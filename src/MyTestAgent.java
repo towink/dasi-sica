@@ -15,7 +15,6 @@ import java.io.Serializable;
 import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.vecmath.Vector2d;
 
 public class MyTestAgent extends Agent {
     

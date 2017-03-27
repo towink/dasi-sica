@@ -1,4 +1,5 @@
 import graphics.Simulation;
+import jade.core.AID;
 import jade.core.Agent;
 import jade.core.behaviours.CyclicBehaviour;
 import jade.domain.DFService;
@@ -8,6 +9,8 @@ import jade.domain.FIPAException;
 import jade.lang.acl.ACLMessage;
 import jade.lang.acl.MessageTemplate;
 import jade.lang.acl.UnreadableException;
+import util.TwoDVector;
+
 import java.util.logging.Level;
 import java.util.logging.Logger; 
 
@@ -26,18 +29,19 @@ public class DrawingAgent extends Agent {
             MessageTemplate mt = MessageTemplate.MatchPerformative(
                 ACLMessage.INFORM);
             ACLMessage msg = myAgent.receive(mt);
-            MyTestAgent.Pos pos = null;
+            TwoDVector pos = null;
+            AID aid = null;
             if(msg != null) {
                 //System.out.println(System.currentTimeMillis() - timeLastReceived);
                 timeLastReceived = System.currentTimeMillis();
                 try {
                     //System.out.println(msg.getContent());
-                    pos = (MyTestAgent.Pos)msg.getContentObject();
+                    pos = (TwoDVector) msg.getContentObject();
+                    aid = msg.getSender();
                 } catch (UnreadableException ex) {
                     Logger.getLogger(DrawingAgent.class.getName()).log(Level.SEVERE, null, ex);
                 }
-                sim.x = (int) ((width / 2) + pos.x * (width / 2));
-                sim.y = (int) ((height / 2) + pos.y * (height / 2));
+                sim.addObject(aid, pos);
                 
             }
             else {

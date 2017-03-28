@@ -50,7 +50,7 @@ public class MovableAgent extends Agent {
         	this.vel.dot(max / norm);
         
         this.pos.add(this.vel.getDot(elapsedTime));
-        this.pos.clip(-1.0, 1.0);
+        this.pos.clamp(-1.0, 1.0);
     }
     
     /**

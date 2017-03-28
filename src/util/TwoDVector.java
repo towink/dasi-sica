@@ -75,13 +75,13 @@ public class TwoDVector implements Serializable, Cloneable {
 	}
 
 	/**
-	 * Clip the vector's coordinates to the given closed interval
-	 * @param start
-	 * @param end
+	 * Clamps the vector's coordinates between min and max
+	 * @param min
+	 * @param max
 	 */
-	public void clip(double start, double end) {
-		this.x = Math.max(start, Math.min(end, this.x));
-		this.y = Math.max(start, Math.min(end, this.y));
+	public void clamp(double min, double max) {
+		this.x = Math.max(min, Math.min(max, this.x));
+		this.y = Math.max(min, Math.min(max, this.y));
 	}
 	
 	

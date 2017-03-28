@@ -1,0 +1,5 @@
+# Eclipse files and folders
+[Bb]in/
+.settings/
+.classpath
+.project

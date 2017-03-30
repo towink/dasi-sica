@@ -51,6 +51,20 @@ public class BeeGUI extends GUIState {
 		SimulationController simulation = (SimulationController) state;
 		// TODO: set up the objects from simulation
 		
+		flowers.setField(simulation.flowers);
+		flowers.setMap(new sim.util.gui.SimpleColorMap(
+				0,
+				1,
+				new Color(0,0,0,0),
+				Color.YELLOW
+				));
+		hive.setField(simulation.hive);
+		hive.setMap(new sim.util.gui.SimpleColorMap(
+				0,
+				1,
+				new Color(0,0,0,0),
+				Color.RED
+				));
 		bees.setField(simulation.bees);
         
 		display.reset();
@@ -89,10 +103,8 @@ public class BeeGUI extends GUIState {
 		frame.setVisible(true);
 
 		// attach the objects from bottom to top
-		/*display.attach(homePheromonePortrayal,"Pheromones To Home");
-		display.attach(foodPheromonePortrayal,"Pheromones To Food");
-		display.attach(sitesPortrayal,"Site Locations");
-		display.attach(obstaclesPortrayal,"Obstacles");*/
+		display.attach(flowers,"Flowers");
+		display.attach(hive,"Hive");
 		display.attach(bees,"Bees");
 
 		display.setBackdrop(Color.white);

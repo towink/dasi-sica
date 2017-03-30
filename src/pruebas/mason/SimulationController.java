@@ -1,11 +1,11 @@
 package pruebas.mason;
 
-import java.util.ArrayList;
+import java.awt.Point;
 
-import pruebas.mason.agents.*;
+import pruebas.mason.agents.Agent;
+import pruebas.mason.agents.WorkerBee;
 import sim.engine.Schedule;
 import sim.engine.SimState;
-import sim.field.grid.DoubleGrid2D;
 import sim.field.grid.IntGrid2D;
 import sim.field.grid.SparseGrid2D;
 
@@ -19,8 +19,12 @@ public class SimulationController extends SimState {
 
 	// Hive's size
 	public static final int HIVE_HEIGHT = 10;
-	public static final int HOME_WIDTH = 10;
-
+	public static final int HIVE_WIDTH = 10;
+	
+	//Flowers's size
+	public static final int NORMAL_FLOWER_HEIGHT = 5;
+	public static final int NORMAL_FLOWER_WIDTH = 5;
+	
 	// Representation value
 	public static final int HIVE = 1;
 	public static final int FLOWER = 2;
@@ -46,28 +50,57 @@ public class SimulationController extends SimState {
 		flowers = new IntGrid2D(GRID_WIDTH, GRID_HEIGHT,0);
 		bees = new SparseGrid2D(GRID_WIDTH, GRID_HEIGHT);
 		
-		GenerateHive();
-		GenerateFlowers();
-		GenerateBees();
+		generateHive();
+		generateFlowers();
+		generateBees();
 	}
 
-	private void GenerateHive () {
+	private void generateHive () {
 		// TODO: Here, we can implement factory pattern
-
+		Point center = new Point (GRID_WIDTH/2, GRID_HEIGHT/2);
+		Point length = new Point (HIVE_WIDTH, HIVE_HEIGHT);
+		drawRect (center, length, hive, HIVE);
 	}
 
-	private void GenerateFlowers () {
+	private void generateFlowers () {
 		// TODO: Here, we can implement factory pattern
-
+		Point length = new Point (NORMAL_FLOWER_WIDTH, NORMAL_FLOWER_HEIGHT);
+		drawFillRect(length, length, flowers, FLOWER);
 	}
 
-	private void GenerateBees() {
+	private void generateBees() {
 		// TODO: Here, we can implement factory pattern
 		for(int x = 0; x < getNumBees(); x++)
 		{
 			Agent agent = new WorkerBee();
 			bees.setObjectLocation(agent, GRID_WIDTH/2, GRID_HEIGHT/2);
 			schedule.scheduleRepeating(Schedule.EPOCH + x, 0, agent, 1);
+		}
+	}
+	
+	private void drawRect (Point center, Point length, IntGrid2D container, int value) {
+		for (int i = 0; i <= length.getY()/2; i++) {
+			container.field[(int) (center.getX()-length.getX()/2)][(int) (center.getY()+i)] = value;
+			container.field[(int) (center.getX()-length.getX()/2)][(int) (center.getY()-i)] = value;
+			container.field[(int) (center.getX()+length.getX()/2)][(int) (center.getY()+i)] = value;
+			container.field[(int) (center.getX()+length.getX()/2)][(int) (center.getY()-i)] = value;
+		}
+		for (int i = 0; i < length.getX()/2; i++) {
+			container.field[(int) (center.getX()+i)][(int) (center.getY()-length.getY()/2)] = value;
+			container.field[(int) (center.getX()-i)][(int) (center.getY()-length.getY()/2)] = value;
+			container.field[(int) (center.getX()+i)][(int) (center.getY()+length.getY()/2)] = value;
+			container.field[(int) (center.getX()-i)][(int) (center.getY()+length.getY()/2)] = value;
+		}
+	}
+	
+	private void drawFillRect (Point center, Point length, IntGrid2D container, int value) {		
+		int i = (int) (center.getX()-length.getX()/2);
+		int j = (int) (center.getY()-length.getY()/2);
+		for (;i < center.getX()+length.getX()/2; i++) {
+			for (; j < center.getY()+length.getY()/2; j++) {
+				container.field[i][j] = value;
+			}
+			j = (int) (center.getY()-length.getY()/2);
 		}
 	}
 

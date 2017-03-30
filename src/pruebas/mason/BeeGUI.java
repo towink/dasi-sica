@@ -50,6 +50,11 @@ public class BeeGUI extends GUIState {
 	public void setUp() {
 		SimulationController simulation = (SimulationController) state;
 		// TODO: set up the objects from simulation
+		
+		bees.setField(simulation.bees);
+        
+		display.reset();
+        display.repaint();
 	}
 
 	public void start()
@@ -87,8 +92,8 @@ public class BeeGUI extends GUIState {
 		/*display.attach(homePheromonePortrayal,"Pheromones To Home");
 		display.attach(foodPheromonePortrayal,"Pheromones To Food");
 		display.attach(sitesPortrayal,"Site Locations");
-		display.attach(obstaclesPortrayal,"Obstacles");
-		display.attach(bugPortrayal,"Agents");*/
+		display.attach(obstaclesPortrayal,"Obstacles");*/
+		display.attach(bees,"Bees");
 
 		display.setBackdrop(Color.white);
 	}

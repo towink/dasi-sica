@@ -32,6 +32,8 @@ public class SimulationController extends SimState {
 	// Simulation's variables
 	public int numBees = 1000;
 	public int numFlowers = 4;
+	public float groupingAffinity = 0.95f;
+
 
 	public IntGrid2D hive = new IntGrid2D(GRID_WIDTH, GRID_HEIGHT,0);
 	public IntGrid2D flowers = new IntGrid2D(GRID_WIDTH, GRID_HEIGHT,0);
@@ -74,7 +76,7 @@ public class SimulationController extends SimState {
 		{
 			Agent agent = new WorkerBee();
 			bees.setObjectLocation(agent, GRID_WIDTH/2, GRID_HEIGHT/2);
-			schedule.scheduleRepeating(Schedule.EPOCH + x, 0, agent, 1);
+			schedule.scheduleRepeating(Schedule.EPOCH, 0, agent, 1);
 		}
 	}
 	
@@ -123,6 +125,14 @@ public class SimulationController extends SimState {
 		if (numFlowers > 0) {
 			this.numFlowers = numFlowers;
 		}
+	}
+	
+	public float getGroupingAffinity() {
+		return groupingAffinity;
+	}
+
+	public void setGroupingAffinity(float groupingAffinity) {
+		this.groupingAffinity = groupingAffinity;
 	}
 
 }

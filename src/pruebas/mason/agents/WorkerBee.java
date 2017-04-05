@@ -6,7 +6,10 @@ import java.util.Random;
 
 import pruebas.mason.SimulationController;
 import sim.engine.SimState;
+import sim.field.grid.Grid2D;
+import sim.field.grid.SparseGrid2D;
 import sim.portrayal.DrawInfo2D;
+import sim.util.Bag;
 import sim.util.Int2D;
 import util.TwoDVector;
 
@@ -18,9 +21,42 @@ public class WorkerBee extends Agent{
 		
 	}
 	
+	
 	public void step( final SimState state ) {
 		// TODO: do something
-		move (state);
+		if (state.schedule.getSteps() > 2500 && state.random.nextFloat() > ((SimulationController)state).groupingAffinity)
+			group(state);
+		else
+			move (state);
+	}
+	
+	private int sign(float number) {
+		return number < 0 ? -1 : number > 0 ? 1 : 0;
+	}
+	
+	
+	private void group (final SimState state) {
+		final SimulationController simulation = (SimulationController) state;
+		Int2D location = simulation.bees.getObjectLocation(this);
+		Bag beeBag = simulation.bees.getRadialNeighbors(location.getX(), location.getY(), 5, Grid2D.TOROIDAL, true);
+		
+		float meanx = 0, meany = 0;
+		int cnt = 0;
+		for (Object a: beeBag) {
+			Int2D loc = simulation.bees.getObjectLocation(a);
+			meanx += loc.getX();
+			meany += loc.getY();
+			cnt ++;
+		}
+		meanx /= (float) cnt;
+		meany /= (float) cnt;
+		
+		float diffx = meanx - (float) location.getX();
+		float diffy = meany - (float) location.getY();
+		
+		simulation.bees.setObjectLocation(this, new Int2D(
+				location.getX() + sign(diffx), 
+				location.getY() + sign(diffy)));
 	}
 	
 	private void move (final SimState state) {
@@ -28,22 +64,12 @@ public class WorkerBee extends Agent{
 		Int2D location = simulation.bees.getObjectLocation(this);
 		int max = 2;
 		int min = -2;
+		
 		int x = ((int)(Math.random()*(max - min) + min)) + location.getX();
 		int y = ((int)(Math.random()*(max - min) + min)) + location.getY();
-		
-		if (x > simulation.GRID_WIDTH - 1) {
-			x = simulation.GRID_WIDTH - 1;
-		}
-		else if (x < 0) {
-			x = 0;
-		}
-		
-		if (y > simulation.GRID_HEIGHT - 1) {
-			y = simulation.GRID_HEIGHT - 1;
-		}
-		else if (y < 0) {
-			y = 0;
-		}
+			
+		x = Math.floorMod(x, simulation.GRID_WIDTH); //== 1;
+		y = Math.floorMod(y, simulation.GRID_HEIGHT);
 		
 		if (simulation.flowers.field[x][y] == SimulationController.FLOWER) {
 			simulation.flowers.field[x][y] = 0;

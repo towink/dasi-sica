@@ -25,6 +25,7 @@ public class Canvas extends JPanel {
 			@Override
 			public void run() {
 				render();
+				
 			}
 		}, 0, (long) Math.ceil(1000 / (double) fps));
 

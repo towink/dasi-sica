@@ -1,5 +1,4 @@
 
-import graphics.Simulation;
 
 
 public class Main {
@@ -8,7 +7,13 @@ public class Main {
         
         args = new String[3];
         args[0] = "-agents";
-        args[1] = "testAgent1:MyTestAgent;testAgent2:MyTestAgent;testAgent3:MyTestAgent;testAgent4:MyTestAgent;testAgent5:MyTestAgent;testAgent6:MyTestAgent;drawer:DrawingAgent";
+        
+        String s = "";
+        for (int i = 0; i < 500; i++) {
+        	s += "testAgent" + i + ":MyTestAgent;";
+        }
+        
+        args[1] = s + "drawer:DrawingAgent";
         args[2] = "-gui";
         jade.Boot.main(args);
     }

@@ -6,8 +6,8 @@
 package graphics;
 
 import java.awt.Color;
-import java.util.HashMap;
 import java.util.Map.Entry;
+import java.util.concurrent.ConcurrentHashMap;
 
 import jade.core.AID;
 import util.TwoDVector;
@@ -26,7 +26,7 @@ public class Simulation extends AbstractGame {
     
     private final int width, height;
     
-    private HashMap<AID, TwoDVector> objects;
+    private ConcurrentHashMap<AID, TwoDVector> objects;
 
     public void addObject(AID object, TwoDVector position) {
     	this.objects.put(object, position);
@@ -40,7 +40,7 @@ public class Simulation extends AbstractGame {
     public Simulation(int width, int height) {
         this.width = width;
         this.height = height;
-        objects = new HashMap<AID, TwoDVector>();
+        objects = new ConcurrentHashMap<AID, TwoDVector>();
     }
 
     @Override

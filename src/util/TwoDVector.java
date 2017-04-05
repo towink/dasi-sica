@@ -79,7 +79,7 @@ public class TwoDVector implements Serializable, Cloneable {
 	 * @param start
 	 * @param end
 	 */
-	public void clip(double start, double end) {
+	public void clamp(double start, double end) {
 		this.x = Math.max(start, Math.min(end, this.x));
 		this.y = Math.max(start, Math.min(end, this.y));
 	}

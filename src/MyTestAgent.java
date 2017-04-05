@@ -40,11 +40,11 @@ public class MyTestAgent extends MovableAgent {
         addBehaviour(new ParallelBehaviour(this, ParallelBehaviour.WHEN_ALL) {
             @Override
             public void onStart() {
-                addSubBehaviour(new PositionSender(MyTestAgent.this, 30));
-                addSubBehaviour(new TickerBehaviour(myAgent, 30) {
+                addSubBehaviour(new PositionSender(MyTestAgent.this, 100));
+                addSubBehaviour(new TickerBehaviour(myAgent, 100) {
                     @Override
                     protected void onTick() {
-                        System.out.println("Position: " + getPos());
+                        //System.out.println("Position: " + getPos());
                         ((MyTestAgent)myAgent).move(1.0);
                     }
                  });

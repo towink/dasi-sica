@@ -1,0 +1,9 @@
+# Eclipse files and folders
+[Bb]in/
+.settings/
+.classpath
+.project
+
+#I don't know what it is
+APDescription.txt
+MTPs-Main-Container.txt

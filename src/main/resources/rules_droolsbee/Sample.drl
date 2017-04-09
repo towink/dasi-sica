@@ -1,0 +1,13 @@
+package com.sica.agents
+ 
+import com.sica.agents.DroolsBee.DroolsBeeController;
+ 
+rule "Fire_controller"
+    when
+        dbc : DroolsBeeController( status == DroolsBeeController.PRE_FIRING )
+    then
+        System.out.println( "Found a pre_fired_message. Firing..." + dbc.getID() );
+        dbc.setStatus( DroolsBeeController.FIRED );
+        update ( dbc ) ;
+        //modify ( dbc ) {setStatus( DroolsBeeController.FIRED )};
+end

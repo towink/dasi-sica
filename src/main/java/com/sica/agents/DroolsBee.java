@@ -2,6 +2,8 @@ package com.sica.agents;
 
 import java.util.Random;
 
+import com.util.searching.Map;
+
 import sim.engine.SimState;
 
 public class DroolsBee extends DroolsAgent {
@@ -14,6 +16,10 @@ public class DroolsBee extends DroolsAgent {
 
 	public DroolsBee() {
 		super("ksession-DroolsBee");
+	}
+	
+	public DroolsBee(Map map) {
+		super("ksession-DroolsBee", map);
 	}
 
 	@Override

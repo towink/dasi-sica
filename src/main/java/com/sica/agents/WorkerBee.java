@@ -2,7 +2,10 @@ package com.sica.agents;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
+
 import com.sica.SimulationController;
+import com.util.searching.Map;
+
 import sim.engine.SimState;
 import sim.field.grid.Grid2D;
 import sim.portrayal.DrawInfo2D;
@@ -14,9 +17,12 @@ public class WorkerBee extends Agent{
 	private static final long serialVersionUID = -1449354141004958564L;
 
 	public WorkerBee() {
-		
+		super();
 	}
 	
+	public WorkerBee(Map map) {
+		super(map);
+	}
 	
 	public void step( final SimState state ) {
 		// TODO: do something

@@ -7,6 +7,8 @@ import org.kie.api.runtime.KieContainer;
 import org.kie.api.runtime.KieSession;
 import org.kie.api.runtime.rule.FactHandle;
 
+import com.util.searching.Map;
+
 import sim.engine.SimState;
 
 /**
@@ -32,6 +34,19 @@ public abstract class DroolsAgent extends Agent {
 	 * @param kSessionName
 	 */
 	public DroolsAgent(String kSessionName) {
+		super();
+		this.setUpAgent(kSessionName, 0);
+	}
+	
+	/**
+	 * Create a drools-based agent using the specified knowledge session
+	 * name and adding the initial knowledge of his environment. Check 
+	 * kmodule.xml to set up which rule files the knowledge session uses.
+	 * @param kSessionName
+	 * @param map
+	 */
+	public DroolsAgent(String kSessionName, Map map) {
+		super(map);
 		this.setUpAgent(kSessionName, 0);
 	}
 	
@@ -82,8 +97,7 @@ public abstract class DroolsAgent extends Agent {
 	public abstract void setupSessionKnowledge();
 	
 
-	@Override
-	public void step(SimState arg0) {     
+	public void step (final SimState arg0) {     
 		//let the subclass do something before rules are fired
 		this.stepBeforeFiringRules(arg0);
 		//update all the knowledge base objects so that rules can fire again

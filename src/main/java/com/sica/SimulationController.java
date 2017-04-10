@@ -40,7 +40,7 @@ public class SimulationController extends SimState {
 	public IntGrid2D hive = new IntGrid2D(GRID_WIDTH, GRID_HEIGHT,0);
 	public IntGrid2D flowers = new IntGrid2D(GRID_WIDTH, GRID_HEIGHT,0);
 	public SparseGrid2D bees = new SparseGrid2D(GRID_WIDTH, GRID_HEIGHT);
-	public SparseGrid2D drlbees = new SparseGrid2D(GRID_WIDTH, GRID_HEIGHT);
+	public SparseGrid2D drlBees = new SparseGrid2D(GRID_WIDTH, GRID_HEIGHT);
 
 	public SimulationController(long seed)
 	{ 
@@ -54,7 +54,7 @@ public class SimulationController extends SimState {
 		hive = new IntGrid2D(GRID_WIDTH, GRID_HEIGHT,0);
 		flowers = new IntGrid2D(GRID_WIDTH, GRID_HEIGHT,0);
 		bees = new SparseGrid2D(GRID_WIDTH, GRID_HEIGHT);
-		drlbees = new SparseGrid2D(GRID_WIDTH, GRID_HEIGHT);
+		drlBees = new SparseGrid2D(GRID_WIDTH, GRID_HEIGHT);
 		
 		generateHive();
 		generateFlowers();
@@ -81,7 +81,7 @@ public class SimulationController extends SimState {
 		
 		for (int x = 0; x < 100; x++) {
 			agent = new DroolsBee();
-			drlbees.setObjectLocation(agent, 20,20);
+			drlBees.setObjectLocation(agent, 20,20);
 			schedule.scheduleRepeating(Schedule.EPOCH, 0, agent, 1);
 		}
 		

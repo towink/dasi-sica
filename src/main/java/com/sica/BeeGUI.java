@@ -19,6 +19,7 @@ public class BeeGUI extends GUIState {
 	FastValueGridPortrayal2D hive = new FastValueGridPortrayal2D("Hive");
 	FastValueGridPortrayal2D flowers = new FastValueGridPortrayal2D("Flowers");
 	SparseGridPortrayal2D bees = new SparseGridPortrayal2D();
+	SparseGridPortrayal2D drlBees = new SparseGridPortrayal2D();
 	
 
 	public BeeGUI() { 
@@ -66,6 +67,7 @@ public class BeeGUI extends GUIState {
 				Color.RED
 				));
 		bees.setField(simulation.bees);
+		drlBees.setField(simulation.drlBees);
         
 		display.reset();
         display.repaint();
@@ -106,6 +108,7 @@ public class BeeGUI extends GUIState {
 		display.attach(flowers,"Flowers");
 		display.attach(hive,"Hive");
 		display.attach(bees,"Bees");
+		display.attach(drlBees, "Drool Bees");
 
 		display.setBackdrop(Color.white);
 	}

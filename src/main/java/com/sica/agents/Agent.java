@@ -16,30 +16,30 @@ public abstract class Agent extends OvalPortrayal2D implements Steppable {
 	protected AStar pathFinding;
 	protected LinkedList<Point> actualPath;
 	protected Map map;
-	protected int[] objetive;
+	protected int[] objective;
 	
 	public Agent () {
-		objetive = new int[2];
+		objective = new int[2];
 	}
 	
 	public Agent (Map map) {
 		this.map = map;
 		pathFinding = new AStar(map);
-		objetive = new int [2];
+		objective = new int [2];
 	}
 
 	public void calculatePath(int [] actualPosition) {
-		actualPath = pathFinding.findPath(actualPosition, getObjetive());
+		actualPath = pathFinding.findPath(actualPosition, getObjective());
 	}
 	
 	// getters and setter
-	public int[] getObjetive() {
-		return objetive;
+	public int[] getObjective() {
+		return objective;
 	}
 
-	public void setObjetive(int x, int y) {
-		objetive[0] = x;
-		objetive[1] = y;
+	public void setObjective(int x, int y) {
+		objective[0] = x;
+		objective[1] = y;
 	}
 	
 }

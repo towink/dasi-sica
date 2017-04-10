@@ -5,6 +5,8 @@ import java.awt.Point;
 import com.sica.agents.Agent;
 import com.sica.agents.DroolsBee;
 import com.sica.agents.WorkerBee;
+import com.util.searching.Map;
+import com.util.searching.Map.Type;
 
 import sim.engine.Schedule;
 import sim.engine.SimState;
@@ -85,14 +87,44 @@ public class SimulationController extends SimState {
 			schedule.scheduleRepeating(Schedule.EPOCH, 0, agent, 1);
 		}
 		
+		/*
+		 * Test A*
+		 * First: Create a map with a lot of obstacles
+		 * Second: Put a random objetive where agents want to go
+		 * Third: Every agent calculate A*
+		 * 
+		 * In addition, we check how long it takes to run
+		 */
+		
+		Map map = new Map(GRID_WIDTH, GRID_HEIGHT);
+		for (int i = 0; i < GRID_HEIGHT - 1; i++) {
+			map.modifyMap(20, i, Type.OBSTACLE);
+		}
+		
+		for (int i = 21; i < GRID_WIDTH/2+30; i++) {
+			map.modifyMap(i, GRID_HEIGHT/2 + 20, Type.OBSTACLE);
+		}
+		
+		long start = System.currentTimeMillis();
+		
 		for(int x = 0; x < getNumBees(); x++)
 		{
-			agent = new WorkerBee();
+			agent = new WorkerBee(map);
+			
+			// Testing A* {
+			agent.setObjective(5, 5);
+			int [] aux = new int [2];
+			aux[0] = GRID_WIDTH/2;
+			aux[1] = GRID_HEIGHT/2;
+			
+			agent.calculatePath(aux);
+			// } testing A*
+			
 			bees.setObjectLocation(agent, GRID_WIDTH/2, GRID_HEIGHT/2);
 			schedule.scheduleRepeating(Schedule.EPOCH, 0, agent, 1);
 		}
 		
-		
+		System.out.println("Time of calculate " + getNumBees() + " A*: " + ((System.currentTimeMillis() - start) / 1000) + " seconds");
 		
 	}
 	

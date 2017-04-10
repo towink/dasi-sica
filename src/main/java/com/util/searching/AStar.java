@@ -1,17 +1,18 @@
 package com.util.searching;
 
 import java.awt.Point;
+import java.util.HashSet;
 import java.util.LinkedList;
 
 public class AStar {
 	private LinkedList<Node> openList;
-	private LinkedList<Point> closedList;
+	private HashSet<Point> closedList;
 	private Map map;
 
 	public AStar (Map map) {
 		this.map = map;
 		openList = new LinkedList<Node>();
-		closedList = new LinkedList<Point>();
+		closedList = new HashSet<Point>();
 	}
 
 	/**

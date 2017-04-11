@@ -154,7 +154,7 @@ public class AStar {
 		openList.add(index, node);
 	}
 
-	private void updateMap (Map map) {
+	public void updateMap (Map map) {
 		this.map = map;
 	}
 }

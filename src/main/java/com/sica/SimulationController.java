@@ -6,8 +6,6 @@ import java.util.Random;
 import com.sica.agents.Agent;
 import com.sica.agents.DroolsBee;
 import com.sica.agents.WorkerBee;
-import com.util.searching.Map;
-import com.util.searching.Map.Type;
 
 import sim.engine.Schedule;
 import sim.engine.SimState;
@@ -45,7 +43,7 @@ public class SimulationController extends SimState {
 
 	public IntGrid2D hive = new IntGrid2D(GRID_WIDTH, GRID_HEIGHT,0);
 	public IntGrid2D flowers = new IntGrid2D(GRID_WIDTH, GRID_HEIGHT,0);
-	public IntGrid2D obstacles = new IntGrid2D(GRID_WIDTH, GRID_HEIGHT,0);
+	public SparseGrid2D obstacles = new SparseGrid2D(GRID_WIDTH, GRID_HEIGHT);
 	public SparseGrid2D bees = new SparseGrid2D(GRID_WIDTH, GRID_HEIGHT);
 	public SparseGrid2D drlBees = new SparseGrid2D(GRID_WIDTH, GRID_HEIGHT);
 
@@ -60,7 +58,7 @@ public class SimulationController extends SimState {
 
 		hive = new IntGrid2D(GRID_WIDTH, GRID_HEIGHT,0);
 		flowers = new IntGrid2D(GRID_WIDTH, GRID_HEIGHT,0);
-		obstacles = new IntGrid2D(GRID_WIDTH, GRID_HEIGHT,0);
+		obstacles = new SparseGrid2D(GRID_WIDTH, GRID_HEIGHT);
 		bees = new SparseGrid2D(GRID_WIDTH, GRID_HEIGHT);
 		drlBees = new SparseGrid2D(GRID_WIDTH, GRID_HEIGHT);
 		
@@ -98,7 +96,8 @@ public class SimulationController extends SimState {
 				pos.x = rnd.nextInt(GRID_WIDTH);
 				pos.y = rnd.nextInt(GRID_HEIGHT);
 			}
-			obstacles.field[pos.x][pos.y] = OBSTACLE;
+			//obstacles.field[pos.x][pos.y] = OBSTACLE;
+			obstacles.setObjectLocation(new Object(), pos.x, pos.y);
 		}
 	}
 	
@@ -148,27 +147,27 @@ public class SimulationController extends SimState {
 		 * In addition, we check how long it takes to run
 		 */
 		
-		Map map = new Map(GRID_WIDTH, GRID_HEIGHT);
+		/*Map map = new Map(GRID_WIDTH, GRID_HEIGHT);
 		for (int i = 0; i < GRID_HEIGHT - 1; i++) {
 			map.modifyMap(20, i, Type.OBSTACLE);
 		}
 		
 		for (int i = 21; i < GRID_WIDTH/2+30; i++) {
 			map.modifyMap(i, GRID_HEIGHT/2 + 20, Type.OBSTACLE);
-		}
+		}*/
 		
 		long start = System.currentTimeMillis();
 		
 		for(int x = 0; x < getNumBees(); x++)
 		{
-			agent = new WorkerBee(map);
+			agent = new WorkerBee();
 			
-			// Testing A* {
+			/*// Testing A* {
 			agent.setObjective(5, 5);
 			Point aux = new Point (GRID_WIDTH/2, GRID_HEIGHT/2);
 			
 			agent.calculatePath(aux);
-			// } testing A*
+			// } testing A**/
 			
 			bees.setObjectLocation(agent, GRID_WIDTH/2, GRID_HEIGHT/2);
 			schedule.scheduleRepeating(Schedule.EPOCH, 0, agent, 1);

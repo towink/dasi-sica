@@ -18,7 +18,7 @@ public class BeeGUI extends GUIState {
 
 	FastValueGridPortrayal2D hive = new FastValueGridPortrayal2D("Hive");
 	FastValueGridPortrayal2D flowers = new FastValueGridPortrayal2D("Flowers");
-	FastValueGridPortrayal2D obstacles = new FastValueGridPortrayal2D("Obstacles");
+	SparseGridPortrayal2D obstacles = new SparseGridPortrayal2D();
 	SparseGridPortrayal2D bees = new SparseGridPortrayal2D();
 	SparseGridPortrayal2D drlBees = new SparseGridPortrayal2D();
 	
@@ -61,12 +61,7 @@ public class BeeGUI extends GUIState {
 				Color.YELLOW
 				));
 		obstacles.setField(simulation.obstacles);
-		obstacles.setMap(new sim.util.gui.SimpleColorMap(
-				0,
-				1,
-				new Color(0,0,0,0),
-				Color.GRAY
-				));
+		
 		hive.setField(simulation.hive);
 		hive.setMap(new sim.util.gui.SimpleColorMap(
 				0,

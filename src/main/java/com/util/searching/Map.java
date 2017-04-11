@@ -35,11 +35,17 @@ public class Map {
 	 * @param x
 	 * @param y
 	 * @param type
+	 * @return true if the value has changed or false if it has not changed
 	 */
-	public void modifyMap (int x, int y, Type type) {
+	public boolean modifyMap (int x, int y, Type type) {
+		boolean changed = false;
 		if (isValidPosition(x, y)) {
-			map[x][y] = type;
+			if (map[x][y] != type) {
+				changed = true;
+				map[x][y] = type;
+			}
 		}
+		return changed;
 	}
 
 	/**

@@ -86,7 +86,7 @@ public class DroolsBee extends DroolsAgent {
     
     public final void draw(Object object, Graphics2D graphics, DrawInfo2D info) {
 
-		graphics.setColor( Color.BLUE );
+		graphics.setColor( Color.GREEN );
 		
 		// this code was stolen from OvalPortrayal2D
 		int x = (int)(info.draw.x - info.draw.width / 2.0);

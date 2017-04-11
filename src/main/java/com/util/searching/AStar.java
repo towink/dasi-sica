@@ -21,7 +21,7 @@ public class AStar {
 	 * @param finalPos
 	 * @return A linked list with the path or null if there is not a path
 	 */
-	public LinkedList<Point> findPath (int [] initialPos, int [] finalPos) {
+	public LinkedList<Point> findPath (Point initialPos, Point finalPos) {
 		if (map == null) {
 			return null;
 		}
@@ -137,7 +137,7 @@ public class AStar {
 			cost = map.getCost(pos[0], pos[1]);
 			if (cost < Map.IMPASSABLE) {
 				map.setVisited(pos[0], pos[1], true);
-				nodes.add(new Node (node, finalNode, pos, cost + node.getgCost()));
+				nodes.add(new Node (node, finalNode, new Point (pos[0], pos[1]), cost + node.getgCost()));
 			}
 		}
 	}

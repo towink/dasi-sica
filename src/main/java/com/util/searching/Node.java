@@ -9,15 +9,13 @@ public class Node{
 	public int totalCost;
 	public int gCost;
 	
-	private int [] pos;
+	private Point pos;
 	
-	public Node (Node parentNode, Node finalNode, int[] pos, int cost) {
+	public Node (Node parentNode, Node finalNode, Point pos, int cost) {
 		setParentNode(parentNode);
 		setFinalNode(finalNode);
 		setgCost(cost);
-		this.pos = new int [2];
-		this.pos[0] = pos[0];
-		this.pos[1] = pos[1];
+		this.pos = new Point(pos.x, pos.y);
 		
 		
 		if (finalNode != null) {
@@ -27,7 +25,7 @@ public class Node{
 
 	public int calculateCost () {
 		// Manhattan distance
-		return Math.abs(this.pos[0] - getFinalNode().getX()) + Math.abs(this.pos[1] - getFinalNode().getY());
+		return Math.abs(this.pos.x - getFinalNode().getX()) + Math.abs(this.pos.y - getFinalNode().getY());
 	}
 	
 	public boolean equals (Node node) {
@@ -40,16 +38,16 @@ public class Node{
 	// getters and setters
 	public Point getPosition () {
 		Point aux = new Point();
-		aux.setLocation(this.pos[0], this.pos[1]);
+		aux.setLocation(this.pos.x, this.pos.y);
 		return aux;
 	}
 	
 	public int getX() {
-		return pos[0];
+		return pos.x;
 	}
 	
 	public int getY() {
-		return pos[1];
+		return pos.y;
 	}
 	
 	public Node getParentNode() {

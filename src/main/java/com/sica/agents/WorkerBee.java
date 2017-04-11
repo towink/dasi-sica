@@ -26,6 +26,7 @@ public class WorkerBee extends Agent{
 	
 	public void step( final SimState state ) {
 		// TODO: do something
+		super.step(state);
 		if (state.schedule.getSteps() > 2500 && state.random.nextFloat() > ((SimulationController)state).groupingAffinity)
 			group(state);
 		else

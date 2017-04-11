@@ -1,6 +1,7 @@
 package com.sica;
 
 import java.awt.Point;
+import java.util.Random;
 
 import com.sica.agents.Agent;
 import com.sica.agents.DroolsBee;
@@ -32,15 +33,19 @@ public class SimulationController extends SimState {
 	// Representation value
 	public static final int HIVE = 1;
 	public static final int FLOWER = 2;
+	public static final int OBSTACLE = 3;
 
 	// Simulation's variables
-	public int numBees = 1000;
-	public int numFlowers = 4;
+	public int numBees = 100;
+	public int numFlowers = 1;
 	public float groupingAffinity = 0.95f;
+	public int radioView = 5;
+	public int percentageObstacle = 10;
 
 
 	public IntGrid2D hive = new IntGrid2D(GRID_WIDTH, GRID_HEIGHT,0);
 	public IntGrid2D flowers = new IntGrid2D(GRID_WIDTH, GRID_HEIGHT,0);
+	public IntGrid2D obstacles = new IntGrid2D(GRID_WIDTH, GRID_HEIGHT,0);
 	public SparseGrid2D bees = new SparseGrid2D(GRID_WIDTH, GRID_HEIGHT);
 	public SparseGrid2D drlBees = new SparseGrid2D(GRID_WIDTH, GRID_HEIGHT);
 
@@ -55,11 +60,13 @@ public class SimulationController extends SimState {
 
 		hive = new IntGrid2D(GRID_WIDTH, GRID_HEIGHT,0);
 		flowers = new IntGrid2D(GRID_WIDTH, GRID_HEIGHT,0);
+		obstacles = new IntGrid2D(GRID_WIDTH, GRID_HEIGHT,0);
 		bees = new SparseGrid2D(GRID_WIDTH, GRID_HEIGHT);
 		drlBees = new SparseGrid2D(GRID_WIDTH, GRID_HEIGHT);
 		
 		generateHive();
 		generateFlowers();
+		generateRandomObstacles(percentageObstacle);
 		generateBees();
 	}
 
@@ -76,6 +83,51 @@ public class SimulationController extends SimState {
 		drawFillRect(length, length, flowers, FLOWER);
 	}
 
+	private void generateRandomObstacles (int percentage) {
+		int numObstacles = (percentage * GRID_WIDTH * GRID_HEIGHT) / 100;
+		int limit = (GRID_WIDTH * GRID_HEIGHT) - (HIVE_WIDTH * HIVE_HEIGHT) - (numFlowers * NORMAL_FLOWER_WIDTH * NORMAL_FLOWER_HEIGHT);
+		if (numObstacles > limit) {
+			numObstacles = limit - 1;
+		}
+		Point pos = new Point();
+		Random rnd = new Random();
+		for (int i = 0; i < numObstacles; i++) {
+			pos.x = rnd.nextInt(GRID_WIDTH);
+			pos.y = rnd.nextInt(GRID_HEIGHT);
+			while (!emptyPos(pos)) {
+				pos.x = rnd.nextInt(GRID_WIDTH);
+				pos.y = rnd.nextInt(GRID_HEIGHT);
+			}
+			obstacles.field[pos.x][pos.y] = OBSTACLE;
+		}
+	}
+	
+	private boolean emptyPos (Point pos) {
+		return checkHive (pos) && checkFlowers(pos);
+	}
+	
+	private boolean checkHive (Point pos) {
+		Point center = new Point (GRID_WIDTH/2, GRID_HEIGHT/2);
+		int minX = (int) (center.getX() - HIVE_WIDTH/2);
+		int minY = (int) (center.getY() - HIVE_HEIGHT/2);
+		int maxX = (int) (center.getX() + HIVE_WIDTH/2);
+		int maxY = (int) (center.getY() + HIVE_HEIGHT/2);
+	
+		if (pos.x > maxX || pos.x < minX) {
+			return true;
+		}
+		
+		if (pos.y > maxY || pos.y < minY) {
+			return true;
+		}
+		
+		return false;
+	}
+	
+	private boolean checkFlowers (Point pos) {	
+		return flowers.field[pos.x][pos.y] == 0 ? true : false;
+	}
+	
 	private void generateBees() {
 		// TODO: Here, we can implement factory pattern
 		
@@ -113,9 +165,7 @@ public class SimulationController extends SimState {
 			
 			// Testing A* {
 			agent.setObjective(5, 5);
-			int [] aux = new int [2];
-			aux[0] = GRID_WIDTH/2;
-			aux[1] = GRID_HEIGHT/2;
+			Point aux = new Point (GRID_WIDTH/2, GRID_HEIGHT/2);
 			
 			agent.calculatePath(aux);
 			// } testing A*
@@ -181,6 +231,29 @@ public class SimulationController extends SimState {
 
 	public void setGroupingAffinity(float groupingAffinity) {
 		this.groupingAffinity = groupingAffinity;
+	}
+
+	public int getRadioView() {
+		return radioView;
+	}
+
+	public void setRadioView(int radioView) {
+		if (radioView > 0) {
+			this.radioView = radioView;
+		}
+	}
+
+	public int getPercentageObstacle() {
+		return percentageObstacle;
+	}
+
+	public void setPercentageObstacle(int percentageObstacle) {
+		if (percentageObstacle > 0) {
+			this.percentageObstacle = percentageObstacle;
+		}
+		if (percentageObstacle > 100) {
+			this.percentageObstacle = 100;
+		}
 	}
 
 }

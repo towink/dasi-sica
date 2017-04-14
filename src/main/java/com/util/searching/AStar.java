@@ -1,17 +1,28 @@
 package com.util.searching;
 
 import java.awt.Point;
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.LinkedList;
+import java.util.List;
+import java.util.PriorityQueue;
 
 public class AStar {
-	private LinkedList<Node> openList;
+	private PriorityQueue<Node> openList;
 	private HashSet<Point> closedList;
 	private Map map;
 
 	public AStar (Map map) {
 		this.map = map;
-		openList = new LinkedList<Node>();
+		openList = new PriorityQueue<Node>(new Comparator<Node>() {
+
+			@Override
+			public int compare(Node arg0, Node arg1) {
+				return Integer.compare(arg0.getTotalCost(), arg1.getTotalCost());
+			}
+			
+		});
 		closedList = new HashSet<Point>();
 	}
 
@@ -21,7 +32,7 @@ public class AStar {
 	 * @param finalPos
 	 * @return A linked list with the path or null if there is not a path
 	 */
-	public LinkedList<Point> findPath (Point initialPos, Point finalPos) {
+	public List<Point> findPath (Point initialPos, Point finalPos) {
 		if (map == null) {
 			return null;
 		}
@@ -32,51 +43,46 @@ public class AStar {
 
 		Node initialNode = new Node (null, null, initialPos, 0);
 		Node finalNode = new Node (null, null, finalPos, 0);
-		putNode(initialNode);
+		openList.add(initialNode);
 
 		while (openList.size() > 0) {
-			Node actualNode = openList.get(openList.size() - 1);
+			Node actualNode = openList.peek();
 
 			// Checking if the actual node is the final node
 			if (actualNode.equals(finalNode)) {
 				return createPath(actualNode);
 			}
 
-			openList.remove(actualNode);
-			int index = 0;
-			LinkedList<Node> adjacentNodes = findAdjacentNodes(actualNode, finalNode);
-
-			while (adjacentNodes.size() > index) {
-				if (!closedList.contains(adjacentNodes.get(index).getPosition())) {
-					if (openList.contains(adjacentNodes.get(index))) {
-						if (adjacentNodes.get(index).getgCost() >= actualNode.getgCost()) {
-							index++;
-							continue;
-						}
-					}
-					putNode(adjacentNodes.get(index));
-				}
-				index++;
+			openList.poll();
+			
+			//add new nodes if they have not yet been visited
+			//and either they are not yet opened or their gCost is less than the actual gCost
+			for (Node n: findAdjacentNodes(actualNode, finalNode)) {
+				if (!closedList.contains(n.getPosition()))
+					if (!openList.contains(n) || n.getgCost() < actualNode.getgCost())
+						openList.add(n);
 			}
-			closedList.add(actualNode.getPosition());
+			
+			closedList.add((Point) actualNode.getPosition().clone());
 		}
 
 		// There is not path between initialPos and finalPos
 		return null;
 	}
 
-	private LinkedList<Point> createPath (Node node) {
+	private List<Point> createPath (Node node) {
 		LinkedList<Point> path = new LinkedList<Point>();
 		while (node != null) {
-			path.add(0, node.getPosition());
+			path.add(0, (Point) node.getPosition().clone());
 			node = node.getParentNode();
 		}
 
 		return path;
 	}
 
-	private LinkedList<Node> findAdjacentNodes (Node node, Node finalNode) {
-		LinkedList<Node> adjacentNodes = new LinkedList<Node>();
+	private List<Node> findAdjacentNodes (Node node, Node finalNode) {
+		//start with a list of up to 9 elements
+		ArrayList<Node> adjacentNodes = new ArrayList<Node>(9);
 		int x = node.getX();
 		int y = node.getY();
 		int [] aux = new int [2];
@@ -131,7 +137,7 @@ public class AStar {
 		return adjacentNodes;
 	}
 
-	private void checkAdjacentNode (int [] pos, LinkedList<Node> nodes, Node node, Node finalNode) {
+	private void checkAdjacentNode (int [] pos, List<Node> nodes, Node node, Node finalNode) {
 		int cost;
 		if (!map.isVisited(pos[0], pos[1])) {
 			cost = map.getCost(pos[0], pos[1]);
@@ -140,18 +146,6 @@ public class AStar {
 				nodes.add(new Node (node, finalNode, new Point (pos[0], pos[1]), cost + node.getgCost()));
 			}
 		}
-	}
-
-	/**
-	 * Method to put a node in the open list
-	 * @param node
-	 */
-	private void putNode (Node node) {
-		int index = 0;
-		while ((openList.size() > index) && (node.getTotalCost() < openList.get(index).getTotalCost())){
-			index++;
-		}
-		openList.add(index, node);
 	}
 
 	public void updateMap (Map map) {

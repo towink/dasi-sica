@@ -4,8 +4,6 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.util.Random;
 
-import com.util.searching.Map;
-
 import sim.engine.SimState;
 import sim.portrayal.DrawInfo2D;
 
@@ -19,10 +17,6 @@ public class DroolsBee extends DroolsAgent {
 
 	public DroolsBee() {
 		super("ksession-DroolsBee");
-	}
-	
-	public DroolsBee(Map map) {
-		super("ksession-DroolsBee", map);
 	}
 
 	@Override

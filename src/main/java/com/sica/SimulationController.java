@@ -34,7 +34,7 @@ public class SimulationController extends SimState {
 	public static final int OBSTACLE = 3;
 
 	// Simulation's variables
-	public int numBees = 100;
+	public int numBees = 1000;
 	public int numFlowers = 1;
 	public float groupingAffinity = 0.95f;
 	public int radioView = 5;
@@ -52,6 +52,7 @@ public class SimulationController extends SimState {
 		super(seed);
 	}
 
+	@Override
 	public void start()
 	{
 		super.start();

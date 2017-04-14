@@ -13,7 +13,7 @@ import sim.portrayal.DrawInfo2D;
 import sim.util.Bag;
 import sim.util.Int2D;
 
-public class WorkerBee extends Agent{
+public class WorkerBee extends PathFindingAgent {
 
 	private static final long serialVersionUID = -1449354141004958564L;
 
@@ -31,8 +31,7 @@ public class WorkerBee extends Agent{
 		
 		if (actualPath != null) {
 			final SimulationController simulation = (SimulationController) state;
-			Point aux = actualPath.get(0);
-			actualPath.remove(0);
+			Point aux = actualPath.remove(0);
 			simulation.bees.setObjectLocation(this, new Int2D(aux.x, aux.y));
 			if (actualPath.size() <= 0) {
 				actualPath = null;

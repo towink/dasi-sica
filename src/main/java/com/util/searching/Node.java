@@ -36,10 +36,8 @@ public class Node{
 	}
 	
 	// getters and setters
-	public Point getPosition () {
-		Point aux = new Point();
-		aux.setLocation(this.pos.x, this.pos.y);
-		return aux;
+	public final Point getPosition () {
+		return this.pos;
 	}
 	
 	public int getX() {

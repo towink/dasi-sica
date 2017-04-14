@@ -1,4 +1,4 @@
-package com.sica.agents;
+package com.sica.entities.agents;
 
 import java.awt.Color;
 import java.awt.Graphics2D;

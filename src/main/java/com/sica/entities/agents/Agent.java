@@ -1,19 +1,22 @@
-package com.sica.agents;
+package com.sica.entities.agents;
 
 import java.awt.Point;
 import java.util.List;
 
-import com.sica.SimulationController;
+import com.sica.entities.AgentEntity;
+import com.sica.environment.EnvironmentTypes;
+import com.sica.simulation.SimulationConfig;
+import com.sica.simulation.SimulationController;
 import com.util.searching.AStar;
 import com.util.searching.Map;
 import com.util.searching.Map.Type;
 
 import sim.engine.SimState;
 import sim.field.grid.Grid2D;
-import sim.util.Bag;
 import sim.util.Int2D;
+import sim.util.IntBag;
 
-public class PathFindingAgent extends Agent {
+public class Agent extends AgentEntity {
 	/**
 	 * 
 	 */
@@ -26,18 +29,20 @@ public class PathFindingAgent extends Agent {
 	protected Map map;
 	protected Point objective;
 	
-	public PathFindingAgent () {
+	public Agent (AgentEntityType type) {
+		super(type);
 		objective = new Point();
-		this.map = new Map(SimulationController.GRID_WIDTH, SimulationController.GRID_HEIGHT);
+		this.map = new Map(SimulationConfig.GRID_WIDTH, SimulationConfig.GRID_HEIGHT);
 		pathFinding = new AStar(map);
-		setHome(new Point (SimulationController.GRID_WIDTH/2, SimulationController.GRID_HEIGHT/2));
+		setHome(new Point (SimulationConfig.GRID_WIDTH/2, SimulationConfig.GRID_HEIGHT/2));
 	}
 	
-	public PathFindingAgent (Map map) {
+	public Agent (AgentEntityType type, Map map) {
+		super(type);
 		this.map = map;
 		pathFinding = new AStar(map);
 		objective = new Point();
-		setHome(new Point (SimulationController.GRID_WIDTH/2, SimulationController.GRID_HEIGHT/2));
+		setHome(new Point (SimulationConfig.GRID_WIDTH/2, SimulationConfig.GRID_HEIGHT/2));
 	}
 
 	public void calculatePath(Point actualPosition) {
@@ -48,16 +53,23 @@ public class PathFindingAgent extends Agent {
 		lookObstacles (state);
 	}
 	
+	/**
+	 * Check nearby cells for obstacles, and add them to our 
+	 * own knowledge to avoid them later
+	 * @param state
+	 */
 	private void lookObstacles (final SimState state) {
 		final SimulationController simulation = (SimulationController) state;
-		Int2D location = simulation.bees.getObjectLocation(this);
-		Bag obstacleBag = simulation.obstacles.getRadialNeighbors(location.getX(), location.getY(), simulation.getRadioView(), Grid2D.TOROIDAL, true);
+		Int2D location = simulation.entities.getObjectLocation(this);
+		
+		IntBag xCoords = new IntBag(), yCoords = new IntBag();
+		simulation.environment.getRadialNeighbors(location.getX(), location.getY(), simulation.getConfig().getRadioView(), Grid2D.TOROIDAL, true, EnvironmentTypes.OBSTACLE, xCoords, yCoords);
 		
 		boolean changed = false;
-		for (Object obstacle: obstacleBag) {
-			Int2D loc = simulation.obstacles.getObjectLocation(obstacle);
-			changed |= map.modifyMap(loc.getX(), loc.getY(), Type.OBSTACLE);
+		for (int i = 0; i < xCoords.numObjs; i++) {
+			changed |= map.modifyMap(xCoords.get(i), yCoords.get(i), Type.OBSTACLE);
 		}
+		
 		if (changed) {
 			pathFinding.updateMap(map);
 			if ((getObjective() != null) && (actualPath != null)) {

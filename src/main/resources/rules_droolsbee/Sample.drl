@@ -1,6 +1,6 @@
 package com.sica.agents
  
-import com.sica.agents.DroolsBee.DroolsBeeController;
+import com.sica.entities.agents.DroolsBee.DroolsBeeController;
  
 rule "Fire_controller"
     when

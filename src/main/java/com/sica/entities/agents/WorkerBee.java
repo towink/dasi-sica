@@ -1,10 +1,13 @@
-package com.sica.agents;
+package com.sica.entities.agents;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Point;
 
-import com.sica.SimulationController;
+import com.sica.entities.AgentEntity;
+import com.sica.environment.EnvironmentTypes;
+import com.sica.simulation.SimulationConfig;
+import com.sica.simulation.SimulationController;
 import com.util.searching.Map;
 
 import sim.engine.SimState;
@@ -13,16 +16,16 @@ import sim.portrayal.DrawInfo2D;
 import sim.util.Bag;
 import sim.util.Int2D;
 
-public class WorkerBee extends PathFindingAgent {
+public class WorkerBee extends Agent {
 
 	private static final long serialVersionUID = -1449354141004958564L;
 
 	public WorkerBee() {
-		super();
+		super(AgentEntityType.WORKER);
 	}
 	
 	public WorkerBee(Map map) {
-		super(map);
+		super(AgentEntityType.WORKER, map);
 	}
 	
 	public void step( final SimState state ) {
@@ -32,14 +35,14 @@ public class WorkerBee extends PathFindingAgent {
 		if (actualPath != null) {
 			final SimulationController simulation = (SimulationController) state;
 			Point aux = actualPath.remove(0);
-			simulation.bees.setObjectLocation(this, new Int2D(aux.x, aux.y));
+			simulation.entities.setObjectLocation(this, new Int2D(aux.x, aux.y));
 			if (actualPath.size() <= 0) {
 				actualPath = null;
 			}
 		}
 		
 		else {
-			if (state.schedule.getSteps() > 2500 && state.random.nextFloat() > ((SimulationController)state).groupingAffinity)
+			if (state.schedule.getSteps() > 2500 && state.random.nextFloat() > ((SimulationController)state).getConfig().getGroupingAffinity())
 				group(state);
 			else
 				move (state);
@@ -54,13 +57,17 @@ public class WorkerBee extends PathFindingAgent {
 	
 	private void group (final SimState state) {
 		final SimulationController simulation = (SimulationController) state;
-		Int2D location = simulation.bees.getObjectLocation(this);
-		Bag beeBag = simulation.bees.getRadialNeighbors(location.getX(), location.getY(), 5, Grid2D.TOROIDAL, true);
+		Int2D location = simulation.entities.getObjectLocation(this);
+		Bag beeBag = simulation.entities.getRadialNeighbors(location.getX(), location.getY(), 5, Grid2D.TOROIDAL, true);
 		
 		float meanx = 0, meany = 0;
 		int cnt = 0;
 		for (Object a: beeBag) {
-			Int2D loc = simulation.bees.getObjectLocation(a);
+			AgentEntity ag = (AgentEntity) a;
+			if (ag.getType() != AgentEntityType.WORKER)
+				continue;
+				
+			Int2D loc = simulation.entities.getObjectLocation(a);
 			meanx += loc.getX();
 			meany += loc.getY();
 			cnt ++;
@@ -71,30 +78,31 @@ public class WorkerBee extends PathFindingAgent {
 		float diffx = meanx - (float) location.getX();
 		float diffy = meany - (float) location.getY();
 		
-		simulation.bees.setObjectLocation(this, new Int2D(
+		simulation.entities.setObjectLocation(this, new Int2D(
 				location.getX() + sign(diffx), 
 				location.getY() + sign(diffy)));
 	}
 	
 	private void move (final SimState state) {
 		final SimulationController simulation = (SimulationController) state;
-		Int2D location = simulation.bees.getObjectLocation(this);
+		Int2D location = simulation.entities.getObjectLocation(this);
 		int max = 2;
 		int min = -2;
 		
 		int x = ((int)(Math.random()*(max - min) + min)) + location.getX();
 		int y = ((int)(Math.random()*(max - min) + min)) + location.getY();
 			
-		x = Math.floorMod(x, SimulationController.GRID_WIDTH); //== 1;
-		y = Math.floorMod(y, SimulationController.GRID_HEIGHT);
+		x = Math.floorMod(x, SimulationConfig.GRID_WIDTH); //== 1;
+		y = Math.floorMod(y, SimulationConfig.GRID_HEIGHT);
 		
-		if (simulation.flowers.field[x][y] == SimulationController.FLOWER) {
-			simulation.flowers.field[x][y] = 0;
+		if (simulation.environment.hasTypeAt(x,  y, EnvironmentTypes.FLOWER)) {
+			simulation.environment.set(x, y, EnvironmentTypes.EMPTY);
 			setObjective(getHome());
 			calculatePath(new Point(location.getX(), location.getY()));
 		}
+
 		
-		simulation.bees.setObjectLocation(this, new Int2D(x, y));
+		simulation.entities.setObjectLocation(this, new Int2D(x, y));
 	}
 
 	public final void draw(Object object, Graphics2D graphics, DrawInfo2D info) {

@@ -4,6 +4,9 @@ import java.awt.Color;
 
 import javax.swing.JFrame;
 
+import com.sica.environment.EnvironmentColorMap;
+import com.sica.simulation.SimulationController;
+
 import sim.display.Controller;
 import sim.display.Display2D;
 import sim.display.GUIState;
@@ -16,12 +19,8 @@ public class BeeGUI extends GUIState {
 	public Display2D display;
 	public JFrame frame;
 
-	FastValueGridPortrayal2D hive = new FastValueGridPortrayal2D("Hive");
-	FastValueGridPortrayal2D flowers = new FastValueGridPortrayal2D("Flowers");
-	SparseGridPortrayal2D obstacles = new SparseGridPortrayal2D();
-	SparseGridPortrayal2D bees = new SparseGridPortrayal2D();
-	SparseGridPortrayal2D drlBees = new SparseGridPortrayal2D();
-	
+	FastValueGridPortrayal2D environmentPortrayal = new FastValueGridPortrayal2D("environment");
+	SparseGridPortrayal2D entityPortrayal = new SparseGridPortrayal2D();
 
 	public BeeGUI() { 
 		super(new SimulationController(System.currentTimeMillis())); 
@@ -53,25 +52,11 @@ public class BeeGUI extends GUIState {
 		SimulationController simulation = (SimulationController) state;
 		// TODO: set up the objects from simulation
 		
-		flowers.setField(simulation.flowers);
-		flowers.setMap(new sim.util.gui.SimpleColorMap(
-				0,
-				1,
-				new Color(0,0,0,0),
-				Color.YELLOW
-				));
-		obstacles.setField(simulation.obstacles);
+		environmentPortrayal.setField(simulation.environment);
+		environmentPortrayal.setMap(new EnvironmentColorMap());
 		
-		hive.setField(simulation.hive);
-		hive.setMap(new sim.util.gui.SimpleColorMap(
-				0,
-				1,
-				new Color(0,0,0,0),
-				Color.RED
-				));
-		bees.setField(simulation.bees);
-		drlBees.setField(simulation.drlBees);
-        
+		entityPortrayal.setField(simulation.entities);
+
 		display.reset();
         display.repaint();
 	}
@@ -108,12 +93,9 @@ public class BeeGUI extends GUIState {
 		frame.setVisible(true);
 
 		// attach the objects from bottom to top
-		display.attach(flowers,"Flowers");
-		display.attach(obstacles,"Obstacles");
-		display.attach(hive,"Hive");
-		display.attach(bees,"Bees");
-		display.attach(drlBees, "Drool Bees");
-
+		display.attach(environmentPortrayal,"Environment");
+		display.attach(entityPortrayal,"Entities");
+		
 		display.setBackdrop(Color.white);
 	}
 

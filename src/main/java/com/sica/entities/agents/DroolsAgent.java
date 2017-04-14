@@ -1,4 +1,4 @@
-package com.sica.agents;
+package com.sica.entities.agents;
 
 import java.util.Collection;
 
@@ -7,6 +7,7 @@ import org.kie.api.runtime.KieContainer;
 import org.kie.api.runtime.KieSession;
 import org.kie.api.runtime.rule.FactHandle;
 
+import com.sica.entities.AgentEntity;
 import sim.engine.SimState;
 
 /**
@@ -17,7 +18,7 @@ import sim.engine.SimState;
  * @author Daniel
  *
  */
-public abstract class DroolsAgent extends Agent {
+public abstract class DroolsAgent extends AgentEntity {
 	/**
 	 * 
 	 */
@@ -32,7 +33,7 @@ public abstract class DroolsAgent extends Agent {
 	 * @param kSessionName
 	 */
 	public DroolsAgent(String kSessionName) {
-		super();
+		super(AgentEntity.AgentEntityType.DROOLS);
 		this.setUpAgent(kSessionName, 0);
 	}
 	
@@ -44,6 +45,7 @@ public abstract class DroolsAgent extends Agent {
 	 * @param maxRulesFired
 	 */
 	public DroolsAgent(String kSessionName, int maxRulesFired) {
+		super(AgentEntity.AgentEntityType.DROOLS);
 		this.setUpAgent(kSessionName, maxRulesFired);
 	}
 	

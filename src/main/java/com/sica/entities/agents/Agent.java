@@ -3,20 +3,19 @@ package com.sica.entities.agents;
 import java.awt.Point;
 import java.util.List;
 
-import com.sica.entities.AgentEntity;
+import com.sica.entities.Entity;
 import com.sica.environment.EnvironmentTypes;
 import com.sica.simulation.SimulationConfig;
-import com.sica.simulation.SimulationController;
+import com.sica.simulation.SimulationState;
 import com.util.searching.AStar;
 import com.util.searching.Map;
 import com.util.searching.Map.Type;
 
-import sim.engine.SimState;
 import sim.field.grid.Grid2D;
 import sim.util.Int2D;
 import sim.util.IntBag;
 
-public class Agent extends AgentEntity {
+public abstract class Agent extends Entity {
 	/**
 	 * 
 	 */
@@ -29,7 +28,7 @@ public class Agent extends AgentEntity {
 	protected Map map;
 	protected Point objective;
 	
-	public Agent (AgentEntityType type) {
+	public Agent (EntityType type) {
 		super(type);
 		objective = new Point();
 		this.map = new Map(SimulationConfig.GRID_WIDTH, SimulationConfig.GRID_HEIGHT);
@@ -37,7 +36,7 @@ public class Agent extends AgentEntity {
 		setHome(new Point (SimulationConfig.GRID_WIDTH/2, SimulationConfig.GRID_HEIGHT/2));
 	}
 	
-	public Agent (AgentEntityType type, Map map) {
+	public Agent (EntityType type, Map map) {
 		super(type);
 		this.map = map;
 		pathFinding = new AStar(map);
@@ -49,7 +48,7 @@ public class Agent extends AgentEntity {
 		actualPath = pathFinding.findPath(actualPosition, getObjective());
 	}
 	
-	public void step( final SimState state ) {
+	public void doStep( final SimulationState state ) {
 		lookObstacles (state);
 	}
 	
@@ -58,12 +57,11 @@ public class Agent extends AgentEntity {
 	 * own knowledge to avoid them later
 	 * @param state
 	 */
-	private void lookObstacles (final SimState state) {
-		final SimulationController simulation = (SimulationController) state;
-		Int2D location = simulation.entities.getObjectLocation(this);
+	private void lookObstacles (final SimulationState simState) {
+		Int2D location = simState.entities.getObjectLocation(this);
 		
 		IntBag xCoords = new IntBag(), yCoords = new IntBag();
-		simulation.environment.getRadialNeighbors(location.getX(), location.getY(), simulation.getConfig().getRadioView(), Grid2D.TOROIDAL, true, EnvironmentTypes.OBSTACLE, xCoords, yCoords);
+		simState.environment.getRadialNeighbors(location.getX(), location.getY(), simState.getConfig().getRadioView(), Grid2D.TOROIDAL, true, EnvironmentTypes.OBSTACLE, xCoords, yCoords);
 		
 		boolean changed = false;
 		for (int i = 0; i < xCoords.numObjs; i++) {

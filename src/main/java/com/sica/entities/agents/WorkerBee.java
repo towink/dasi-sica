@@ -1,18 +1,15 @@
 package com.sica.entities.agents;
 
-import java.awt.Color;
-import java.awt.Graphics2D;
 import java.awt.Point;
 
-import com.sica.entities.AgentEntity;
+import com.sica.entities.Entity;
 import com.sica.environment.EnvironmentTypes;
 import com.sica.simulation.SimulationConfig;
-import com.sica.simulation.SimulationController;
+import com.sica.simulation.SimulationState;
 import com.util.searching.Map;
 
 import sim.engine.SimState;
 import sim.field.grid.Grid2D;
-import sim.portrayal.DrawInfo2D;
 import sim.util.Bag;
 import sim.util.Int2D;
 
@@ -21,31 +18,31 @@ public class WorkerBee extends Agent {
 	private static final long serialVersionUID = -1449354141004958564L;
 
 	public WorkerBee() {
-		super(AgentEntityType.WORKER);
+		super(EntityType.WORKER);
 	}
 	
 	public WorkerBee(Map map) {
-		super(AgentEntityType.WORKER, map);
+		super(EntityType.WORKER, map);
 	}
 	
-	public void step( final SimState state ) {
+	@Override
+	public void doStep( final SimulationState simState ) {
 		// TODO: do something
-		super.step(state);
+		super.doStep(simState);
 		
 		if (actualPath != null) {
-			final SimulationController simulation = (SimulationController) state;
 			Point aux = actualPath.remove(0);
-			simulation.entities.setObjectLocation(this, new Int2D(aux.x, aux.y));
+			simState.entities.setObjectLocation(this, new Int2D(aux.x, aux.y));
 			if (actualPath.size() <= 0) {
 				actualPath = null;
 			}
 		}
 		
 		else {
-			if (state.schedule.getSteps() > 2500 && state.random.nextFloat() > ((SimulationController)state).getConfig().getGroupingAffinity())
-				group(state);
+			if (simState.schedule.getSteps() > 2500 && simState.random.nextFloat() > simState.getConfig().getGroupingAffinity())
+				group(simState);
 			else
-				move (state);
+				move (simState);
 		}
 		
 	}
@@ -56,15 +53,15 @@ public class WorkerBee extends Agent {
 	
 	
 	private void group (final SimState state) {
-		final SimulationController simulation = (SimulationController) state;
+		final SimulationState simulation = (SimulationState) state;
 		Int2D location = simulation.entities.getObjectLocation(this);
 		Bag beeBag = simulation.entities.getRadialNeighbors(location.getX(), location.getY(), 5, Grid2D.TOROIDAL, true);
 		
 		float meanx = 0, meany = 0;
 		int cnt = 0;
 		for (Object a: beeBag) {
-			AgentEntity ag = (AgentEntity) a;
-			if (ag.getType() != AgentEntityType.WORKER)
+			Entity ag = (Entity) a;
+			if (ag.getType() != EntityType.WORKER)
 				continue;
 				
 			Int2D loc = simulation.entities.getObjectLocation(a);
@@ -84,7 +81,7 @@ public class WorkerBee extends Agent {
 	}
 	
 	private void move (final SimState state) {
-		final SimulationController simulation = (SimulationController) state;
+		final SimulationState simulation = (SimulationState) state;
 		Int2D location = simulation.entities.getObjectLocation(this);
 		int max = 2;
 		int min = -2;
@@ -105,7 +102,7 @@ public class WorkerBee extends Agent {
 		simulation.entities.setObjectLocation(this, new Int2D(x, y));
 	}
 
-	public final void draw(Object object, Graphics2D graphics, DrawInfo2D info) {
+	/*public final void draw(Object object, Graphics2D graphics, DrawInfo2D info) {
 
 		graphics.setColor( Color.BLUE );
 		
@@ -116,5 +113,6 @@ public class WorkerBee extends Agent {
 		int height = (int)(info.draw.height);
 		graphics.fillOval(x,y,width, height);
 
-	}
+	}*/
+
 }

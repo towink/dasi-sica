@@ -1,11 +1,11 @@
 package com.sica;
 
 import java.awt.Color;
-
 import javax.swing.JFrame;
 
+import com.sica.entities.agents.WorkerBee;
 import com.sica.environment.EnvironmentColorMap;
-import com.sica.simulation.SimulationController;
+import com.sica.simulation.SimulationState;
 
 import sim.display.Controller;
 import sim.display.Display2D;
@@ -13,6 +13,7 @@ import sim.display.GUIState;
 import sim.engine.SimState;
 import sim.portrayal.grid.FastValueGridPortrayal2D;
 import sim.portrayal.grid.SparseGridPortrayal2D;
+import sim.portrayal.simple.OvalPortrayal2D;
 
 public class BeeGUI extends GUIState {
 
@@ -23,18 +24,11 @@ public class BeeGUI extends GUIState {
 	SparseGridPortrayal2D entityPortrayal = new SparseGridPortrayal2D();
 
 	public BeeGUI() { 
-		super(new SimulationController(System.currentTimeMillis())); 
+		super(new SimulationState(System.currentTimeMillis())); 
 	}
 
 	public BeeGUI(SimState state) { 
 		super(state); 
-	}
-
-	/**
-	 *  Allow the user to inspect the model
-	 */
-	public Object getSimulationInspectedObject() { 
-		return state; 
 	}
 
 	/**
@@ -46,33 +40,38 @@ public class BeeGUI extends GUIState {
 	}
 
 	/**
-	 * Set up every objects in the interface
+	 * Set up the portrayals for all static and dynamic objects in the simulation
 	 */
-	public void setUp() {
-		SimulationController simulation = (SimulationController) state;
-		// TODO: set up the objects from simulation
-		
+	public void setUpPortrayals() {
+		SimulationState simulation = (SimulationState) state;
+
+		//set up the portrayal for the static objects
 		environmentPortrayal.setField(simulation.environment);
 		environmentPortrayal.setMap(new EnvironmentColorMap());
-		
+		//set up the portrayals for the agents
 		entityPortrayal.setField(simulation.entities);
-
+		entityPortrayal.setPortrayalForClass(WorkerBee.class, new OvalPortrayal2D(Color.BLUE, true));
+		entityPortrayal.setPortrayalForRemainder(new OvalPortrayal2D(Color.ORANGE, true));
+		
 		display.reset();
         display.repaint();
 	}
 
+	@Override
 	public void start()
 	{
 		super.start(); 
-		setUp();
+		setUpPortrayals();
 	}
 
+	@Override
 	public void load(SimState state)
 	{
 		super.load(state);
-		setUp();
+		setUpPortrayals();
 	}
-
+	
+	@Override
 	public void quit()
 	{
 		super.quit();
@@ -83,6 +82,7 @@ public class BeeGUI extends GUIState {
 		display = null;
 	}
 
+	@Override
 	public void init(Controller c)
 	{
 		super.init(c);

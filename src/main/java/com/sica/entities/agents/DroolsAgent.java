@@ -7,8 +7,8 @@ import org.kie.api.runtime.KieContainer;
 import org.kie.api.runtime.KieSession;
 import org.kie.api.runtime.rule.FactHandle;
 
-import com.sica.entities.AgentEntity;
-import sim.engine.SimState;
+import com.sica.entities.Entity;
+import com.sica.simulation.SimulationState;
 
 /**
  * Agent that can be controlled via drools rule-based system
@@ -18,7 +18,7 @@ import sim.engine.SimState;
  * @author Daniel
  *
  */
-public abstract class DroolsAgent extends AgentEntity {
+public abstract class DroolsAgent extends Entity {
 	/**
 	 * 
 	 */
@@ -33,7 +33,7 @@ public abstract class DroolsAgent extends AgentEntity {
 	 * @param kSessionName
 	 */
 	public DroolsAgent(String kSessionName) {
-		super(AgentEntity.AgentEntityType.DROOLS);
+		super(Entity.EntityType.DROOLS);
 		this.setUpAgent(kSessionName, 0);
 	}
 	
@@ -45,7 +45,7 @@ public abstract class DroolsAgent extends AgentEntity {
 	 * @param maxRulesFired
 	 */
 	public DroolsAgent(String kSessionName, int maxRulesFired) {
-		super(AgentEntity.AgentEntityType.DROOLS);
+		super(Entity.EntityType.DROOLS);
 		this.setUpAgent(kSessionName, maxRulesFired);
 	}
 	
@@ -70,13 +70,13 @@ public abstract class DroolsAgent extends AgentEntity {
 	 * up stuff
 	 * @param arg0
 	 */
-	public abstract void stepBeforeFiringRules(SimState arg0);
+	public abstract void stepBeforeFiringRules(SimulationState arg0);
 	/**
 	 * Function called ON EACH STEP after firing the rules. Use to set up 
 	 * stuff
 	 * @param arg0
 	 */
-	public abstract void stepAfterFiringRules(SimState arg0);
+	public abstract void stepAfterFiringRules(SimulationState arg0);
 	/**
 	 * This function is called in the constructor. Before any calls
 	 * to the stepping functions are made. Use it to set up the class
@@ -85,7 +85,8 @@ public abstract class DroolsAgent extends AgentEntity {
 	public abstract void setupSessionKnowledge();
 	
 
-	public void step (final SimState arg0) {     
+	@Override
+	public void doStep (final SimulationState arg0) {     
 		//let the subclass do something before rules are fired
 		this.stepBeforeFiringRules(arg0);
 		//update all the knowledge base objects so that rules can fire again

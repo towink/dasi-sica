@@ -4,7 +4,8 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.util.Random;
 
-import sim.engine.SimState;
+import com.sica.simulation.SimulationState;
+
 import sim.portrayal.DrawInfo2D;
 
 public class DroolsBee extends DroolsAgent {
@@ -20,7 +21,7 @@ public class DroolsBee extends DroolsAgent {
 	}
 
 	@Override
-	public void stepBeforeFiringRules(SimState arg0) {
+	public void stepBeforeFiringRules(SimulationState arg0) {
 		int random = (new Random()).nextInt(2);
 		if (random > 0)
 			this.controller.setStatus(DroolsBeeController.PRE_FIRING);
@@ -30,7 +31,7 @@ public class DroolsBee extends DroolsAgent {
 	}
 
 	@Override
-	public void stepAfterFiringRules(SimState arg0) {
+	public void stepAfterFiringRules(SimulationState arg0) {
 		this.controller.setStatus(DroolsBeeController.POST_FIRING);
 	}
 

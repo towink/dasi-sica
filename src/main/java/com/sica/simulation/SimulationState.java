@@ -6,7 +6,7 @@ import com.sica.environment.EnvironmentModeller;
 import sim.engine.SimState;
 import sim.field.grid.SparseGrid2D;
 
-public class SimulationController extends SimState {
+public class SimulationState extends SimState {
 
 	private static final long serialVersionUID = -1449354141004958564L;
 	
@@ -15,7 +15,7 @@ public class SimulationController extends SimState {
 	public Environment environment = new Environment(SimulationConfig.GRID_WIDTH, SimulationConfig.GRID_HEIGHT);
 	public SparseGrid2D entities = new SparseGrid2D(SimulationConfig.GRID_WIDTH, SimulationConfig.GRID_HEIGHT);
 	
-	public SimulationController(long seed)
+	public SimulationState(long seed)
 	{ 
 		super(seed);
 		config = new SimulationConfig();

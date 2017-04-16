@@ -12,7 +12,7 @@ public class EntityPlacer {
 	public static void generateBees(SparseGrid2D entities, Schedule schedule, int numBees) {
 		// TODO: Here, we can implement factory pattern
 		
-		AgentEntity agent;
+		Entity agent;
 		
 		for (int x = 0; x < 100; x++) {
 			agent = new DroolsBee();

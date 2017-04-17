@@ -23,7 +23,7 @@ public abstract class Agent extends Entity {
 
 	public Point home;
 	
-	protected AStar pathFinding;
+	protected static AStar pathFinder;
 	protected List<Point> actualPath;
 	protected Map map;
 	protected Point objective;
@@ -32,20 +32,24 @@ public abstract class Agent extends Entity {
 		super(type);
 		objective = new Point();
 		this.map = new Map(SimulationConfig.GRID_WIDTH, SimulationConfig.GRID_HEIGHT);
-		pathFinding = new AStar(map);
 		setHome(new Point (SimulationConfig.GRID_WIDTH/2, SimulationConfig.GRID_HEIGHT/2));
+		if (pathFinder == null) {
+			pathFinder = new AStar();
+		}
 	}
 	
 	public Agent (EntityType type, Map map) {
 		super(type);
 		this.map = map;
-		pathFinding = new AStar(map);
 		objective = new Point();
 		setHome(new Point (SimulationConfig.GRID_WIDTH/2, SimulationConfig.GRID_HEIGHT/2));
+		if (pathFinder == null) {
+			pathFinder = new AStar();
+		}
 	}
 
 	public void calculatePath(Point actualPosition) {
-		actualPath = pathFinding.findPath(actualPosition, getObjective());
+		actualPath = pathFinder.findPath(actualPosition, getObjective(), map);
 	}
 	
 	public void doStep( final SimulationState state ) {
@@ -69,7 +73,6 @@ public abstract class Agent extends Entity {
 		}
 		
 		if (changed) {
-			pathFinding.updateMap(map);
 			if ((getObjective() != null) && (actualPath != null)) {
 				calculatePath(new Point (location.getX(), location.getY()));
 			}

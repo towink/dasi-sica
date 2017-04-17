@@ -13,7 +13,7 @@ public class SimulationConfig {
 	public static final int NORMAL_FLOWER_HEIGHT = 5;
 	public static final int NORMAL_FLOWER_WIDTH = 5;
 
-	// PROTECFTED simulation variables so only the controller can modify them
+	// PROTECTED simulation variables so only the controller can modify them
 	protected int numBees = 1000;
 	protected int numFlowers = 1;
 	protected float groupingAffinity = 0.95f;

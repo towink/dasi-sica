@@ -11,10 +11,8 @@ import java.util.PriorityQueue;
 public class AStar {
 	private PriorityQueue<Node> openList;
 	private HashSet<Point> closedList;
-	private Map map;
 
-	public AStar (Map map) {
-		this.map = map;
+	public AStar () {
 		openList = new PriorityQueue<Node>(new Comparator<Node>() {
 
 			@Override
@@ -32,7 +30,7 @@ public class AStar {
 	 * @param finalPos
 	 * @return A linked list with the path or null if there is not a path
 	 */
-	public List<Point> findPath (Point initialPos, Point finalPos) {
+	public List<Point> findPath (Point initialPos, Point finalPos, Map map) {
 		if (map == null) {
 			return null;
 		}
@@ -57,7 +55,7 @@ public class AStar {
 			
 			//add new nodes if they have not yet been visited
 			//and either they are not yet opened or their gCost is less than the actual gCost
-			for (Node n: findAdjacentNodes(actualNode, finalNode)) {
+			for (Node n: findAdjacentNodes(actualNode, finalNode, map)) {
 				if (!closedList.contains(n.getPosition()))
 					if (!openList.contains(n) || n.getgCost() < actualNode.getgCost())
 						openList.add(n);
@@ -80,7 +78,7 @@ public class AStar {
 		return path;
 	}
 
-	private List<Node> findAdjacentNodes (Node node, Node finalNode) {
+	private List<Node> findAdjacentNodes (Node node, Node finalNode, Map map) {
 		//start with a list of up to 9 elements
 		ArrayList<Node> adjacentNodes = new ArrayList<Node>(9);
 		int x = node.getX();
@@ -90,29 +88,29 @@ public class AStar {
 		if (x > 0) {
 			aux[0] = node.getX() - 1;
 			aux[1] = node.getY();
-			checkAdjacentNode(aux, adjacentNodes, node, finalNode);
+			checkAdjacentNode(aux, adjacentNodes, node, finalNode, map);
 		}
 		// right
 		if (x < map.getWidth() - 1) {
 			aux[0] = node.getX() + 1;
 			aux[1] = node.getY();
-			checkAdjacentNode(aux, adjacentNodes, node, finalNode);
+			checkAdjacentNode(aux, adjacentNodes, node, finalNode, map);
 		}
 
 		// up
 		if (y > 0) {
 			aux[0] = node.getX();
 			aux[1] = node.getY() - 1;
-			checkAdjacentNode(aux, adjacentNodes, node, finalNode);
+			checkAdjacentNode(aux, adjacentNodes, node, finalNode, map);
 			// up left
 			if (x > 0) {
 				aux[0] = node.getX() - 1;
-				checkAdjacentNode(aux, adjacentNodes, node, finalNode);
+				checkAdjacentNode(aux, adjacentNodes, node, finalNode, map);
 			}
 			// up right
 			if (x < map.getWidth() - 1) {
 				aux[0] = node.getX() + 1;
-				checkAdjacentNode(aux, adjacentNodes, node, finalNode);
+				checkAdjacentNode(aux, adjacentNodes, node, finalNode, map);
 			}
 		}
 
@@ -120,16 +118,16 @@ public class AStar {
 		if (y < map.getHeight() - 1) {
 			aux[0] = node.getX();
 			aux[1] = node.getY() + 1;
-			checkAdjacentNode(aux, adjacentNodes, node, finalNode);
+			checkAdjacentNode(aux, adjacentNodes, node, finalNode, map);
 			// down left
 			if (x > 0) {
 				aux[0] = node.getX() - 1;
-				checkAdjacentNode(aux, adjacentNodes, node, finalNode);
+				checkAdjacentNode(aux, adjacentNodes, node, finalNode, map);
 			}
 			// down right
 			if (x < map.getWidth() - 1) {
 				aux[0] = node.getX() + 1;
-				checkAdjacentNode(aux, adjacentNodes, node, finalNode);
+				checkAdjacentNode(aux, adjacentNodes, node, finalNode, map);
 			}
 		}
 
@@ -137,7 +135,7 @@ public class AStar {
 		return adjacentNodes;
 	}
 
-	private void checkAdjacentNode (int [] pos, List<Node> nodes, Node node, Node finalNode) {
+	private void checkAdjacentNode (int [] pos, List<Node> nodes, Node node, Node finalNode, Map map) {
 		int cost;
 		if (!map.isVisited(pos[0], pos[1])) {
 			cost = map.getCost(pos[0], pos[1]);
@@ -146,10 +144,6 @@ public class AStar {
 				nodes.add(new Node (node, finalNode, new Point (pos[0], pos[1]), cost + node.getgCost()));
 			}
 		}
-	}
-
-	public void updateMap (Map map) {
-		this.map = map;
 	}
 }
 

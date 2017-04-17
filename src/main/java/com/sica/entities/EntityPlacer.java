@@ -17,7 +17,7 @@ public class EntityPlacer {
 		for (int x = 0; x < 100; x++) {
 			agent = new DroolsBee();
 			entities.setObjectLocation(agent, 20,20);
-			schedule.scheduleRepeating(Schedule.EPOCH, 0, agent, 1);
+			//schedule.scheduleRepeating(Schedule.EPOCH, 0, agent, 1);
 		}
 		
 		/*

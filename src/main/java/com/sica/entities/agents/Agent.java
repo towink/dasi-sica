@@ -7,6 +7,7 @@ import com.sica.entities.Entity;
 import com.sica.environment.EnvironmentTypes;
 import com.sica.simulation.SimulationConfig;
 import com.sica.simulation.SimulationState;
+import com.util.knowledge.Sites;
 import com.util.searching.AStar;
 import com.util.searching.Map;
 import com.util.searching.Map.Type;
@@ -20,19 +21,20 @@ public abstract class Agent extends Entity {
 	 * 
 	 */
 	private static final long serialVersionUID = -3612132049378487984L;
-
-	public Point home;
 	
 	protected static AStar pathFinder;
 	protected List<Point> actualPath;
 	protected Map map;
+	protected Sites knowledge;
 	protected Point objective;
 	
 	public Agent (EntityType type) {
 		super(type);
 		objective = new Point();
 		this.map = new Map(SimulationConfig.GRID_WIDTH, SimulationConfig.GRID_HEIGHT);
-		setHome(new Point (SimulationConfig.GRID_WIDTH/2, SimulationConfig.GRID_HEIGHT/2));
+		knowledge = new Sites();
+		knowledge.insert("hive", new Point (SimulationConfig.GRID_WIDTH/2, SimulationConfig.GRID_HEIGHT/2));
+		knowledge.updated();
 		if (pathFinder == null) {
 			pathFinder = new AStar();
 		}
@@ -41,8 +43,10 @@ public abstract class Agent extends Entity {
 	public Agent (EntityType type, Map map) {
 		super(type);
 		this.map = map;
+		knowledge = new Sites();
 		objective = new Point();
-		setHome(new Point (SimulationConfig.GRID_WIDTH/2, SimulationConfig.GRID_HEIGHT/2));
+		knowledge.insert("hive", new Point (SimulationConfig.GRID_WIDTH/2, SimulationConfig.GRID_HEIGHT/2));
+		knowledge.updated();
 		if (pathFinder == null) {
 			pathFinder = new AStar();
 		}
@@ -68,8 +72,13 @@ public abstract class Agent extends Entity {
 		simState.environment.getRadialNeighbors(location.getX(), location.getY(), simState.getConfig().getRadioView(), Grid2D.TOROIDAL, true, EnvironmentTypes.OBSTACLE, xCoords, yCoords);
 		
 		boolean changed = false;
+		boolean auxChanged;
 		for (int i = 0; i < xCoords.numObjs; i++) {
-			changed |= map.modifyMap(xCoords.get(i), yCoords.get(i), Type.OBSTACLE);
+			auxChanged = map.modifyMap(xCoords.get(i), yCoords.get(i), Type.OBSTACLE);
+			if (auxChanged) {
+				knowledge.insert("obstacle", new Point (xCoords.get(i), yCoords.get(i)));
+			}
+			changed |= auxChanged;
 		}
 		
 		if (changed) {
@@ -79,6 +88,14 @@ public abstract class Agent extends Entity {
 		}
 	}
 	
+	
+	public void sendKnowledge (Agent receptor) {
+		
+	}
+	
+	public void receiveKnowledge (Sites knowledge) {
+		
+	}
 	
 	// getters and setter
 	public Point getObjective() {
@@ -90,14 +107,16 @@ public abstract class Agent extends Entity {
 	}
 	
 	public void setObjective(Point objective) {
-		this.objective.setLocation(objective.x, objective.y);
+		if (objective != null) {
+			this.objective.setLocation(objective.x, objective.y);
+		}
+		else {
+			this.objective = null;
+		}
 	}
 
 	public Point getHome() {
-		return home;
+		return knowledge.get("hive").get(0);
 	}
 
-	public void setHome(Point home) {
-		this.home = home;
-	}
 }

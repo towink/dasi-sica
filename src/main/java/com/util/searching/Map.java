@@ -6,6 +6,7 @@ public class Map {
 	public static enum Type {
 		OBSTACLE,
 		FREE_POS,
+		FLOWER,
 		BEE,
 		ENEMY,
 		UNKNOWN
@@ -82,6 +83,8 @@ public class Map {
 			case OBSTACLE:
 				return IMPASSABLE;
 			case FREE_POS:
+				return 1;
+			case FLOWER:
 				return 1;
 			case BEE:
 				return 2;

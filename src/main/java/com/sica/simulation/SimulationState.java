@@ -31,7 +31,8 @@ public class SimulationState extends SimState {
 		
 		EnvironmentModeller.generateHive(environment, SimulationConfig.HIVE_WIDTH, SimulationConfig.HIVE_HEIGHT);
 		EnvironmentModeller.generateFlowers(environment, SimulationConfig.NORMAL_FLOWER_WIDTH, SimulationConfig.NORMAL_FLOWER_HEIGHT);
-		EnvironmentModeller.generateRandomObstacles(environment, config.percentageObstacle, this.random);
+		//EnvironmentModeller.generateRandomObstacles(environment, config.percentageObstacle, this.random);
+		EnvironmentModeller.generateWallObstacles(environment, config.numberOfWalls, config.wallLength, this.random);
 		
 		EntityPlacer.generateBees(entities, schedule, config.getNumBees());
 	}

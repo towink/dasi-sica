@@ -19,7 +19,8 @@ public class SimulationConfig {
 	protected float groupingAffinity = 0.95f;
 	protected int radioView = 5;
 	protected float percentageObstacle = 0.1f;
-	
+	protected int numberOfWalls = 10;
+	protected int wallLength = 20;
 	
 	// PUBLIC getters so everyone can see the configuration
 	public int getNumBees() {
@@ -40,5 +41,13 @@ public class SimulationConfig {
 	
 	public float getPercentageObstacle() {
 		return percentageObstacle;
+	}
+	
+	public int getNumberOfWalls() {
+		return numberOfWalls;
+	}
+	
+	public int getWallLength() {
+		return wallLength;
 	}
 }

@@ -57,6 +57,7 @@ public class BeeGUI extends GUIState {
         display.repaint();
 	}
 
+	// Is called when the play button is pressed, just before the SimState's start method is called
 	@Override
 	public void start()
 	{
@@ -64,6 +65,7 @@ public class BeeGUI extends GUIState {
 		setUpPortrayals();
 	}
 
+	// Called when simulation is loaded from a checkpoint (not relevant for us so far)
 	@Override
 	public void load(SimState state)
 	{
@@ -82,6 +84,7 @@ public class BeeGUI extends GUIState {
 		display = null;
 	}
 
+	// Is called when the GUI object is initially created
 	@Override
 	public void init(Controller c)
 	{

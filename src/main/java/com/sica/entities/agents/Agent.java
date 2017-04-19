@@ -76,7 +76,7 @@ public abstract class Agent extends Entity {
 		for (int i = 0; i < xCoords.numObjs; i++) {
 			auxChanged = map.modifyMap(xCoords.get(i), yCoords.get(i), Type.OBSTACLE);
 			if (auxChanged) {
-				knowledge.insert("obstacle", new Point (xCoords.get(i), yCoords.get(i)));
+				knowledge.insert(Sites.OBSTACLES, new Point (xCoords.get(i), yCoords.get(i)));
 			}
 			changed |= auxChanged;
 		}

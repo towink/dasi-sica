@@ -143,17 +143,15 @@ public class WorkerBee extends Agent {
 	}
 
 	private void sendMessages(final SimulationState simState) {
-		System.out.println("I am here 1, it's ok");
 		Int2D location = simState.entities.getObjectLocation(this);
-		// TODO: Delete "* 100", just testing
-		Bag beeBag = simState.entities.getRadialNeighbors(location.getX(), location.getY(), simState.getConfig().getRadioView() * 100, Grid2D.TOROIDAL, true);
+		Bag beeBag = simState.entities.getRadialNeighbors(location.getX(), location.getY(), simState.getConfig().getRadioView(), Grid2D.TOROIDAL, true);
 
 		for (Object a: beeBag) {
 			Entity ag = (Entity) a;
 			if (ag.getType() != EntityType.WORKER)
 				continue;
-
-			sendKnowledge((Agent) a); 
+			
+			sendKnowledge((WorkerBee) a); 
 		}
 		
 		knowledge.updated();
@@ -168,13 +166,11 @@ public class WorkerBee extends Agent {
 	@Override
 	public void receiveKnowledge (Sites knowledge) {
 		if (this.knowledge.updateSites(knowledge)) {
-			actualState = State.UPDATING;
-			System.out.println("Sometimes i must be here!!!!!");
-			for (Point point: this.knowledge.get("obstacles")) {
+			for (Point point: this.knowledge.get(Sites.OBSTACLES)) {
 				map.modifyMap(point.x, point.y, Type.OBSTACLE);
 			}
 			
-			for (Point point: this.knowledge.get("flowers")) {
+			for (Point point: this.knowledge.get(Sites.FLOWERS)) {
 				map.modifyMap(point.x, point.y, Type.FLOWER);
 			}
 			

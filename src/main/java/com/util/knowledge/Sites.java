@@ -6,19 +6,23 @@ import java.util.HashMap;
 
 public class Sites {
 
+	public static final String OBSTACLES = "obstacles";
+	public static final String FLOWERS = "flowers";
+	public static final String HIVES = "hive";
+	
 	protected HashMap <String, ArrayList<Point>> sites;
 	protected boolean newData;
 	protected boolean newObstacles;
 
 	public Sites () {
 		sites = new HashMap <String, ArrayList<Point>>();
-		sites.put("flowers", new ArrayList<Point>());
-		sites.put("hive", new ArrayList<Point>());
-		sites.put("obstacles", new ArrayList<Point>());
+		sites.put(FLOWERS, new ArrayList<Point>());
+		sites.put(HIVES, new ArrayList<Point>());
+		sites.put(OBSTACLES, new ArrayList<Point>());
 	}
 
 	public boolean equals (Sites auxSites) {	
-		return equalsKey (auxSites, "hive") && equalsKey (auxSites, "flowers") && equalsKey (auxSites, "obstacles");
+		return equalsKey (auxSites, HIVES) && equalsKey (auxSites, FLOWERS) && equalsKey (auxSites, OBSTACLES);
 	}
 
 	private boolean equalsKey (Sites auxSites, String key) {
@@ -31,19 +35,27 @@ public class Sites {
 	}
 
 	public boolean updateSites (Sites auxSites) {
-		return updateKey (auxSites, "hive") || updateKey (auxSites, "flowers") || updateKey (auxSites, "obstacles");
+		return updateKey (auxSites, HIVES) || updateKey (auxSites, FLOWERS) || updateKey (auxSites, OBSTACLES);
 	}
 
 	private boolean updateKey (Sites auxSites, String key) {
 		boolean result = false;
-		if (!equalsKey(auxSites, key)) {
-			for (Point point: auxSites.get(key)) {
-				result |= insert (key, point);
-			}
+		for (Point point: auxSites.get(key)) {
+			result |= insert (key, point);
 		}
 		return result;
 	}
 
+	@Override
+	public String toString () {
+		String value = "Knowledge {";
+		value += "\n\tHives: " + sites.get(HIVES).size();
+		value += "\n\tFlowers: " + sites.get(FLOWERS).size();
+		value += "\n\tObstacles: " + sites.get(OBSTACLES).size();
+		value += "\n}";
+		return value;
+	}
+	
 	// Getters and Setters
 	public ArrayList<Point> get (String key) {
 		if (sites.containsKey(key)) {
@@ -54,10 +66,10 @@ public class Sites {
 		}
 	}
 
-	public boolean insert (String key, Point site) {
+	public boolean insert (String key, Point data) {
 		if (sites.containsKey(key)) {
-			if (!sites.get(key).contains(site)) {
-				sites.get(key).add(site);
+			if (!sites.get(key).contains(data)) {
+				sites.get(key).add(data);
 				newData = true;
 				if (key.equals("obstacles")) {
 					newObstacles = true;
@@ -65,7 +77,7 @@ public class Sites {
 				return true;
 			}
 		}
-		
+
 		return false;
 	}
 
@@ -76,11 +88,11 @@ public class Sites {
 	public boolean newData () {
 		return newData;
 	}
-	
+
 	public void updatedObstacles () {
 		newObstacles = false;
 	}
-	
+
 	public boolean newObstacles () {
 		return newObstacles;
 	}

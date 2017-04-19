@@ -30,6 +30,13 @@ public class BeeGUI extends GUIState {
 	public BeeGUI(SimState state) { 
 		super(state); 
 	}
+	
+	/**
+	 *  Allow the user to inspect the model
+	 */
+	public Object getSimulationInspectedObject() { 
+		return state; 
+	}
 
 	/**
 	 * Window takes its name from here

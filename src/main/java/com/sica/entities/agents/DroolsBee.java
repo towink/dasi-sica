@@ -22,6 +22,7 @@ public class DroolsBee extends DroolsAgent {
 
 	@Override
 	public void stepBeforeFiringRules(SimulationState arg0) {
+		this.addObjectToKnowledgeBase(arg0);
 		int random = (new Random()).nextInt(2);
 		if (random > 0)
 			this.controller.setStatus(DroolsBeeController.PRE_FIRING);
@@ -39,6 +40,7 @@ public class DroolsBee extends DroolsAgent {
 	public void setupSessionKnowledge() {
 		this.controller = new DroolsBeeController();
 		this.addObjectToKnowledgeBase(this.controller);
+		this.addObjectToKnowledgeBase(this);
 	}
 	
 	/**

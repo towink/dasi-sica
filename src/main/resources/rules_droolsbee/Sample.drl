@@ -1,6 +1,11 @@
 package com.sica.agents
  
 import com.sica.entities.agents.DroolsBee.DroolsBeeController;
+import com.sica.entities.agents.DroolsBee;
+import com.sica.simulation.SimulationState;
+import com.sica.simulation.SimulationConfig;
+import sim.util.Int2D;
+import com.sica.environment.EnvironmentTypes;
  
 rule "Fire_controller"
     when
@@ -10,4 +15,22 @@ rule "Fire_controller"
         dbc.setStatus( DroolsBeeController.FIRED );
         update ( dbc ) ;
         //modify ( dbc ) {setStatus( DroolsBeeController.FIRED )};
+end
+
+rule "Move randomly"
+	when
+		$bee : DroolsBee()
+		$state : SimulationState()
+	then
+		Int2D location = $state.entities.getObjectLocation($bee);
+		
+		int max = 2;
+		int min = -2;
+		int x = ((int)(Math.random()*(max - min) + min)) + location.getX();
+		int y = ((int)(Math.random()*(max - min) + min)) + location.getY();
+		x = Math.floorMod(x, SimulationConfig.GRID_WIDTH); //== 1;
+		y = Math.floorMod(y, SimulationConfig.GRID_HEIGHT);
+
+		if (!$state.environment.hasTypeAt(x, y, EnvironmentTypes.OBSTACLE))
+				$state.entities.setObjectLocation($bee, new Int2D(x, y));
 end

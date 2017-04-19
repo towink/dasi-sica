@@ -138,8 +138,8 @@ public class WorkerBee extends Agent {
 			actualState = State.MOVING;
 		}
 
-
-		simulation.entities.setObjectLocation(this, new Int2D(x, y));
+		if (!simulation.environment.hasTypeAt(x, y, EnvironmentTypes.OBSTACLE))
+				simulation.entities.setObjectLocation(this, new Int2D(x, y));
 	}
 
 	private void sendMessages(final SimulationState simState) {

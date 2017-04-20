@@ -1,31 +1,25 @@
 package com.util.searching;
 
+import com.util.knowledge.Knowledge;
+
 public class Map {
 
 	public static int IMPASSABLE = 10000;
-	public static enum Type {
-		OBSTACLE,
-		FREE_POS,
-		FLOWER,
-		BEE,
-		ENEMY,
-		UNKNOWN
-	}
 
 	public int width;
 	public int height;
 	public boolean[][] visited;
 	
-	private Type[][] map;
+	private Knowledge[][] map;
 
 	public Map (int width, int height) {
 		setWidth(width);
 		setHeight(height);
-		map = new Type[width][height];
+		map = new Knowledge[width][height];
 		visited = new boolean[width][height];
 		for (int i = 0; i < width; i++) {
 			for (int j = 0; j < height; j++) {
-				map[i][j] = Type.FREE_POS;
+				map[i][j] = Knowledge.EMPTY;
 				setVisited(i, j, false);
 			}
 		}
@@ -38,7 +32,7 @@ public class Map {
 	 * @param type
 	 * @return true if the value has changed or false if it has not changed
 	 */
-	public boolean modifyMap (int x, int y, Type type) {
+	public boolean modifyMap (int x, int y, Knowledge type) {
 		boolean changed = false;
 		if (isValidPosition(x, y)) {
 			if (map[x][y] != type) {
@@ -55,7 +49,7 @@ public class Map {
 	 * @param width
 	 * @param height
 	 */
-	public void modifyMap (Type [][] type, int width, int height) {
+	public void modifyMap (Knowledge [][] type, int width, int height) {
 		if ((getWidth() == width) && (getHeight() == height)) {
 			for (int i = 0; i < width; i++) {
 				for (int j = 0; j < height; j++) {
@@ -70,11 +64,11 @@ public class Map {
 	 * @param y
 	 * @return 
 	 */
-	public Type getType (int x, int y) {
+	public Knowledge getType (int x, int y) {
 		if (isValidPosition(x, y)) {
 			return map[x][y];
 		}
-		return Type.UNKNOWN;
+		return Knowledge.UNKNOWN;
 	}
 	
 	public int getCost (int x, int y) {
@@ -82,7 +76,7 @@ public class Map {
 			switch (map[x][y]) {
 			case OBSTACLE:
 				return IMPASSABLE;
-			case FREE_POS:
+			case EMPTY:
 				return 1;
 			case FLOWER:
 				return 1;
@@ -91,7 +85,9 @@ public class Map {
 			case ENEMY:
 				return IMPASSABLE;
 			case UNKNOWN:
-				return IMPASSABLE; 
+				return IMPASSABLE;
+			default:
+				break; 
 			}
 		}
 		return -1;

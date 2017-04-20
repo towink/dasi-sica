@@ -4,14 +4,13 @@ import java.awt.Point;
 import java.util.List;
 
 import com.sica.entities.Entity;
-import com.sica.environment.EnvironmentTypes;
 import com.sica.simulation.SimulationConfig;
 import com.sica.simulation.SimulationState;
-import com.util.knowledge.Sites;
+import com.util.knowledge.HashMapKnowledgeMap;
+import com.util.knowledge.Knowledge;
+import com.util.knowledge.KnowledgeMapInterface;
 import com.util.searching.AStar;
 import com.util.searching.Map;
-import com.util.searching.Map.Type;
-
 import sim.field.grid.Grid2D;
 import sim.util.Int2D;
 import sim.util.IntBag;
@@ -25,16 +24,15 @@ public abstract class Agent extends Entity {
 	protected static AStar pathFinder;
 	protected List<Point> actualPath;
 	protected Map map;
-	protected Sites knowledge;
+	protected KnowledgeMapInterface knowledge;
 	protected Point objective;
 	
 	public Agent (EntityType type) {
 		super(type);
 		objective = new Point();
 		this.map = new Map(SimulationConfig.GRID_WIDTH, SimulationConfig.GRID_HEIGHT);
-		knowledge = new Sites();
-		knowledge.insert("hive", new Point (SimulationConfig.GRID_WIDTH/2, SimulationConfig.GRID_HEIGHT/2));
-		knowledge.updated();
+		knowledge = new HashMapKnowledgeMap();
+		knowledge.addKnowledge(new Int2D(SimulationConfig.GRID_WIDTH/2, SimulationConfig.GRID_HEIGHT/2), Knowledge.HIVE);
 		if (pathFinder == null) {
 			pathFinder = new AStar();
 		}
@@ -43,10 +41,9 @@ public abstract class Agent extends Entity {
 	public Agent (EntityType type, Map map) {
 		super(type);
 		this.map = map;
-		knowledge = new Sites();
+		knowledge = new HashMapKnowledgeMap();
 		objective = new Point();
-		knowledge.insert("hive", new Point (SimulationConfig.GRID_WIDTH/2, SimulationConfig.GRID_HEIGHT/2));
-		knowledge.updated();
+		knowledge.addKnowledge(new Int2D(SimulationConfig.GRID_WIDTH/2, SimulationConfig.GRID_HEIGHT/2), Knowledge.HIVE);
 		if (pathFinder == null) {
 			pathFinder = new AStar();
 		}
@@ -69,14 +66,14 @@ public abstract class Agent extends Entity {
 		Int2D location = simState.entities.getObjectLocation(this);
 		
 		IntBag xCoords = new IntBag(), yCoords = new IntBag();
-		simState.environment.getRadialNeighbors(location.getX(), location.getY(), simState.getConfig().getRadioView(), Grid2D.TOROIDAL, true, EnvironmentTypes.OBSTACLE, xCoords, yCoords);
+		simState.environment.getRadialNeighbors(location.getX(), location.getY(), simState.getConfig().getRadioView(), Grid2D.TOROIDAL, true, Knowledge.OBSTACLE, xCoords, yCoords);
 		
 		boolean changed = false;
 		boolean auxChanged;
 		for (int i = 0; i < xCoords.numObjs; i++) {
-			auxChanged = map.modifyMap(xCoords.get(i), yCoords.get(i), Type.OBSTACLE);
+			auxChanged = map.modifyMap(xCoords.get(i), yCoords.get(i), Knowledge.OBSTACLE);
 			if (auxChanged) {
-				knowledge.insert(Sites.OBSTACLES, new Point (xCoords.get(i), yCoords.get(i)));
+				knowledge.addKnowledge(new Int2D(xCoords.get(i), yCoords.get(i)), Knowledge.OBSTACLE);
 			}
 			changed |= auxChanged;
 		}
@@ -93,7 +90,7 @@ public abstract class Agent extends Entity {
 		
 	}
 	
-	public void receiveKnowledge (Sites knowledge) {
+	public void receiveKnowledge (KnowledgeMapInterface knowledge) {
 		
 	}
 	
@@ -106,7 +103,7 @@ public abstract class Agent extends Entity {
 		objective.setLocation(x, y);
 	}
 	
-	public void setObjective(Point objective) {
+	public void setObjective(Int2D objective) {
 		if (objective != null) {
 			this.objective.setLocation(objective.x, objective.y);
 		}
@@ -115,8 +112,9 @@ public abstract class Agent extends Entity {
 		}
 	}
 
-	public Point getHome() {
-		return knowledge.get("hive").get(0);
+	public Int2D getHome() {
+		//gets the first element of the type HIVE
+		return knowledge.getKnowledgeOf(Knowledge.HIVE).iterator().next();
 	}
 
 }

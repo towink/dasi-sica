@@ -2,13 +2,15 @@ package com.sica.environment;
 
 import java.awt.Color;
 
+import com.util.knowledge.Knowledge;
+
 import sim.util.gui.ColorMap;
 
 public class EnvironmentColorMap implements ColorMap {
 
 	@Override
 	public double defaultValue() {
-		return EnvironmentTypes.EMPTY;
+		return Knowledge.EMPTY.ordinal();
 	}
 
 	@Override
@@ -18,15 +20,15 @@ public class EnvironmentColorMap implements ColorMap {
 
 	@Override
 	public Color getColor(double arg0) {
-		switch ((short) arg0) {
-		case EnvironmentTypes.FLOWER:
+		switch (Knowledge.fromInt((int) arg0)) {
+		case FLOWER:
 			return Color.YELLOW;
-		case EnvironmentTypes.HIVE:	
+		case HIVE:	
 			return Color.RED;
-		case EnvironmentTypes.OBSTACLE:	
+		case OBSTACLE:	
 			return Color.GRAY;
 		//fall back to default behavior
-		case EnvironmentTypes.EMPTY:	
+		case EMPTY:	
 		default:
 			return Color.WHITE;
 		}

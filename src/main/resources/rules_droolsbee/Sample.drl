@@ -5,13 +5,13 @@ import com.sica.entities.agents.DroolsBee;
 import com.sica.simulation.SimulationState;
 import com.sica.simulation.SimulationConfig;
 import sim.util.Int2D;
-import com.sica.environment.EnvironmentTypes;
+import com.util.knowledge.Knowledge;
  
 rule "Fire_controller"
     when
         dbc : DroolsBeeController( status == DroolsBeeController.PRE_FIRING )
     then
-        System.out.println( "Found a pre_fired_message. Firing..." + dbc.getID() );
+        //System.out.println( "Found a pre_fired_message. Firing..." + dbc.getID() );
         dbc.setStatus( DroolsBeeController.FIRED );
         update ( dbc ) ;
         //modify ( dbc ) {setStatus( DroolsBeeController.FIRED )};
@@ -31,6 +31,6 @@ rule "Move randomly"
 		x = Math.floorMod(x, SimulationConfig.GRID_WIDTH); //== 1;
 		y = Math.floorMod(y, SimulationConfig.GRID_HEIGHT);
 
-		if (!$state.environment.hasTypeAt(x, y, EnvironmentTypes.OBSTACLE))
+		if (!$state.environment.hasTypeAt(x, y, Knowledge.OBSTACLE))
 				$state.entities.setObjectLocation($bee, new Int2D(x, y));
 end

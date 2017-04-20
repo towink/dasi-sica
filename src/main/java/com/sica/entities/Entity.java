@@ -1,9 +1,10 @@
 package com.sica.entities;
 
-import com.sica.environment.EnvironmentTypes;
 import com.sica.simulation.SimulationConfig;
 import com.sica.simulation.SimulationState;
+import com.util.knowledge.Knowledge;
 import com.util.movement.Direction;
+import com.util.movement.MovementFunctions;
 
 import sim.engine.SimState;
 import sim.engine.Steppable;
@@ -12,7 +13,7 @@ import sim.util.Int2D;
 public abstract class Entity implements Steppable {
 	private static final long serialVersionUID = -1449354141004958564L;
 	
-	public static enum EntityType {UNKNOWN, WORKER, DROOLS};
+	public static enum EntityType {UNKNOWN, WORKER, DROOLS, OBJECTIVE_DRIVEN};
 	
 	private static int uaidGenerator = 0;	//static variable to count the number of agents created
 	private int uaid;						//unique agent identifier
@@ -73,7 +74,7 @@ public abstract class Entity implements Steppable {
 	public boolean move(Direction dir, SimulationState simState, int mode) {
 		Int2D origin = simState.entities.getObjectLocation(this);
 		Int2D destination = dir.getMovementOf(origin, mode, SimulationConfig.GRID_WIDTH, SimulationConfig.GRID_HEIGHT);
-		if (this.canMoveTo(destination, simState)) {
+		if (this.canMoveTo(destination, simState, mode)) {
 			simState.entities.setObjectLocation(this, destination);
 			return true;
 		} else {
@@ -86,7 +87,8 @@ public abstract class Entity implements Steppable {
 	 * @param simState
 	 * @return true if p is a valid position for this object (i.e: it can move to it) 
 	 */
-	public boolean canMoveTo(Int2D p, SimulationState simState) {
-		return !EnvironmentTypes.isType(simState.environment.get(p.x, p.y), EnvironmentTypes.OBSTACLE);
+	public boolean canMoveTo(Int2D p, SimulationState simState, int mode) {
+		Int2D fitted = MovementFunctions.fitToGrid(p, mode, SimulationConfig.GRID_WIDTH, SimulationConfig.GRID_HEIGHT);
+		return !Knowledge.isType(simState.environment.get(fitted.x, fitted.y), Knowledge.OBSTACLE);
 	}
 }

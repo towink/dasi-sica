@@ -4,6 +4,11 @@ import java.awt.Point;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+/**
+ * Moved to KnowledgeMap. Improved performance. Extracted interface to allow multiple implementations depending on 
+ * desired performance. Used enums instead of strings for better maintainability. Overall improvements
+ */
+@Deprecated 
 public class Sites {
 
 	public static final String OBSTACLES = "obstacles";

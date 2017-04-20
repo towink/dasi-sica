@@ -2,6 +2,8 @@ package com.sica.environment;
 
 import java.awt.Point;
 
+import com.util.knowledge.Knowledge;
+
 import sim.field.grid.IntGrid2D;
 import sim.util.IntBag;
 
@@ -9,7 +11,7 @@ public class Environment extends IntGrid2D {
 	private static final long serialVersionUID = 8925118805389868575L;
 
 	public Environment(int width, int height) {
-		super(width, height, EnvironmentTypes.EMPTY);
+		super(width, height, Knowledge.EMPTY.ordinal());
 	}
 	
 	/**
@@ -17,7 +19,7 @@ public class Environment extends IntGrid2D {
 	 * @param type
 	 * @return true if this object has the environmentType type set at position pos
 	 */
-	public boolean hasTypeAt(Point pos, short type) {
+	public boolean hasTypeAt(Point pos, Knowledge type) {
 		return this.hasTypeAt(pos.x, pos.y, type);
 	}
 	
@@ -28,10 +30,20 @@ public class Environment extends IntGrid2D {
 	 * @return true if this environment has the specified type
 	 * at the specified coordinates
 	 */
-	public boolean hasTypeAt(int x, int y, short type) {
-		return EnvironmentTypes.isType(this.get(x, y), type);
+	public boolean hasTypeAt(int x, int y, Knowledge type) {
+		return Knowledge.isType(this.get(x, y), type);
 	}
 	
+	
+	/**
+	 * Sets the type at the specified position
+	 * @param x
+	 * @param y
+	 * @param type
+	 */
+	public void set(int x, int y, Knowledge type) {
+		this.set(x, y, type.ordinal());
+	}
 	
 	
 	/**
@@ -44,12 +56,12 @@ public class Environment extends IntGrid2D {
 	 * @param includeCenter if we search in the center as well
 	 * @param type return positions of ONLY the given type
 	 */
-	public void getRadialNeighbors(int x, int y, int radius, int mode, boolean includeCenter, short type, IntBag xCoords, IntBag yCoords) {
+	public void getRadialNeighbors(int x, int y, int radius, int mode, boolean includeCenter, Knowledge type, IntBag xCoords, IntBag yCoords) {
 		IntBag values = new IntBag(), tempXCoords = new IntBag(), tempYCoords = new IntBag();
 		this.getRadialNeighbors(x, y, radius, mode, includeCenter, values, tempXCoords, tempYCoords);
 		
 		for (int i = 0; i < values.numObjs; i++) {
-			if (EnvironmentTypes.isType(values.get(i), type)) {
+			if (Knowledge.isType(values.get(i), type)) {
 				xCoords.add(tempXCoords.get(i));
 				yCoords.add(tempYCoords.get(i));
 			}
@@ -64,7 +76,7 @@ public class Environment extends IntGrid2D {
 	 * @param container
 	 * @param value
 	 */
-	public void drawRect (Point center, Point length, int value) {
+	public void drawRect (Point center, Point length, Knowledge value) {
 		for (int i = 0; i <= length.getY()/2; i++) {
 			this.set(center.x - length.x/2, center.y+i, value);
 			this.set(center.x - length.x/2, center.y-i, value);
@@ -87,7 +99,7 @@ public class Environment extends IntGrid2D {
 	 * @param container
 	 * @param value
 	 */
-	public void drawFillRect (Point center, Point length, int value) {		
+	public void drawFillRect (Point center, Point length, Knowledge value) {		
 		int i = center.x-length.x/2;
 		int j = center.y-length.y/2;
 		for (;i < center.x+length.x/2; i++) {

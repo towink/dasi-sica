@@ -1,10 +1,13 @@
 package com.sica.entities;
 
+import com.sica.behaviour.ObjectiveGetToPosition;
 import com.sica.entities.agents.DroolsBee;
+import com.sica.entities.agents.ObjectiveDrivenBee;
 import com.sica.entities.agents.WorkerBee;
 
 import sim.engine.Schedule;
 import sim.field.grid.SparseGrid2D;
+import sim.util.Int2D;
 
 public class EntityPlacer {
 
@@ -13,6 +16,13 @@ public class EntityPlacer {
 		// TODO: Here, we can implement factory pattern
 		
 		Entity agent;
+		
+		for (int x = 0; x < 30; x++) {
+			agent = new ObjectiveDrivenBee();
+			((ObjectiveDrivenBee) agent).addObjective(new ObjectiveGetToPosition(new Int2D(30, 30)));
+			entities.setObjectLocation(agent, 25, 25);
+			schedule.scheduleRepeating(Schedule.EPOCH, 0, agent, 1);
+		}
 		
 		for (int x = 0; x < 100; x++) {
 			agent = new DroolsBee();

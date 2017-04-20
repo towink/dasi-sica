@@ -3,13 +3,11 @@ package com.sica.entities.agents;
 import java.awt.Point;
 
 import com.sica.entities.Entity;
-import com.sica.environment.EnvironmentTypes;
 import com.sica.simulation.SimulationConfig;
 import com.sica.simulation.SimulationState;
-import com.util.knowledge.Sites;
+import com.util.knowledge.Knowledge;
+import com.util.knowledge.KnowledgeMapInterface;
 import com.util.searching.Map;
-import com.util.searching.Map.Type;
-
 import sim.engine.SimState;
 import sim.field.grid.Grid2D;
 import sim.util.Bag;
@@ -50,10 +48,9 @@ public class WorkerBee extends Agent {
 				actualState = State.EXPLORING;
 			}
 			else {
-				if (actualPath == null || knowledge.newObstacles()) {
+				if (actualPath == null || knowledge.pollNewKnowledge()) {
 					Int2D location = simState.entities.getObjectLocation(this);
 					calculatePath (new Point(location.x, location.y));
-					knowledge.updatedObstacles();
 				}
 				actualState = State.MOVING;
 			}
@@ -131,14 +128,14 @@ public class WorkerBee extends Agent {
 		x = Math.floorMod(x, SimulationConfig.GRID_WIDTH); //== 1;
 		y = Math.floorMod(y, SimulationConfig.GRID_HEIGHT);
 
-		if (simulation.environment.hasTypeAt(x,  y, EnvironmentTypes.FLOWER)) {
-			simulation.environment.set(x, y, EnvironmentTypes.EMPTY);
+		if (simulation.environment.hasTypeAt(x,  y, Knowledge.FLOWER)) {
+			simulation.environment.set(x, y, Knowledge.EMPTY);
 			setObjective(getHome());
 			calculatePath(new Point(location.getX(), location.getY()));
 			actualState = State.MOVING;
 		}
 
-		if (!simulation.environment.hasTypeAt(x, y, EnvironmentTypes.OBSTACLE))
+		if (!simulation.environment.hasTypeAt(x, y, Knowledge.OBSTACLE))
 				simulation.entities.setObjectLocation(this, new Int2D(x, y));
 	}
 
@@ -154,7 +151,7 @@ public class WorkerBee extends Agent {
 			sendKnowledge((WorkerBee) a); 
 		}
 		
-		knowledge.updated();
+		knowledge.pollNewKnowledge();
 	}
 	
 	@Override
@@ -164,16 +161,13 @@ public class WorkerBee extends Agent {
 	}
 
 	@Override
-	public void receiveKnowledge (Sites knowledge) {
-		if (this.knowledge.updateSites(knowledge)) {
-			for (Point point: this.knowledge.get(Sites.OBSTACLES)) {
-				map.modifyMap(point.x, point.y, Type.OBSTACLE);
-			}
-			
-			for (Point point: this.knowledge.get(Sites.FLOWERS)) {
-				map.modifyMap(point.x, point.y, Type.FLOWER);
-			}
-			
+	public void receiveKnowledge (KnowledgeMapInterface knowledge) {
+		if (this.knowledge.addKnowledge(knowledge)) {
+			for (Int2D i: this.knowledge.getKnowledgeOf(Knowledge.OBSTACLE))
+				map.modifyMap(i.x, i.y, Knowledge.OBSTACLE);
+
+			for (Int2D i: this.knowledge.getKnowledgeOf(Knowledge.FLOWER))
+				map.modifyMap(i.x, i.y, Knowledge.FLOWER);			
 		}
 		
 		

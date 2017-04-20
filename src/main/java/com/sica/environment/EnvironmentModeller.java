@@ -1,6 +1,9 @@
 package com.sica.environment;
 
 import java.awt.Point;
+
+import com.util.knowledge.Knowledge;
+
 import ec.util.MersenneTwisterFast;
 
 public class EnvironmentModeller {
@@ -12,10 +15,9 @@ public class EnvironmentModeller {
 	 * @param hiveHeight
 	 */
 	public static void generateHive (Environment environment, int hiveWidth, int hiveHeight) {
-		// TODO: Here, we can implement factory pattern
 		Point center = new Point (environment.getWidth()/2, environment.getHeight()/2);
 		Point length = new Point (hiveWidth, hiveHeight);
-		environment.drawRect (center, length, EnvironmentTypes.HIVE);
+		environment.drawRect (center, length, Knowledge.HIVE);
 	}
 
 	/**
@@ -25,9 +27,8 @@ public class EnvironmentModeller {
 	 * @param flowerHeight
 	 */
 	public static void generateFlowers (Environment environment, int flowerWidth, int flowerHeight) {
-		// TODO: Here, we can implement factory pattern
 		Point length = new Point (flowerWidth, flowerHeight);
-		environment.drawFillRect(length, length, EnvironmentTypes.FLOWER);
+		environment.drawFillRect(length, length, Knowledge.FLOWER);
 	}
 
 	/**
@@ -42,9 +43,9 @@ public class EnvironmentModeller {
 	public static void generateRandomObstacles (Environment environment, float probability, MersenneTwisterFast rnd) {
 		for (int x = 0; x < environment.getWidth(); x++)
 			for (int y = 0; y < environment.getHeight(); y++)
-				if (environment.hasTypeAt(x, y, EnvironmentTypes.EMPTY))
+				if (environment.hasTypeAt(x, y, Knowledge.EMPTY))
 					if (rnd.nextFloat() < probability)
-						environment.set(x, y, EnvironmentTypes.OBSTACLE);
+						environment.set(x, y, Knowledge.OBSTACLE);
 	}
 	
 	/**
@@ -69,8 +70,8 @@ public class EnvironmentModeller {
 				int wallY = rnd.nextInt(environment.getHeight());
 				for(int i = 0; i < length; i++) {
 					// check if this position is already occupied
-					if(environment.hasTypeAt(leftWallPointX + i, wallY, EnvironmentTypes.EMPTY))
-						environment.set(leftWallPointX + i, wallY, EnvironmentTypes.OBSTACLE);
+					if(environment.hasTypeAt(leftWallPointX + i, wallY, Knowledge.EMPTY))
+						environment.set(leftWallPointX + i, wallY, Knowledge.OBSTACLE);
 					else
 						i++; // jump over it so that no dead regions can exist
 				}
@@ -81,8 +82,8 @@ public class EnvironmentModeller {
 				int topWallPointY = rnd.nextInt(environment.getHeight() - length + 1);
 				int wallX = rnd.nextInt(environment.getWidth());
 				for(int i = 0; i < length; i++) {
-					if(environment.hasTypeAt(wallX, topWallPointY + i, EnvironmentTypes.EMPTY))
-						environment.set(wallX, topWallPointY + i, EnvironmentTypes.OBSTACLE);
+					if(environment.hasTypeAt(wallX, topWallPointY + i, Knowledge.EMPTY))
+						environment.set(wallX, topWallPointY + i, Knowledge.OBSTACLE);
 					else
 						i++;
 				}

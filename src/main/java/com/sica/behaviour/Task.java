@@ -16,8 +16,9 @@ public interface Task {
 	/**
 	 * Called by the Objective when the task is finished. Might be useful to set up stuff
 	 * @param a
+	 * @param obj A reference to the objective this task is part of
 	 */
-	public void endTask(ObjectiveDrivenAgent a, SimulationState simState);
+	public void endTask(ObjectiveDrivenAgent a, Objective obj, SimulationState simState);
 	
 	/**
 	 * @return true if the task has finished executing

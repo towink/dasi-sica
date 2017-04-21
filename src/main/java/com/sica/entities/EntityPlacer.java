@@ -1,8 +1,9 @@
 package com.sica.entities;
 
+import com.sica.behaviour.ObjectiveExplore;
 import com.sica.behaviour.ObjectiveGetToPosition;
 import com.sica.entities.agents.DroolsBee;
-import com.sica.entities.agents.ObjectiveDrivenBee;
+import com.sica.entities.agents.ObjectiveDrivenWorkerBee;
 import com.sica.entities.agents.WorkerBee;
 
 import sim.engine.Schedule;
@@ -17,14 +18,14 @@ public class EntityPlacer {
 		
 		Entity agent;
 		
-		for (int x = 0; x < 30; x++) {
-			agent = new ObjectiveDrivenBee();
-			((ObjectiveDrivenBee) agent).addObjective(new ObjectiveGetToPosition(new Int2D(30, 30)));
-			entities.setObjectLocation(agent, 25, 25);
+		for (int x = 0; x < 10; x++) {
+			agent = new ObjectiveDrivenWorkerBee();
+			((ObjectiveDrivenWorkerBee) agent).addObjective(new ObjectiveExplore());
+			entities.setObjectLocation(agent, 50, 50);
 			schedule.scheduleRepeating(Schedule.EPOCH, 0, agent, 1);
 		}
 		
-		for (int x = 0; x < 100; x++) {
+		for (int x = 0; x < 0; x++) {
 			agent = new DroolsBee();
 			entities.setObjectLocation(agent, 20,20);
 			schedule.scheduleRepeating(Schedule.EPOCH, 0, agent, 1);
@@ -50,7 +51,7 @@ public class EntityPlacer {
 		
 		//long start = System.currentTimeMillis();
 		
-		for(int x = 0; x < numBees; x++)
+		for(int x = 0; x < 0; x++)
 		{
 			agent = new WorkerBee();
 			

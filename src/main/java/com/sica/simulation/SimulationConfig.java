@@ -1,5 +1,7 @@
 package com.sica.simulation;
 
+import sim.field.grid.Grid2D;
+
 public class SimulationConfig {
 	// Grid's size
 	public static final int GRID_HEIGHT = 100;
@@ -12,6 +14,9 @@ public class SimulationConfig {
 	//Flowers's size
 	public static final int NORMAL_FLOWER_HEIGHT = 5;
 	public static final int NORMAL_FLOWER_WIDTH = 5;
+	
+	// env mode (bounded, unbounded, toroidal)
+	public static final int ENV_MODE = Grid2D.BOUNDED;
 
 	// PROTECTED simulation variables so only the controller can modify them
 	protected int numBees = 1000;
@@ -19,8 +24,8 @@ public class SimulationConfig {
 	protected float groupingAffinity = 0.95f;
 	protected int radioView = 5;
 	protected float percentageObstacle = 0.1f;
-	protected int numberOfWalls = 10;
-	protected int wallLength = 20;
+	protected int numberOfWalls = 20;
+	protected int wallLength = 30;
 	
 	// PUBLIC getters so everyone can see the configuration
 	public int getNumBees() {

@@ -38,13 +38,27 @@ public abstract class Objective implements Comparable<Objective>{
 	}
 
 	/**
-	 * removes all finished tasks from the queu
+	 * removes all finished tasks from the queue
 	 * @param a
 	 * @param simState
 	 */
 	private void removeFinishedTasks(ObjectiveDrivenAgent a, SimulationState simState) {
 		while (!this.taskQueue.isEmpty() && this.taskQueue.peek().isFinished(a, simState))
-			this.taskQueue.poll().endTask(a, simState);
+			this.taskQueue.poll().endTask(a, this, simState);
+	}
+	
+	/**
+	 * Tasks in this objective can call this method when they are finished
+	 * @param t
+	 */
+	public void taskFinishedCallback(Task t) {};
+	
+	/**
+	 * Adds a task to this objective
+	 * @param t
+	 */
+	public void addTask(Task t) {
+		taskQueue.add(t);
 	}
 	
 	/**

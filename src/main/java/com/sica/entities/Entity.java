@@ -65,7 +65,7 @@ public abstract class Entity implements Steppable {
 	
 	
 	/**
-	 * Move this entiy in the specified direction with the specified grid mode
+	 * Move this entity in the specified direction with the specified grid mode
 	 * @param dir
 	 * @param simState
 	 * @param mode

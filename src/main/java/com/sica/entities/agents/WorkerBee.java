@@ -1,7 +1,5 @@
 package com.sica.entities.agents;
 
-import java.awt.Point;
-
 import com.sica.entities.Entity;
 import com.sica.simulation.SimulationConfig;
 import com.sica.simulation.SimulationState;
@@ -50,7 +48,7 @@ public class WorkerBee extends Agent {
 			else {
 				if (actualPath == null || knowledge.pollNewKnowledge()) {
 					Int2D location = simState.entities.getObjectLocation(this);
-					calculatePath (new Point(location.x, location.y));
+					calculatePath (new Int2D(location.x, location.y));
 				}
 				actualState = State.MOVING;
 			}
@@ -65,7 +63,7 @@ public class WorkerBee extends Agent {
 
 		case MOVING:
 			if (actualPath != null) {
-				Point aux = actualPath.remove(0);
+				Int2D aux = actualPath.remove(0);
 				simState.entities.setObjectLocation(this, new Int2D(aux.x, aux.y));
 				if (actualPath.size() <= 0) {
 					actualPath = null;
@@ -131,7 +129,7 @@ public class WorkerBee extends Agent {
 		if (simulation.environment.hasTypeAt(x,  y, Knowledge.FLOWER)) {
 			simulation.environment.set(x, y, Knowledge.EMPTY);
 			setObjective(getHome());
-			calculatePath(new Point(location.getX(), location.getY()));
+			calculatePath(new Int2D(location.getX(), location.getY()));
 			actualState = State.MOVING;
 		}
 

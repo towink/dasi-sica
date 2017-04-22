@@ -1,10 +1,9 @@
 package com.sica.environment;
 
-import java.awt.Point;
-
 import com.util.knowledge.Knowledge;
 
 import sim.field.grid.IntGrid2D;
+import sim.util.Int2D;
 import sim.util.IntBag;
 
 public class Environment extends IntGrid2D {
@@ -19,7 +18,7 @@ public class Environment extends IntGrid2D {
 	 * @param type
 	 * @return true if this object has the environmentType type set at position pos
 	 */
-	public boolean hasTypeAt(Point pos, Knowledge type) {
+	public boolean hasTypeAt(Int2D pos, Knowledge type) {
 		return this.hasTypeAt(pos.x, pos.y, type);
 	}
 	
@@ -76,7 +75,7 @@ public class Environment extends IntGrid2D {
 	 * @param container
 	 * @param value
 	 */
-	public void drawRect (Point center, Point length, Knowledge value) {
+	public void drawRect (Int2D center, Int2D length, Knowledge value) {
 		for (int i = 0; i <= length.getY()/2; i++) {
 			this.set(center.x - length.x/2, center.y+i, value);
 			this.set(center.x - length.x/2, center.y-i, value);
@@ -99,7 +98,7 @@ public class Environment extends IntGrid2D {
 	 * @param container
 	 * @param value
 	 */
-	public void drawFillRect (Point center, Point length, Knowledge value) {		
+	public void drawFillRect (Int2D center, Int2D length, Knowledge value) {		
 		int i = center.x-length.x/2;
 		int j = center.y-length.y/2;
 		for (;i < center.x+length.x/2; i++) {

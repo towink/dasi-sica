@@ -1,6 +1,5 @@
 package com.sica.entities.agents;
 
-import java.awt.Point;
 import java.util.List;
 import java.util.PriorityQueue;
 
@@ -8,13 +7,11 @@ import com.sica.behaviour.Objective;
 import com.sica.entities.Entity;
 import com.sica.simulation.SimulationConfig;
 import com.sica.simulation.SimulationState;
-import com.util.TypeConversions;
 import com.util.knowledge.HashMapKnowledgeMap;
 import com.util.knowledge.Knowledge;
 import com.util.knowledge.KnowledgeMapInterface;
 import com.util.searching.AStar;
 
-import sim.field.grid.Grid2D;
 import sim.util.Int2D;
 import sim.util.IntBag;
 
@@ -27,7 +24,7 @@ public abstract class ObjectiveDrivenAgent extends Entity{
 	private KnowledgeMapInterface knowledgeMap;
 	
 	public static AStar pathFinder;
-	protected List<Point> actualPath;
+	protected List<Int2D> actualPath;
 	
 	public ObjectiveDrivenAgent(EntityType type, HashMapKnowledgeMap knowledgeMap) {
 		super(type);
@@ -77,7 +74,7 @@ public abstract class ObjectiveDrivenAgent extends Entity{
 		this.objectives.add(o);
 	}
 	
-	public List<Point> getActualPath() {
+	public List<Int2D> getActualPath() {
 		return actualPath;
 	}
 	
@@ -91,8 +88,8 @@ public abstract class ObjectiveDrivenAgent extends Entity{
 	public void computePath(final SimulationState state, Int2D destination) {
 		Int2D beginPos = state.entities.getObjectLocation(this);
 		actualPath = ObjectiveDrivenAgent.pathFinder.findPath(
-				TypeConversions.int2DtoPoint(beginPos),
-				TypeConversions.int2DtoPoint(destination),
+				beginPos,
+				destination,
 				knowledgeMap.toAStarMap());
 	}
 	

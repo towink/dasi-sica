@@ -1,6 +1,6 @@
 package com.util.searching;
 
-import java.awt.Point;
+import sim.util.Int2D;
 
 public class Node{
 
@@ -9,13 +9,13 @@ public class Node{
 	public int totalCost;
 	public int gCost;
 	
-	private Point pos;
+	private Int2D pos;
 	
-	public Node (Node parentNode, Node finalNode, Point pos, int cost) {
+	public Node (Node parentNode, Node finalNode, Int2D pos, int cost) {
 		setParentNode(parentNode);
 		setFinalNode(finalNode);
 		setgCost(cost);
-		this.pos = new Point(pos.x, pos.y);
+		this.pos = new Int2D(pos.x, pos.y);
 		
 		
 		if (finalNode != null) {
@@ -36,7 +36,7 @@ public class Node{
 	}
 	
 	// getters and setters
-	public final Point getPosition () {
+	public final Int2D getPosition () {
 		return this.pos;
 	}
 	

@@ -1,14 +1,12 @@
 package com.sica.entities;
 
 import com.sica.behaviour.ObjectiveExplore;
-import com.sica.behaviour.ObjectiveGetToPosition;
 import com.sica.entities.agents.DroolsBee;
 import com.sica.entities.agents.ObjectiveDrivenWorkerBee;
 import com.sica.entities.agents.WorkerBee;
 
 import sim.engine.Schedule;
 import sim.field.grid.SparseGrid2D;
-import sim.util.Int2D;
 
 public class EntityPlacer {
 

@@ -1,10 +1,9 @@
 package com.sica.environment;
 
-import java.awt.Point;
-
 import com.util.knowledge.Knowledge;
 
 import ec.util.MersenneTwisterFast;
+import sim.util.Int2D;
 
 public class EnvironmentModeller {
 
@@ -15,8 +14,8 @@ public class EnvironmentModeller {
 	 * @param hiveHeight
 	 */
 	public static void generateHive (Environment environment, int hiveWidth, int hiveHeight) {
-		Point center = new Point (environment.getWidth()/2, environment.getHeight()/2);
-		Point length = new Point (hiveWidth, hiveHeight);
+		Int2D center = new Int2D (environment.getWidth()/2, environment.getHeight()/2);
+		Int2D length = new Int2D (hiveWidth, hiveHeight);
 		environment.drawRect (center, length, Knowledge.HIVE);
 	}
 
@@ -27,7 +26,7 @@ public class EnvironmentModeller {
 	 * @param flowerHeight
 	 */
 	public static void generateFlowers (Environment environment, int flowerWidth, int flowerHeight) {
-		Point length = new Point (flowerWidth, flowerHeight);
+		Int2D length = new Int2D (flowerWidth, flowerHeight);
 		environment.drawFillRect(length, length, Knowledge.FLOWER);
 	}
 

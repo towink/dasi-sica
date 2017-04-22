@@ -1,6 +1,5 @@
 package com.util.searching;
 
-import java.awt.Point;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashSet;
@@ -8,9 +7,11 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.PriorityQueue;
 
+import sim.util.Int2D;
+
 public class AStar {
 	private PriorityQueue<Node> openList;
-	private HashSet<Point> closedList;
+	private HashSet<Int2D> closedList;
 
 	public AStar () {
 		openList = new PriorityQueue<Node>(new Comparator<Node>() {
@@ -21,7 +22,7 @@ public class AStar {
 			}
 			
 		});
-		closedList = new HashSet<Point>();
+		closedList = new HashSet<Int2D>();
 	}
 
 	/**
@@ -30,7 +31,7 @@ public class AStar {
 	 * @param finalPos
 	 * @return A linked list with the path or null if there is not a path
 	 */
-	public List<Point> findPath (Point initialPos, Point finalPos, Map map) {
+	public List<Int2D> findPath (Int2D initialPos, Int2D finalPos, Map map) {
 		if (map == null) {
 			return null;
 		}
@@ -61,17 +62,17 @@ public class AStar {
 						openList.add(n);
 			}
 			
-			closedList.add((Point) actualNode.getPosition().clone());
+			closedList.add(actualNode.getPosition());
 		}
 
 		// There is not path between initialPos and finalPos
 		return null;
 	}
 
-	private List<Point> createPath (Node node) {
-		LinkedList<Point> path = new LinkedList<Point>();
+	private List<Int2D> createPath (Node node) {
+		LinkedList<Int2D> path = new LinkedList<Int2D>();
 		while (node != null) {
-			path.add(0, (Point) node.getPosition().clone());
+			path.add(0, node.getPosition());
 			node = node.getParentNode();
 		}
 
@@ -141,7 +142,7 @@ public class AStar {
 			cost = map.getCost(pos[0], pos[1]);
 			if (cost < Map.IMPASSABLE) {
 				map.setVisited(pos[0], pos[1], true);
-				nodes.add(new Node (node, finalNode, new Point (pos[0], pos[1]), cost + node.getgCost()));
+				nodes.add(new Node (node, finalNode, new Int2D (pos[0], pos[1]), cost + node.getgCost()));
 			}
 		}
 	}

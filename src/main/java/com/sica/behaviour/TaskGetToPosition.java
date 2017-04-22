@@ -1,15 +1,11 @@
 package com.sica.behaviour;
 
-import java.awt.Point;
 import java.util.List;
 
 import com.sica.entities.agents.ObjectiveDrivenAgent;
 import com.sica.simulation.SimulationConfig;
 import com.sica.simulation.SimulationState;
-import com.util.TypeConversions;
 import com.util.knowledge.Knowledge;
-import com.util.movement.Direction;
-import sim.field.grid.Grid2D;
 import sim.util.Int2D;
 
 /**
@@ -41,15 +37,15 @@ public class TaskGetToPosition implements Task {
 		agent.observeEnvironment(simState);
 		
 		// check if agent already has a path
-		List<Point> path = agent.getActualPath();
+		List<Int2D> path = agent.getActualPath();
 		if(path != null && !path.isEmpty()) {
 			
 			// check if this path already goes to this tasks destination
 			// TODO use either Int2D or java.awt.Point throughout whole project ...
-			if(TypeConversions.pointToInt2D(path.get(path.size() - 1)).equals(destination)) {
+			if(path.get(path.size() - 1).equals(destination)) {
 				
 				// now we try to move to the next point in the path
-				Int2D nextPoint = TypeConversions.pointToInt2D(path.remove(0));
+				Int2D nextPoint = path.remove(0);
 				// check if we can actually move to this location, i.e. that it is no obstacle
 				// or the environment boundary (in case of a bounded environment)
 				if(agent.canMoveTo(nextPoint, simState, SimulationConfig.ENV_MODE)) {
@@ -88,7 +84,7 @@ public class TaskGetToPosition implements Task {
 		// we say that this objective is immediately finished
 		return simState.entities.getObjectLocation(a).equals(this.destination)
 			|| simState.environment.hasTypeAt(
-					TypeConversions.int2DtoPoint(destination),
+					destination,
 					Knowledge.OBSTACLE);
 	}
 

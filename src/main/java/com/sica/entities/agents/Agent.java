@@ -1,6 +1,5 @@
 package com.sica.entities.agents;
 
-import java.awt.Point;
 import java.util.List;
 
 import com.sica.entities.Entity;
@@ -22,14 +21,14 @@ public abstract class Agent extends Entity {
 	private static final long serialVersionUID = -3612132049378487984L;
 	
 	protected static AStar pathFinder;
-	protected List<Point> actualPath;
+	protected List<Int2D> actualPath;
 	protected Map map;
 	protected KnowledgeMapInterface knowledge;
-	protected Point objective;
+	protected Int2D objective;
 	
 	public Agent (EntityType type) {
 		super(type);
-		objective = new Point();
+		objective = new Int2D();
 		this.map = new Map(SimulationConfig.GRID_WIDTH, SimulationConfig.GRID_HEIGHT);
 		knowledge = new HashMapKnowledgeMap();
 		knowledge.addKnowledge(new Int2D(SimulationConfig.GRID_WIDTH/2, SimulationConfig.GRID_HEIGHT/2), Knowledge.HIVE);
@@ -42,14 +41,14 @@ public abstract class Agent extends Entity {
 		super(type);
 		this.map = map;
 		knowledge = new HashMapKnowledgeMap();
-		objective = new Point();
+		objective = new Int2D();
 		knowledge.addKnowledge(new Int2D(SimulationConfig.GRID_WIDTH/2, SimulationConfig.GRID_HEIGHT/2), Knowledge.HIVE);
 		if (pathFinder == null) {
 			pathFinder = new AStar();
 		}
 	}
 
-	public void calculatePath(Point actualPosition) {
+	public void calculatePath(Int2D actualPosition) {
 		actualPath = pathFinder.findPath(actualPosition, getObjective(), map);
 	}
 	
@@ -80,7 +79,7 @@ public abstract class Agent extends Entity {
 		
 		if (changed) {
 			if ((getObjective() != null) && (actualPath != null)) {
-				calculatePath(new Point (location.getX(), location.getY()));
+				calculatePath(new Int2D (location.getX(), location.getY()));
 			}
 		}
 	}
@@ -95,17 +94,17 @@ public abstract class Agent extends Entity {
 	}
 	
 	// getters and setter
-	public Point getObjective() {
+	public Int2D getObjective() {
 		return objective;
 	}
 
 	public void setObjective(int x, int y) {
-		objective.setLocation(x, y);
+		this.setObjective(new Int2D(x, y));
 	}
 	
 	public void setObjective(Int2D objective) {
 		if (objective != null) {
-			this.objective.setLocation(objective.x, objective.y);
+			this.objective = objective;
 		}
 		else {
 			this.objective = null;

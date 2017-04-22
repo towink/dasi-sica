@@ -55,26 +55,26 @@ public class TaskGetToPosition implements Task {
 				}
 				else {
 					// cannot move to next point - recalculate path
-					System.out.println("Recomputing path: cant move to next point in old path");
+					//System.out.println("Recomputing path: cant move to next point in old path");
 					agent.computePath(simState, destination);
 				}
 			}
 			else {
 				// agent has a path stored but its not the right one
-				System.out.println("Recomputing path: path stored is not the right one");
+				//System.out.println("Recomputing path: path stored is not the right one");
 				agent.computePath(simState, destination);
 			}
 		}
 		else {
 			// agent has no actual path - calculate it
-			System.out.println("Recomputing path: no path yet");
+			//System.out.println("Recomputing path: no path yet");
 			agent.computePath(simState, destination);
 		}
 	}
 
 	@Override
 	public void endTask(ObjectiveDrivenAgent a, Objective obj, SimulationState simState) {
-		System.out.println("Reached destination " + destination);
+		//System.out.println("Reached destination " + destination);
 		obj.taskFinishedCallback(this);
 	}
 

@@ -2,82 +2,94 @@ package com.util.searching;
 
 import sim.util.Int2D;
 
-public class Node{
+public class Node {
+	
+	public enum DistanceMode {
+		MANHATTAN, STRAIGHT
+	}
 
-	public Node parentNode;
-	public Node finalNode;
-	public int totalCost;
-	public int gCost;
+	private Node parent;
+	private int totalCost;
+	private int baseCost;
+	private int toDestinationCost;
 	
 	private Int2D pos;
 	
-	public Node (Node parentNode, Node finalNode, Int2D pos, int cost) {
-		setParentNode(parentNode);
-		setFinalNode(finalNode);
-		setgCost(cost);
-		this.pos = new Int2D(pos.x, pos.y);
-		
-		
-		if (finalNode != null) {
-			setTotalCost(getgCost() + calculateCost());
-		}
-	}
-
-	public int calculateCost () {
-		// Manhattan distance
-		return Math.abs(this.pos.x - getFinalNode().getX()) + Math.abs(this.pos.y - getFinalNode().getY());
+	public Node (Int2D pos, Int2D destination, int baseCost, Node parent, DistanceMode mode) {
+		this.parent = parent;
+		this.baseCost = baseCost;
+		this.pos = pos;
+		this.toDestinationCost = this.calculateCost(mode, destination);
+		this.totalCost = this.baseCost + this.toDestinationCost;
 	}
 	
-	public boolean equals (Node node) {
-		if (getPosition().equals(node.getPosition())) {
-			return true;
+	/**
+	 * Returns an estimate of the cost from this node's position to the given destination
+	 * @param mode: the way of measuring distance
+	 * @param destination
+	 * @return
+	 */
+	private int calculateCost (DistanceMode mode, Int2D destination) {
+		switch(mode) {
+		case MANHATTAN:
+			return Math.abs(this.pos.x - destination.x) + Math.abs(this.pos.y - destination.y);
+		case STRAIGHT:
+			int dx = this.pos.x - destination.x;
+			int dy = this.pos.y - destination.y;
+			return (int) Math.sqrt(dx*dx + dy*dy);
 		}
-		return false;
+		return 0;
 	}
 	
 	// getters and setters
+	/**
+	 * @return this node's position
+	 */
 	public final Int2D getPosition () {
 		return this.pos;
 	}
 	
+	/**
+	 * @return this node's x coordinate
+	 */
 	public int getX() {
-		return pos.x;
+		return this.pos.x;
 	}
 	
+	/**
+	 * @return this node's y coordinate
+	 */
 	public int getY() {
-		return pos.y;
+		return this.pos.y;
 	}
 	
+	/** 
+	 * @return the node from which this one spawned. Useful for backtracking the path
+	 */
 	public Node getParentNode() {
-		return parentNode;
+		return this.parent;
 	}
 
-	public void setParentNode(Node parentNode) {
-		this.parentNode = parentNode;
-	}
-
-	public Node getFinalNode() {
-		return finalNode;
-	}
-
-	public void setFinalNode(Node finalNode) {
-		this.finalNode = finalNode;
-	}
-
+	/**
+	 * @return the total cost to get to this node from the begining plus the cost of getting to the end from this node
+	 */
 	public int getTotalCost() {
-		return totalCost;
+		return this.totalCost;
+	}
+	
+	/**
+	 * @return the cost from the start to this node
+	 */
+	public int getBaseCost() {
+		return this.baseCost;
 	}
 
-	public void setTotalCost(int totalCost) {
-		this.totalCost = totalCost;
+	/**
+	 * @return the cost from this node to the destination
+	 */
+	public int getToDestinationCost() {
+		return this.toDestinationCost;
 	}
 
-	public int getgCost() {
-		return gCost;
-	}
-
-	public void setgCost(int gCost) {
-		this.gCost = gCost;
-	}
 }
 

@@ -3,8 +3,6 @@ package com.util.knowledge;
 import java.util.Collection;
 import java.util.Map.Entry;
 
-import com.util.searching.Map;
-
 import sim.util.Int2D;
 
 /**
@@ -17,13 +15,6 @@ import sim.util.Int2D;
  *
  */
 public interface KnowledgeMapInterface {
-	
-	/**
-	 * Creates the type of maps used by the A Star algorithm to calculate paths.
-	 * TODO: Change A star so that it can use a map of type KnowledgeMapInterface directly.
-	 * @return
-	 */
-	public Map toAStarMap();
 	
 	/**
 	 * Adds knowledge of the environment in a certain position
@@ -64,6 +55,14 @@ public interface KnowledgeMapInterface {
 	public Knowledge getKnowledgeAt(Int2D where);
 	
 	/**
+	 * 
+	 * @param x
+	 * @param y
+	 * @return the knowledge stored in this map at the given position
+	 */
+	public Knowledge getKnowledgeAt(int x, int y);
+	
+	/**
 	 * @param knowledge
 	 * @return All the positions where the given knowledge is found
 	 */
@@ -89,5 +88,7 @@ public interface KnowledgeMapInterface {
 	 * This function also resets the knowledge, setting it all as already known
 	 */
 	public boolean pollNewKnowledge();
+
+	
 	
 }

@@ -11,7 +11,6 @@ package com.util.knowledge;
 public enum Knowledge {
 	//do not declare more than 65536 (0xffff) different types or the class will break!
 	UNKNOWN, HIVE, FLOWER, OBSTACLE, EMPTY, BEE, ENEMY;
-	
 
 	/**
 	 * Chech if a given environment value is of the given type.

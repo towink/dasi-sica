@@ -6,9 +6,6 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map.Entry;
 
-import com.sica.simulation.SimulationConfig;
-import com.util.searching.Map;
-
 import sim.util.Int2D;
 
 public class HashMapKnowledgeMap implements KnowledgeMapInterface {
@@ -28,16 +25,6 @@ public class HashMapKnowledgeMap implements KnowledgeMapInterface {
 		this.knowledgePosition = new HashMap<Knowledge, HashSet<Int2D>>();
 		this.knowledgeUpdatedTable = new HashMap<Knowledge, Boolean>();
 		this.hasNewKnowledge = false;
-	}
-	
-	@Override
-	public Map toAStarMap() {
-		Map res = new Map(SimulationConfig.GRID_WIDTH, SimulationConfig.GRID_HEIGHT);
-		for (Entry<Int2D, Knowledge> e: positionKnowledge.entrySet()) {
-			res.modifyMap(e.getKey().x, e.getKey().y, e.getValue());
-			res.setVisited(e.getKey().x, e.getKey().y, true);
-		}
-		return res;
 	}
 
 	@Override
@@ -98,6 +85,11 @@ public class HashMapKnowledgeMap implements KnowledgeMapInterface {
 	public Knowledge getKnowledgeAt(Int2D where) {
 		return this.positionKnowledge.getOrDefault(where, Knowledge.UNKNOWN);
 	}
+	
+	@Override
+	public Knowledge getKnowledgeAt(int x, int y) {
+		return this.getKnowledgeAt(new Int2D(x, y));
+	}
 
 	@Override
 	public Collection<Int2D> getKnowledgeOf(Knowledge knowledge) {
@@ -141,5 +133,8 @@ public class HashMapKnowledgeMap implements KnowledgeMapInterface {
 		value += "\n}";
 		return value;
 	}
+
+
+
 	
 }

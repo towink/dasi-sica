@@ -1,19 +1,23 @@
 package com.util.searching;
 
-import java.util.ArrayList;
 import java.util.Comparator;
-import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.PriorityQueue;
 
+import com.util.knowledge.Knowledge;
+import com.util.knowledge.KnowledgeMapInterface;
+
 import sim.util.Int2D;
 
 public class AStar {
+	private static final int IMPASSABLE = 10000;
+	
+	
 	private PriorityQueue<Node> openList;
-	private HashSet<Int2D> closedList;
+	Map aState;
 
-	public AStar () {
+	public AStar (int width, int height) {
 		openList = new PriorityQueue<Node>(new Comparator<Node>() {
 
 			@Override
@@ -22,53 +26,57 @@ public class AStar {
 			}
 			
 		});
-		closedList = new HashSet<Int2D>();
+		
+		aState = new Map(width, height);
 	}
 
 	/**
 	 * Method to find the best path between the initial position and the final position
+	 * This is the A_STAR implementation
 	 * @param initialPos
 	 * @param finalPos
 	 * @return A linked list with the path or null if there is not a path
 	 */
-	public List<Int2D> findPath (Int2D initialPos, Int2D finalPos, Map map) {
-		if (map == null) {
-			return null;
-		}
-
+	public List<Int2D> findPath (Int2D initialPos, Int2D finalPos, KnowledgeMapInterface map) {
 		openList.clear();
-		closedList.clear();
-		map.resetVisited();
-
-		Node initialNode = new Node (null, null, initialPos, 0);
-		Node finalNode = new Node (null, null, finalPos, 0);
-		openList.add(initialNode);
-
+		aState.resetState();
+		
+		//add the opening node
+		this.addAndOpenNewNode(new Node (initialPos, finalPos, 0, null, Node.DistanceMode.MANHATTAN), aState);
+		//while we still have nodes to explore
 		while (openList.size() > 0) {
-			Node actualNode = openList.peek();
-
-			// Checking if the actual node is the final node
-			if (actualNode.equals(finalNode)) {
+			//get the first node in the queue according to its comparator's metric
+			//i.e: the most promising
+			Node actualNode = this.openList.poll();
+			//If we've reached our destination, return the path to it
+			if (actualNode.getPosition().equals(finalPos))
 				return createPath(actualNode);
-			}
-
-			openList.poll();
-			
-			//add new nodes if they have not yet been visited
-			//and either they are not yet opened or their gCost is less than the actual gCost
-			for (Node n: findAdjacentNodes(actualNode, finalNode, map)) {
-				if (!closedList.contains(n.getPosition()))
-					if (!openList.contains(n) || n.getgCost() < actualNode.getgCost())
-						openList.add(n);
-			}
-			
-			closedList.add(actualNode.getPosition());
+			//otherwise open all valid adjacent nodes and keep looking
+			openAdjacentNodes(actualNode, finalPos, map, aState);
 		}
 
 		// There is not path between initialPos and finalPos
 		return null;
 	}
-
+	
+	/**
+	 * Adds the given node to the opened nodes list, and
+	 * sets it as opened on the given map.
+	 * NOTE: NO CHECKS ARE MADE TO SEE IF IT IS ALREADY OPENED,
+	 * DO IT BEFOREHAND!!
+	 * @param node
+	 * @param map
+	 */
+	private void addAndOpenNewNode(Node node, Map aState) {
+		openList.add(node);
+		aState.setVisited(node.getX(), node.getY());
+	}
+	
+	/**
+	 * Creates a path by backtracking through parent nodes
+	 * @param node
+	 * @return
+	 */
 	private List<Int2D> createPath (Node node) {
 		LinkedList<Int2D> path = new LinkedList<Int2D>();
 		while (node != null) {
@@ -79,72 +87,85 @@ public class AStar {
 		return path;
 	}
 
-	private List<Node> findAdjacentNodes (Node node, Node finalNode, Map map) {
-		//start with a list of up to 9 elements
-		ArrayList<Node> adjacentNodes = new ArrayList<Node>(9);
+	/**
+	 * This function opens all the adjacent nodes to the one given,
+	 * unless they have already been visited
+	 * @param node
+	 * @param finalPos
+	 * @param map
+	 */
+	private void openAdjacentNodes (Node node, Int2D finalPos, KnowledgeMapInterface map, Map aState) {
 		int x = node.getX();
 		int y = node.getY();
-		int [] aux = new int [2];
-		// left
-		if (x > 0) {
-			aux[0] = node.getX() - 1;
-			aux[1] = node.getY();
-			checkAdjacentNode(aux, adjacentNodes, node, finalNode, map);
+		
+		if (x > 0)						//left
+			openNode(x - 1, y, node, finalPos, map, aState);
+		if (x < aState.getWidth() - 1)		//right
+			openNode(x + 1, y, node, finalPos, map, aState);
+		if (y > 0) {					//up
+			openNode(x, y - 1, node, finalPos, map, aState);
+			if (x > 0)					//up left
+				openNode(x - 1, y - 1, node, finalPos, map, aState);
+			if (x < aState.getWidth() - 1) //up right
+				openNode(x + 1, y - 1, node, finalPos, map, aState);
 		}
-		// right
-		if (x < map.getWidth() - 1) {
-			aux[0] = node.getX() + 1;
-			aux[1] = node.getY();
-			checkAdjacentNode(aux, adjacentNodes, node, finalNode, map);
+		if (y < aState.getHeight() - 1) { 	//down
+			openNode(x, y + 1, node, finalPos, map, aState);
+			if (x > 0)					//down left
+				openNode(x, y + 1, node, finalPos, map, aState);
+			if (x < aState.getWidth() - 1) //down right
+				openNode(x, y + 1, node, finalPos, map, aState);
 		}
-
-		// up
-		if (y > 0) {
-			aux[0] = node.getX();
-			aux[1] = node.getY() - 1;
-			checkAdjacentNode(aux, adjacentNodes, node, finalNode, map);
-			// up left
-			if (x > 0) {
-				aux[0] = node.getX() - 1;
-				checkAdjacentNode(aux, adjacentNodes, node, finalNode, map);
-			}
-			// up right
-			if (x < map.getWidth() - 1) {
-				aux[0] = node.getX() + 1;
-				checkAdjacentNode(aux, adjacentNodes, node, finalNode, map);
-			}
-		}
-
-		// down
-		if (y < map.getHeight() - 1) {
-			aux[0] = node.getX();
-			aux[1] = node.getY() + 1;
-			checkAdjacentNode(aux, adjacentNodes, node, finalNode, map);
-			// down left
-			if (x > 0) {
-				aux[0] = node.getX() - 1;
-				checkAdjacentNode(aux, adjacentNodes, node, finalNode, map);
-			}
-			// down right
-			if (x < map.getWidth() - 1) {
-				aux[0] = node.getX() + 1;
-				checkAdjacentNode(aux, adjacentNodes, node, finalNode, map);
-			}
-		}
-
-
-		return adjacentNodes;
 	}
 
-	private void checkAdjacentNode (int [] pos, List<Node> nodes, Node node, Node finalNode, Map map) {
-		int cost;
-		if (!map.isVisited(pos[0], pos[1])) {
-			cost = map.getCost(pos[0], pos[1]);
-			if (cost < Map.IMPASSABLE) {
-				map.setVisited(pos[0], pos[1], true);
-				nodes.add(new Node (node, finalNode, new Int2D (pos[0], pos[1]), cost + node.getgCost()));
+	/**
+	 * Opens a node if it has not been opened yet
+	 * @param x: coordinate of the new node
+	 * @param y: coordinate of the new node
+	 * @param parent: parent node
+	 * @param finalPos: where we are going
+	 * @param map: the map containing useful information
+	 */
+	private void openNode (int x, int y, Node parent, Int2D finalPos, KnowledgeMapInterface map, Map aState) {
+		if (!aState.isVisited(x, y)) {
+			int movementCost = this.getCost(map.getKnowledgeAt(new Int2D(x, y)));
+			if (movementCost < IMPASSABLE) {
+				this.addAndOpenNewNode(
+					new Node (new Int2D(x, y), finalPos, movementCost + parent.getBaseCost(), parent, Node.DistanceMode.MANHATTAN), 
+					aState);
+			} else {
+				aState.setVisited(x, y);
 			}
 		}
+	}
+	
+	/**
+	 * Gets the cost of moving to a tile 
+	 * of the specified knowledge
+	 * @param knowledge
+	 * @return
+	 */
+	public int getCost (Knowledge knowledge) {
+		switch (knowledge) {
+		case OBSTACLE:
+			return IMPASSABLE;
+		case EMPTY:
+			return 1;
+		case FLOWER:
+			return 1;
+		case BEE:
+			return 2;
+		case ENEMY:
+			return IMPASSABLE;
+		case UNKNOWN:
+			return 1;
+		case HIVE:
+			return 1;
+		default:
+			break;
+		}
+		
+		throw new IllegalArgumentException("Cost from unexistent knowledge being calculated: " + knowledge.toString());
 	}
 }
 

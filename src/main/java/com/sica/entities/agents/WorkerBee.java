@@ -5,7 +5,6 @@ import com.sica.simulation.SimulationConfig;
 import com.sica.simulation.SimulationState;
 import com.util.knowledge.Knowledge;
 import com.util.knowledge.KnowledgeMapInterface;
-import com.util.searching.Map;
 import sim.engine.SimState;
 import sim.field.grid.Grid2D;
 import sim.util.Bag;
@@ -25,11 +24,6 @@ public class WorkerBee extends Agent {
 
 	public WorkerBee() {
 		super(EntityType.WORKER);
-		actualState = State.EXPLORING;
-	}
-
-	public WorkerBee(Map map) {
-		super(EntityType.WORKER, map);
 		actualState = State.EXPLORING;
 	}
 
@@ -160,15 +154,7 @@ public class WorkerBee extends Agent {
 
 	@Override
 	public void receiveKnowledge (KnowledgeMapInterface knowledge) {
-		if (this.knowledge.addKnowledge(knowledge)) {
-			for (Int2D i: this.knowledge.getKnowledgeOf(Knowledge.OBSTACLE))
-				map.modifyMap(i.x, i.y, Knowledge.OBSTACLE);
-
-			for (Int2D i: this.knowledge.getKnowledgeOf(Knowledge.FLOWER))
-				map.modifyMap(i.x, i.y, Knowledge.FLOWER);			
-		}
-		
-		
+		this.knowledge.addKnowledge(knowledge);		
 	}
 	
 	/*public final void draw(Object object, Graphics2D graphics, DrawInfo2D info) {

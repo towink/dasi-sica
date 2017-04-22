@@ -32,7 +32,7 @@ public abstract class ObjectiveDrivenAgent extends Entity{
 		this.knowledgeMap = knowledgeMap;
 		this.actualPath = null;
 		if (pathFinder == null) {
-			pathFinder = new AStar();
+			pathFinder = new AStar(SimulationConfig.GRID_WIDTH, SimulationConfig.GRID_HEIGHT);
 		}
 	}
 
@@ -90,7 +90,7 @@ public abstract class ObjectiveDrivenAgent extends Entity{
 		actualPath = ObjectiveDrivenAgent.pathFinder.findPath(
 				beginPos,
 				destination,
-				knowledgeMap.toAStarMap());
+				knowledgeMap);
 	}
 	
 	public KnowledgeMapInterface getKnowledgeMap() {

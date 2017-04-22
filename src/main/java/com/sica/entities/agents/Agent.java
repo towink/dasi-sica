@@ -9,7 +9,6 @@ import com.util.knowledge.HashMapKnowledgeMap;
 import com.util.knowledge.Knowledge;
 import com.util.knowledge.KnowledgeMapInterface;
 import com.util.searching.AStar;
-import com.util.searching.Map;
 import sim.field.grid.Grid2D;
 import sim.util.Int2D;
 import sim.util.IntBag;
@@ -22,34 +21,21 @@ public abstract class Agent extends Entity {
 	
 	protected static AStar pathFinder;
 	protected List<Int2D> actualPath;
-	protected Map map;
 	protected KnowledgeMapInterface knowledge;
 	protected Int2D objective;
 	
 	public Agent (EntityType type) {
 		super(type);
-		objective = new Int2D();
-		this.map = new Map(SimulationConfig.GRID_WIDTH, SimulationConfig.GRID_HEIGHT);
-		knowledge = new HashMapKnowledgeMap();
-		knowledge.addKnowledge(new Int2D(SimulationConfig.GRID_WIDTH/2, SimulationConfig.GRID_HEIGHT/2), Knowledge.HIVE);
-		if (pathFinder == null) {
-			pathFinder = new AStar();
-		}
-	}
-	
-	public Agent (EntityType type, Map map) {
-		super(type);
-		this.map = map;
 		knowledge = new HashMapKnowledgeMap();
 		objective = new Int2D();
 		knowledge.addKnowledge(new Int2D(SimulationConfig.GRID_WIDTH/2, SimulationConfig.GRID_HEIGHT/2), Knowledge.HIVE);
 		if (pathFinder == null) {
-			pathFinder = new AStar();
+			pathFinder = new AStar(SimulationConfig.GRID_WIDTH, SimulationConfig.GRID_HEIGHT);
 		}
 	}
 
 	public void calculatePath(Int2D actualPosition) {
-		actualPath = pathFinder.findPath(actualPosition, getObjective(), map);
+		actualPath = pathFinder.findPath(actualPosition, getObjective(), knowledge);
 	}
 	
 	public void doStep( final SimulationState state ) {
@@ -68,14 +54,8 @@ public abstract class Agent extends Entity {
 		simState.environment.getRadialNeighbors(location.getX(), location.getY(), simState.getConfig().getRadioView(), Grid2D.TOROIDAL, true, Knowledge.OBSTACLE, xCoords, yCoords);
 		
 		boolean changed = false;
-		boolean auxChanged;
-		for (int i = 0; i < xCoords.numObjs; i++) {
-			auxChanged = map.modifyMap(xCoords.get(i), yCoords.get(i), Knowledge.OBSTACLE);
-			if (auxChanged) {
-				knowledge.addKnowledge(new Int2D(xCoords.get(i), yCoords.get(i)), Knowledge.OBSTACLE);
-			}
-			changed |= auxChanged;
-		}
+		for (int i = 0; i < xCoords.numObjs; i++)
+			changed |= knowledge.addKnowledge(new Int2D(xCoords.get(i), yCoords.get(i)), Knowledge.OBSTACLE);
 		
 		if (changed) {
 			if ((getObjective() != null) && (actualPath != null)) {
@@ -85,13 +65,9 @@ public abstract class Agent extends Entity {
 	}
 	
 	
-	public void sendKnowledge (Agent receptor) {
-		
-	}
+	public abstract void sendKnowledge (Agent receptor);
 	
-	public void receiveKnowledge (KnowledgeMapInterface knowledge) {
-		
-	}
+	public abstract void receiveKnowledge (KnowledgeMapInterface knowledge);
 	
 	// getters and setter
 	public Int2D getObjective() {

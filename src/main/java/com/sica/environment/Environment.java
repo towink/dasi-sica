@@ -41,7 +41,17 @@ public class Environment extends IntGrid2D {
 	 * @param type
 	 */
 	public void set(int x, int y, Knowledge type) {
-		this.set(x, y, type.ordinal());
+		this.set(x, y, type.toInt());
+	}
+	
+	/**
+	 * Sets the type at the specified position
+	 * @param x
+	 * @param y
+	 * @param type
+	 */
+	public void set(Int2D pos, Knowledge type) {
+		this.set(pos.x, pos.y, type.toInt());
 	}
 	
 	

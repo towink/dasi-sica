@@ -3,7 +3,7 @@ package com.util.movement;
 import sim.util.Int2D;
 
 public enum Direction {
-	NORTH, SOUTH, EAST, WEST;
+	NORTH, SOUTH, EAST, WEST, NORTH_EAST, SOUTH_EAST, NORTH_WEST, SOUTH_WEST;
 	
 	public Int2D move(Int2D origin, int mode) {
 		int x = origin.x, y = origin.y;
@@ -18,6 +18,22 @@ public enum Direction {
 			x++;
 			break;
 		case WEST:
+			x--;
+			break;
+		case NORTH_EAST:
+			y--;
+			x++;
+			break;
+		case SOUTH_EAST:
+			y++;
+			x++;
+			break;
+		case NORTH_WEST:
+			y--;
+			x--;
+			break;
+		case SOUTH_WEST:
+			y++;
 			x--;
 			break;
 		}

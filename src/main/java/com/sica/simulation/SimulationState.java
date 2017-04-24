@@ -3,12 +3,18 @@ package com.sica.simulation;
 import com.sica.entities.EntityPlacer;
 import com.sica.environment.Environment;
 import com.sica.environment.EnvironmentModeller;
+
+import ec.util.MersenneTwisterFast;
 import sim.engine.SimState;
 import sim.field.grid.SparseGrid2D;
 
 public class SimulationState extends SimState {
 
 	private static final long serialVersionUID = -1449354141004958564L;
+	
+	// I want to access the random generator at many places all over the code
+	// is it a good idea to make it global?
+	//public static MersenneTwisterFast random;
 	
 	SimulationConfig config;
 
@@ -19,6 +25,7 @@ public class SimulationState extends SimState {
 	{ 
 		super(seed);
 		config = new SimulationConfig();
+		//SimulationState.random = this.random;
 	}
 
 	@Override
@@ -29,11 +36,27 @@ public class SimulationState extends SimState {
 		environment = new Environment(SimulationConfig.GRID_WIDTH, SimulationConfig.GRID_HEIGHT);
 		entities = new SparseGrid2D(SimulationConfig.GRID_WIDTH, SimulationConfig.GRID_HEIGHT);
 		
+		// place the hive
 		EnvironmentModeller.generateHive(environment, SimulationConfig.HIVE_WIDTH, SimulationConfig.HIVE_HEIGHT);
-		EnvironmentModeller.generateFlowers(environment, SimulationConfig.NORMAL_FLOWER_WIDTH, SimulationConfig.NORMAL_FLOWER_HEIGHT);
-		//EnvironmentModeller.generateRandomObstacles(environment, config.percentageObstacle, this.random);
-		EnvironmentModeller.generateWallObstacles(environment, config.numberOfWalls, config.wallLength, this.random);
 		
+		// let some flowers grow
+		//EnvironmentModeller.generateFlowers(environment, SimulationConfig.NORMAL_FLOWER_WIDTH, SimulationConfig.NORMAL_FLOWER_HEIGHT);
+		EnvironmentModeller.randomlyGenerateFlowers(
+				environment,
+				20,
+				config.getMinAlimentFlower(),
+				config.getMaxAlimentFlower(),
+				random);
+		
+		// put some obstacles around
+		//EnvironmentModeller.generateRandomObstacles(environment, config.percentageObstacle, this.random);
+		EnvironmentModeller.generateWallObstacles(
+				environment,
+				config.getNumberOfWalls(),
+				config.getWallLength(),
+				random);
+		
+		// let the bees out!
 		EntityPlacer.generateBees(entities, schedule, config.getNumBees());
 	}
 	

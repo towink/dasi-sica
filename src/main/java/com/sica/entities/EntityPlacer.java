@@ -16,7 +16,7 @@ public class EntityPlacer {
 		
 		Entity agent;
 		
-		for (int x = 0; x < 10; x++) {
+		for (int x = 0; x < 50; x++) {
 			agent = new ObjectiveDrivenWorkerBee();
 			((ObjectiveDrivenWorkerBee) agent).addObjective(new ObjectiveExplore());
 			entities.setObjectLocation(agent, 50, 50);

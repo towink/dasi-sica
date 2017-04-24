@@ -19,13 +19,19 @@ public class SimulationConfig {
 	public static final int ENV_MODE = Grid2D.BOUNDED;
 
 	// PROTECTED simulation variables so only the controller can modify them
+	
+	// agent parameters
 	protected int numBees = 1000;
-	protected int numFlowers = 1;
 	protected float groupingAffinity = 0.95f;
 	protected int radioView = 5;
+	
+	// environment parameters
+	protected int numFlowers = 1;
+	protected int minAlimentFlower = 5;
+	protected int maxAlimentFlower = 20;
 	protected float percentageObstacle = 0.1f;
 	protected int numberOfWalls = 20;
-	protected int wallLength = 30;
+	protected int wallLength = 20;
 	
 	// PUBLIC getters so everyone can see the configuration
 	public int getNumBees() {
@@ -54,5 +60,13 @@ public class SimulationConfig {
 	
 	public int getWallLength() {
 		return wallLength;
+	}
+	
+	public int getMinAlimentFlower() {
+		return minAlimentFlower;
+	}
+	
+	public int getMaxAlimentFlower() {
+		return maxAlimentFlower;
 	}
 }

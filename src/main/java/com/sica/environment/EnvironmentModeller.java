@@ -1,5 +1,6 @@
 package com.sica.environment;
 
+import com.sica.simulation.SimulationConfig;
 import com.util.knowledge.Knowledge;
 
 import ec.util.MersenneTwisterFast;
@@ -29,12 +30,50 @@ public class EnvironmentModeller {
 		Int2D length = new Int2D (flowerWidth, flowerHeight);
 		environment.drawFillRect(length, length, Knowledge.FLOWER);
 	}
+	
+	/**
+	 * Puts a flower at the given position in the environment. The flower will have
+	 * the number of aliment units as meta data.
+	 * @param env
+	 * @param pos
+	 * @param aliment
+	 */
+	public static void generateFlower(Environment env, Int2D pos, int aliment) {
+		Knowledge flower = Knowledge.FLOWER;
+		flower.inyectMetadata((short) aliment);
+		env.set(pos, flower);
+	}
+	
+	/**
+	 * Puts count flowers in the environment at random spots
+	 * TODO Only place flowers on empty environment spots and maybe not into the hive
+	 * @param env
+	 * @param count
+	 * @param minAlimentFlower
+	 * @param maxAlimentFlower
+	 * @param random
+	 */
+	public static void randomlyGenerateFlowers(
+			Environment env,
+			int count,
+			int minAlimentFlower,
+			int maxAlimentFlower,
+			MersenneTwisterFast random) {
+		for(int i = 0; i < count; i++) {
+			int aliment = random.nextInt(maxAlimentFlower - minAlimentFlower + 1) + minAlimentFlower;
+			Int2D pos = new Int2D(
+					random.nextInt(SimulationConfig.GRID_WIDTH),
+					random.nextInt(SimulationConfig.GRID_HEIGHT));
+			generateFlower(env, pos, aliment);
+		}
+	}
 
 	/**
 	 * Generate random obstacles across the given environment.
 	 * ANY location with an EnvironmenType of EMPTY can be set as an obstacle
 	 * with the given probability. No checks are made to see if all locations are still
 	 * accessible after genreating the obstacles
+	 * TODO do obstacles in hive
 	 * @param environment
 	 * @param probability
 	 * @param rnd should be the simulation's random number generator to always give the same results
@@ -52,6 +91,7 @@ public class EnvironmentModeller {
 	 * this makes any location unaccessible.
 	 * There is a chance that this method does not terminate if you try to place too many
 	 * and/or too long walls, so be careful.
+	 * TODO no obstacles in hives
 	 * @param environment
 	 * @param count The number of walls to be placed.
 	 * @param length Length in grid units of the walls. Must not be too large!

@@ -15,7 +15,7 @@ import sim.util.Int2D;
  * After moving to a new position, the environment is observed and knowledge about obstacles
  * is inserted.
  * If the current path turns out to be impossible because of obstacles or other things
- * in the way, then pathes are recomputed.
+ * in the way, then paths are recomputed.
  * @author Tobias
  *
  */

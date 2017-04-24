@@ -30,7 +30,7 @@ public class EnvironmentColorMap implements ColorMap {
 		//fall back to default behavior
 		case EMPTY:	
 		default:
-			return Color.WHITE;
+			return Color.BLACK;
 		}
 	}
 

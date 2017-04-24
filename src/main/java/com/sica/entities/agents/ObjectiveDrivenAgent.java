@@ -19,9 +19,9 @@ public abstract class ObjectiveDrivenAgent extends Entity{
 	private static final long serialVersionUID = -3670233969349917087L;
 
 	
-	private PriorityQueue<Objective> objectives;
+	protected PriorityQueue<Objective> objectives;
 	
-	private KnowledgeMapInterface knowledgeMap;
+	protected KnowledgeMapInterface knowledge;
 	
 	public static AStar pathFinder;
 	protected List<Int2D> actualPath;
@@ -29,7 +29,7 @@ public abstract class ObjectiveDrivenAgent extends Entity{
 	public ObjectiveDrivenAgent(EntityType type, HashMapKnowledgeMap knowledgeMap) {
 		super(type);
 		this.objectives = new PriorityQueue<Objective>();
-		this.knowledgeMap = knowledgeMap;
+		this.knowledge = knowledgeMap;
 		this.actualPath = null;
 		if (pathFinder == null) {
 			pathFinder = new AStar(SimulationConfig.GRID_WIDTH, SimulationConfig.GRID_HEIGHT);
@@ -64,8 +64,26 @@ public abstract class ObjectiveDrivenAgent extends Entity{
 				xCoords, yCoords);
 		
 		for(int i = 0; i < xCoords.numObjs; i++)
-			knowledgeMap.addKnowledge(new Int2D(xCoords.get(i), yCoords.get(i)), Knowledge.OBSTACLE);
+			knowledge.addKnowledge(new Int2D(xCoords.get(i), yCoords.get(i)), Knowledge.OBSTACLE);
+	}
+	
+	/**
+	 * Check nearby cells for the given type and add them to the knowledge map
+	 * @param state
+	 */
+	public void observeEnvironment(final SimulationState simState, Knowledge type) {
+		Int2D location = simState.entities.getObjectLocation(this);
 		
+		IntBag xCoords = new IntBag();
+		IntBag yCoords = new IntBag();
+		simState.environment.getRadialNeighbors(
+				location.getX(), location.getY(),
+				simState.getConfig().getRadioView(), SimulationConfig.ENV_MODE,
+				true, type,
+				xCoords, yCoords);
+		
+		for(int i = 0; i < xCoords.numObjs; i++)
+			knowledge.addKnowledge(new Int2D(xCoords.get(i), yCoords.get(i)), type);
 	}
 	
 	
@@ -90,11 +108,15 @@ public abstract class ObjectiveDrivenAgent extends Entity{
 		actualPath = ObjectiveDrivenAgent.pathFinder.findPath(
 				beginPos,
 				destination,
-				knowledgeMap);
+				knowledge);
 	}
 	
 	public KnowledgeMapInterface getKnowledgeMap() {
-		return knowledgeMap;
+		return knowledge;
 	}
+	
+	public abstract void sendKnowledge (Agent receptor);
+	
+	public abstract void receiveKnowledge (KnowledgeMapInterface knowledge);
 
 }

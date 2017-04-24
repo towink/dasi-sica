@@ -60,7 +60,7 @@ public class BeeGUI extends GUIState {
 		entityPortrayal.setField(simulation.entities);
 		entityPortrayal.setPortrayalForClass(WorkerBee.class, new OvalPortrayal2D(Color.BLUE, true));
 		entityPortrayal.setPortrayalForClass(DroolsBee.class, new OvalPortrayal2D(Color.GREEN, true));
-		entityPortrayal.setPortrayalForRemainder(new OvalPortrayal2D(Color.ORANGE, true));
+		entityPortrayal.setPortrayalForRemainder(new OvalPortrayal2D(Color.CYAN, true));
 		
 		display.reset();
         display.repaint();

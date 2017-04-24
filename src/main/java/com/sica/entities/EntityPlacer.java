@@ -19,7 +19,6 @@ public class EntityPlacer {
 		
 		for (int x = 0; x < 0; x++) {
 			agent = AgentFactory.getAgent(AgentFactory.WORKER_BEE);
-			((ObjectiveDrivenWorkerBee) agent).addObjective(new ObjectiveExplore());
 			entities.setObjectLocation(agent, 50, 50);
 			schedule.scheduleRepeating(Schedule.EPOCH, 0, agent, 1);
 		}

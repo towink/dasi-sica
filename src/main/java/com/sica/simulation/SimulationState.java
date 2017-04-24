@@ -16,15 +16,13 @@ public class SimulationState extends SimState {
 	public Environment environment = Environment.getNewEnvironment(SimulationConfig.GRID_WIDTH, SimulationConfig.GRID_HEIGHT);
 	public SparseGrid2D entities = new SparseGrid2D(SimulationConfig.GRID_WIDTH, SimulationConfig.GRID_HEIGHT);
 	
-	public SimulationState(long seed)
-	{ 
+	public SimulationState(long seed) { 
 		super(seed);
-		config = SimulationConfig.getConfig();
+		config = SimulationConfig.config();
 	}
 
 	@Override
-	public void start()
-	{
+	public void start() {
 		super.start();
 
 		environment = Environment.getNewEnvironment(SimulationConfig.GRID_WIDTH, SimulationConfig.GRID_HEIGHT);
@@ -32,59 +30,22 @@ public class SimulationState extends SimState {
 		
 		EnvironmentModeller.generateHive(environment, SimulationConfig.HIVE_WIDTH, SimulationConfig.HIVE_HEIGHT);
 		EnvironmentModeller.generateFlowers(environment, SimulationConfig.NORMAL_FLOWER_WIDTH, SimulationConfig.NORMAL_FLOWER_HEIGHT);
-		//EnvironmentModeller.generateRandomObstacles(environment, config.percentageObstacle, this.random);
-		EnvironmentModeller.generateWallObstacles(environment, config.numberOfWalls, config.wallLength, this.random);
 		
-		EntityPlacer.generateBees(entities, schedule, config.getNumBees());
+		if(SimulationConfig.WALL_OBSTACLES) {
+			EnvironmentModeller.generateWallObstacles(environment, config.numberOfWalls, config.wallLength, this.random);
+		}
+		else {
+			EnvironmentModeller.generateRandomObstacles(environment, config.percentageObstacle, this.random);
+		}
+		
+		EntityPlacer.generateBees(entities, schedule, config.numWorkers);
 	}
 	
 
 	// Getters and Setters
+	
 	public SimulationConfig getConfig() {
 		return this.config;
 	}
 	
-	public void setNumBees(int numBees) {
-		if (numBees > 0) {
-			this.config.numBees = numBees;
-		}	
-	}
-	
-	public int getNumBees() {
-		return this.config.numBees;
-	}
-
-	public void setNumFlowers(int numFlowers) {
-		if (numFlowers > 0) {
-			this.config.numFlowers = numFlowers;
-		}
-	}
-	
-	public void setGroupingAffinity(float groupingAffinity) {
-		this.config.groupingAffinity = groupingAffinity;
-	}
-	
-	public float getGroupingAffinity() {
-		return this.config.groupingAffinity;
-	}
-	
-	public Object domGroupingAffinity(){
-		return new sim.util.Interval(0.5, 1.0);
-	}
-
-	public void setRadioView(int radioView) {
-		if (radioView > 0) {
-			this.config.radioView = radioView;
-		}
-	}
-
-	public void setPercentageObstacle(int percentageObstacle) {
-		if (percentageObstacle > 0) {
-			this.config.percentageObstacle = percentageObstacle;
-		}
-		if (percentageObstacle > 100) {
-			this.config.percentageObstacle = 100;
-		}
-	}
-
 }

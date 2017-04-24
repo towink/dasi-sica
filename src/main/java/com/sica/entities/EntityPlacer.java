@@ -29,7 +29,7 @@ public class EntityPlacer {
 		}
 		
 		
-		for(int x = 0; x < 1000; x++)
+		for(int x = 0; x < numBees; x++)
 		{
 			agent = new WorkerBee();		
 			entities.setObjectLocation(agent, entities.getWidth()/2, entities.getHeight()/2);

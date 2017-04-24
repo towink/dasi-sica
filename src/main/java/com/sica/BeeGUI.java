@@ -38,10 +38,12 @@ public class BeeGUI extends GUIState {
 	}
 	
 	/**
-	 *  Allow the user to inspect the model
+	 *  Allows the user to inspect the model.
+	 *  The properties if the return object will be visible/manipulable
+	 *  in the 'Model' tab of the console window.
 	 */
 	public Object getSimulationInspectedObject() { 
-		return state;
+		return ((SimulationState)state).getConfig();
 	}
 
 	/**

@@ -1,6 +1,7 @@
 package com.util.searching;
 
 import java.util.Comparator;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.PriorityQueue;
@@ -49,8 +50,9 @@ public class AStar {
 			//i.e: the most promising
 			Node actualNode = this.openList.poll();
 			//If we've reached our destination, return the path to it
-			if (actualNode.getPosition().equals(finalPos))
+			if (actualNode.getPosition().equals(finalPos)) {
 				return createPath(actualNode);
+			}
 			//otherwise open all valid adjacent nodes and keep looking
 			openAdjacentNodes(actualNode, finalPos, map, aState);
 		}
@@ -79,11 +81,17 @@ public class AStar {
 	 */
 	private List<Int2D> createPath (Node node) {
 		LinkedList<Int2D> path = new LinkedList<Int2D>();
-		while (node != null) {
+		/*while (node != null) {
 			path.add(0, node.getPosition());
 			node = node.getParentNode();
-		}
+		}*/
 
+		Iterator<Node> iterator = node.iterator();
+		while (iterator.hasNext()) {
+			Node aux = iterator.next();
+			path.add(0, aux.getPosition());
+		}
+		
 		return path;
 	}
 
@@ -98,23 +106,29 @@ public class AStar {
 		int x = node.getX();
 		int y = node.getY();
 		
-		if (x > 0)						//left
+		if (x > 0) {							//left
 			openNode(x - 1, y, node, finalPos, map, aState);
-		if (x < aState.getWidth() - 1)		//right
-			openNode(x + 1, y, node, finalPos, map, aState);
-		if (y > 0) {					//up
-			openNode(x, y - 1, node, finalPos, map, aState);
-			if (x > 0)					//up left
-				openNode(x - 1, y - 1, node, finalPos, map, aState);
-			if (x < aState.getWidth() - 1) //up right
-				openNode(x + 1, y - 1, node, finalPos, map, aState);
 		}
-		if (y < aState.getHeight() - 1) { 	//down
+		if (x < aState.getWidth() - 1) {		//right
+			openNode(x + 1, y, node, finalPos, map, aState);
+		}
+		if (y > 0) {							//up
+			openNode(x, y - 1, node, finalPos, map, aState);
+			if (x > 0) {						//up left
+				openNode(x - 1, y - 1, node, finalPos, map, aState);
+			}
+			if (x < aState.getWidth() - 1) { 	//up right
+				openNode(x + 1, y - 1, node, finalPos, map, aState);
+			}
+		}
+		if (y < aState.getHeight() - 1) { 		//down
 			openNode(x, y + 1, node, finalPos, map, aState);
-			if (x > 0)					//down left
+			if (x > 0) {						//down left
 				openNode(x, y + 1, node, finalPos, map, aState);
-			if (x < aState.getWidth() - 1) //down right
+			}
+			if (x < aState.getWidth() - 1) { 	//down right
 				openNode(x, y + 1, node, finalPos, map, aState);
+			}
 		}
 	}
 

@@ -1,5 +1,6 @@
 package com.sica.environment;
 
+import com.sica.simulation.SimulationConfig;
 import com.util.knowledge.Knowledge;
 
 import sim.field.grid.IntGrid2D;
@@ -9,7 +10,22 @@ import sim.util.IntBag;
 public class Environment extends IntGrid2D {
 	private static final long serialVersionUID = 8925118805389868575L;
 
-	public Environment(int width, int height) {
+	private static Environment instance;
+	
+	public static Environment getEnvironment(int width, int height) {
+		if (instance == null) {
+			instance = new Environment(width, height);
+		}
+		
+		return instance;
+	}
+	
+	public static Environment getNewEnvironment(int width, int height) {
+		instance = new Environment(width, height);
+		return instance;
+	}
+	
+	private Environment(int width, int height) {
 		super(width, height, Knowledge.EMPTY.ordinal());
 	}
 	
@@ -112,12 +128,39 @@ public class Environment extends IntGrid2D {
 		int i = center.x-length.x/2;
 		int j = center.y-length.y/2;
 		for (;i < center.x+length.x/2; i++) {
-			for (; j < center.y+length.y/2; j++)
+			for (; j < center.y+length.y/2; j++) {
 				this.set(i, j, value);
-			
+			}
 			j = center.y -length.y/2;
 		}
 	}
+	
+	/**
+	 * Check if a position is inside the hive
+	 * @param checkPos
+	 * @param hivePos
+	 * @return true if checkPos is inside the hive, otherwise false
+	 * 
+	 *  true if this environment has the specified type
+	 * at the specified coordinates
+	 */
+	public  boolean inHive (Int2D checkPos, Int2D hivePos) {
+		int minX = (int) (hivePos.getX() - SimulationConfig.HIVE_WIDTH/2);
+		int minY = (int) (hivePos.getY() - SimulationConfig.HIVE_HEIGHT/2);
+		int maxX = (int) (hivePos.getX() + SimulationConfig.HIVE_WIDTH/2);
+		int maxY = (int) (hivePos.getY() + SimulationConfig.HIVE_HEIGHT/2);
+
+		if (checkPos.x > maxX || checkPos.x < minX) {
+			return false;
+		}
+
+		if (checkPos.y > maxY || checkPos.y < minY) {
+			System.out.println("X: " + checkPos.x + ", Y: " + checkPos.y);
+			return false;
+		}
+
+		return true;
+	} 
 		
 	
 }

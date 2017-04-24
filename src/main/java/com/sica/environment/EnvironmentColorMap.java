@@ -2,6 +2,7 @@ package com.sica.environment;
 
 import java.awt.Color;
 
+import com.sica.simulation.SimulationConfig;
 import com.util.knowledge.Knowledge;
 
 import sim.util.gui.ColorMap;
@@ -30,7 +31,7 @@ public class EnvironmentColorMap implements ColorMap {
 		//fall back to default behavior
 		case EMPTY:	
 		default:
-			return Color.BLACK;
+			return SimulationConfig.BACKGROUND_COLOR;
 		}
 	}
 

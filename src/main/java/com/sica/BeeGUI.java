@@ -1,22 +1,31 @@
 package com.sica;
 
 import java.awt.Color;
+import java.util.Locale;
+
 import javax.swing.JFrame;
 
 import com.sica.entities.agents.DroolsBee;
+import com.sica.entities.agents.ObjectiveDrivenWorkerBee;
 import com.sica.entities.agents.WorkerBee;
 import com.sica.environment.EnvironmentColorMap;
+import com.sica.simulation.SimulationConfig;
 import com.sica.simulation.SimulationState;
 
+import sim.display.Console;
 import sim.display.Controller;
 import sim.display.Display2D;
 import sim.display.GUIState;
 import sim.engine.SimState;
+import sim.portrayal.Inspector;
 import sim.portrayal.grid.FastValueGridPortrayal2D;
 import sim.portrayal.grid.SparseGridPortrayal2D;
 import sim.portrayal.simple.OvalPortrayal2D;
 
 public class BeeGUI extends GUIState {
+	
+	// size of the simulation frame
+	public static final int DISPLAY_SIZE = 600;
 
 	public Display2D display;
 	public JFrame frame;
@@ -33,10 +42,12 @@ public class BeeGUI extends GUIState {
 	}
 	
 	/**
-	 *  Allow the user to inspect the model
+	 *  Allows the user to inspect the model.
+	 *  The properties if the return object will be visible/manipulable
+	 *  in the 'Model' tab of the console window.
 	 */
 	public Object getSimulationInspectedObject() { 
-		return state; 
+		return ((SimulationState)state).getConfig();
 	}
 
 	/**
@@ -60,7 +71,8 @@ public class BeeGUI extends GUIState {
 		entityPortrayal.setField(simulation.entities);
 		entityPortrayal.setPortrayalForClass(WorkerBee.class, new OvalPortrayal2D(Color.BLUE, true));
 		entityPortrayal.setPortrayalForClass(DroolsBee.class, new OvalPortrayal2D(Color.GREEN, true));
-		entityPortrayal.setPortrayalForRemainder(new OvalPortrayal2D(Color.CYAN, true));
+		entityPortrayal.setPortrayalForClass(ObjectiveDrivenWorkerBee.class, new OvalPortrayal2D(Color.MAGENTA, true));
+		entityPortrayal.setPortrayalForRemainder(new OvalPortrayal2D(Color.ORANGE, true));
 		
 		display.reset();
         display.repaint();
@@ -99,7 +111,7 @@ public class BeeGUI extends GUIState {
 	{
 		super.init(c);
 
-		display = new Display2D(400,400,this);
+		display = new Display2D(DISPLAY_SIZE, DISPLAY_SIZE, this);
 		frame = display.createFrame();
 		c.registerFrame(frame);
 		frame.setVisible(true);
@@ -108,10 +120,14 @@ public class BeeGUI extends GUIState {
 		display.attach(environmentPortrayal,"Environment");
 		display.attach(entityPortrayal,"Entities");
 		
-		display.setBackdrop(Color.white);
+		display.setBackdrop(SimulationConfig.BACKGROUND_COLOR);
 	}
 
 	public static void main(String[] args) {
+		// My locale was set to GERMAN by default and this can crush mason
+		// because of number formats (3.14 is 3,14 in German format)
+		Locale.setDefault(Locale.ENGLISH);
+		
 		// Create the GUI
 		new BeeGUI().createController();
 	}

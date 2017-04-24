@@ -4,7 +4,6 @@ import com.sica.entities.EntityPlacer;
 import com.sica.environment.Environment;
 import com.sica.environment.EnvironmentModeller;
 
-import ec.util.MersenneTwisterFast;
 import sim.engine.SimState;
 import sim.field.grid.SparseGrid2D;
 
@@ -18,22 +17,19 @@ public class SimulationState extends SimState {
 	
 	SimulationConfig config;
 
-	public Environment environment = new Environment(SimulationConfig.GRID_WIDTH, SimulationConfig.GRID_HEIGHT);
+	public Environment environment = Environment.getNewEnvironment(SimulationConfig.GRID_WIDTH, SimulationConfig.GRID_HEIGHT);
 	public SparseGrid2D entities = new SparseGrid2D(SimulationConfig.GRID_WIDTH, SimulationConfig.GRID_HEIGHT);
 	
-	public SimulationState(long seed)
-	{ 
+	public SimulationState(long seed) { 
 		super(seed);
-		config = new SimulationConfig();
-		//SimulationState.random = this.random;
+		config = SimulationConfig.config();
 	}
 
 	@Override
-	public void start()
-	{
+	public void start() {
 		super.start();
 
-		environment = new Environment(SimulationConfig.GRID_WIDTH, SimulationConfig.GRID_HEIGHT);
+		environment = Environment.getNewEnvironment(SimulationConfig.GRID_WIDTH, SimulationConfig.GRID_HEIGHT);
 		entities = new SparseGrid2D(SimulationConfig.GRID_WIDTH, SimulationConfig.GRID_HEIGHT);
 		
 		// place the hive
@@ -49,52 +45,23 @@ public class SimulationState extends SimState {
 				random);
 		
 		// put some obstacles around
-		//EnvironmentModeller.generateRandomObstacles(environment, config.percentageObstacle, this.random);
-		EnvironmentModeller.generateWallObstacles(
-				environment,
-				config.getNumberOfWalls(),
-				config.getWallLength(),
-				random);
+		if(SimulationConfig.WALL_OBSTACLES) {
+			EnvironmentModeller.generateWallObstacles(environment, config.numberOfWalls, config.wallLength, this.random);
+		}
+		else {
+			EnvironmentModeller.generateRandomObstacles(environment, config.percentageObstacle, this.random);
+		}
 		
 		// let the bees out!
-		EntityPlacer.generateBees(entities, schedule, config.getNumBees());
+		EntityPlacer.generateBees(entities, schedule, config.numBees);
+		EntityPlacer.generateWorkers(entities, schedule, config.numWorkers);
 	}
 	
 
 	// Getters and Setters
+	
 	public SimulationConfig getConfig() {
 		return this.config;
 	}
 	
-	public void setNumBees(int numBees) {
-		if (numBees > 0) {
-			this.config.numBees = numBees;
-		}	
-	}
-
-	public void setNumFlowers(int numFlowers) {
-		if (numFlowers > 0) {
-			this.config.numFlowers = numFlowers;
-		}
-	}
-	
-	public void setGroupingAffinity(float groupingAffinity) {
-		this.config.groupingAffinity = groupingAffinity;
-	}
-
-	public void setRadioView(int radioView) {
-		if (radioView > 0) {
-			this.config.radioView = radioView;
-		}
-	}
-
-	public void setPercentageObstacle(int percentageObstacle) {
-		if (percentageObstacle > 0) {
-			this.config.percentageObstacle = percentageObstacle;
-		}
-		if (percentageObstacle > 100) {
-			this.config.percentageObstacle = 100;
-		}
-	}
-
 }

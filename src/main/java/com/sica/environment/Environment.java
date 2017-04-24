@@ -10,7 +10,22 @@ import sim.util.IntBag;
 public class Environment extends IntGrid2D {
 	private static final long serialVersionUID = 8925118805389868575L;
 
-	public Environment(int width, int height) {
+	private static Environment instance;
+	
+	public static Environment getEnvironment(int width, int height) {
+		if (instance == null) {
+			instance = new Environment(width, height);
+		}
+		
+		return instance;
+	}
+	
+	public static Environment getNewEnvironment(int width, int height) {
+		instance = new Environment(width, height);
+		return instance;
+	}
+	
+	private Environment(int width, int height) {
 		super(width, height, Knowledge.EMPTY.ordinal());
 	}
 	

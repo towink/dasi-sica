@@ -3,6 +3,8 @@ package com.sica.simulation;
 import com.sica.entities.EntityPlacer;
 import com.sica.environment.Environment;
 import com.sica.environment.EnvironmentModeller;
+
+import sim.display.Console;
 import sim.engine.SimState;
 import sim.field.grid.SparseGrid2D;
 
@@ -12,13 +14,13 @@ public class SimulationState extends SimState {
 	
 	SimulationConfig config;
 
-	public Environment environment = new Environment(SimulationConfig.GRID_WIDTH, SimulationConfig.GRID_HEIGHT);
+	public Environment environment = Environment.getNewEnvironment(SimulationConfig.GRID_WIDTH, SimulationConfig.GRID_HEIGHT);
 	public SparseGrid2D entities = new SparseGrid2D(SimulationConfig.GRID_WIDTH, SimulationConfig.GRID_HEIGHT);
 	
 	public SimulationState(long seed)
 	{ 
 		super(seed);
-		config = new SimulationConfig();
+		config = SimulationConfig.getConfig();
 	}
 
 	@Override
@@ -26,7 +28,7 @@ public class SimulationState extends SimState {
 	{
 		super.start();
 
-		environment = new Environment(SimulationConfig.GRID_WIDTH, SimulationConfig.GRID_HEIGHT);
+		environment = Environment.getNewEnvironment(SimulationConfig.GRID_WIDTH, SimulationConfig.GRID_HEIGHT);
 		entities = new SparseGrid2D(SimulationConfig.GRID_WIDTH, SimulationConfig.GRID_HEIGHT);
 		
 		EnvironmentModeller.generateHive(environment, SimulationConfig.HIVE_WIDTH, SimulationConfig.HIVE_HEIGHT);

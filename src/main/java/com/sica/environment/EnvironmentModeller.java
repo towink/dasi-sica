@@ -9,7 +9,7 @@ import sim.util.Int2D;
 public class EnvironmentModeller {
 	
 	/**
-	 * Generate a hive of the given size in the given enviromnent
+	 * Generate a hive of the given size in the given environment
 	 * @param environment
 	 * @param hiveWidth
 	 * @param hiveHeight
@@ -35,7 +35,7 @@ public class EnvironmentModeller {
 	 * Generate random obstacles across the given environment.
 	 * ANY location with an EnvironmenType of EMPTY can be set as an obstacle
 	 * with the given probability. No checks are made to see if all locations are still
-	 * accessible after genreating the obstacles
+	 * accessible after generating the obstacles
 	 * @param environment
 	 * @param probability
 	 * @param rnd should be the simulation's random number generator to always give the same results
@@ -76,7 +76,8 @@ public class EnvironmentModeller {
 				for(int i = 0; i < length; i++) {
 					// check if this position is already occupied
 					if((environment.hasTypeAt(leftWallPointX + i, wallY, Knowledge.EMPTY)) &&
-							(!inHive(new Int2D (leftWallPointX + i, wallY)))) {
+						(!environment.inHive(new Int2D (leftWallPointX + i, wallY), 
+						new Int2D (SimulationConfig.GRID_WIDTH/2, SimulationConfig.GRID_HEIGHT/2)))) {
 						environment.set(leftWallPointX + i, wallY, Knowledge.OBSTACLE);
 					}
 						
@@ -92,7 +93,8 @@ public class EnvironmentModeller {
 				int wallX = rnd.nextInt(environment.getWidth());
 				for(int i = 0; i < length; i++) {
 					if((environment.hasTypeAt(wallX, topWallPointY + i, Knowledge.EMPTY)) &&
-							(!inHive(new Int2D (wallX, topWallPointY + i)))) {
+						(!environment.inHive(new Int2D (wallX, topWallPointY + i), 
+						new Int2D (SimulationConfig.GRID_WIDTH/2, SimulationConfig.GRID_HEIGHT/2)))) {
 						environment.set(wallX, topWallPointY + i, Knowledge.OBSTACLE);
 					}
 						
@@ -104,24 +106,5 @@ public class EnvironmentModeller {
 			}
 		}
 	} 
-
-	public static boolean inHive (Int2D pos) {
-		Int2D center = new Int2D (SimulationConfig.GRID_WIDTH/2, SimulationConfig.GRID_HEIGHT/2);
-		int minX = (int) (center.getX() - SimulationConfig.HIVE_WIDTH/2);
-		int minY = (int) (center.getY() - SimulationConfig.HIVE_HEIGHT/2);
-		int maxX = (int) (center.getX() + SimulationConfig.HIVE_WIDTH/2);
-		int maxY = (int) (center.getY() + SimulationConfig.HIVE_HEIGHT/2);
-
-		if (pos.x > maxX || pos.x < minX) {
-			return false;
-		}
-
-		if (pos.y > maxY || pos.y < minY) {
-			System.out.println("X: " + pos.x + ", Y: " + pos.y);
-			return false;
-		}
-
-		return true;
-	}
 
 }

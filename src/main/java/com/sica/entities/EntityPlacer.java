@@ -49,7 +49,7 @@ public class EntityPlacer {
 		
 		//long start = System.currentTimeMillis();
 		
-		for(int x = 0; x < 0; x++)
+		for(int x = 0; x < 1000; x++)
 		{
 			agent = new WorkerBee();
 			

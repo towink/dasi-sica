@@ -1,6 +1,8 @@
 package com.sica;
 
 import java.awt.Color;
+import java.util.Locale;
+
 import javax.swing.JFrame;
 
 import com.sica.entities.agents.DroolsBee;
@@ -12,6 +14,7 @@ import sim.display.Controller;
 import sim.display.Display2D;
 import sim.display.GUIState;
 import sim.engine.SimState;
+import sim.portrayal.Inspector;
 import sim.portrayal.grid.FastValueGridPortrayal2D;
 import sim.portrayal.grid.SparseGridPortrayal2D;
 import sim.portrayal.simple.OvalPortrayal2D;
@@ -36,7 +39,7 @@ public class BeeGUI extends GUIState {
 	 *  Allow the user to inspect the model
 	 */
 	public Object getSimulationInspectedObject() { 
-		return state; 
+		return state;
 	}
 
 	/**
@@ -112,6 +115,10 @@ public class BeeGUI extends GUIState {
 	}
 
 	public static void main(String[] args) {
+		// My locale was set to GERMAN by default and this can crush mason
+		// because of number formats (3.14 is 3,14 in German format)
+		Locale.setDefault(Locale.ENGLISH);
+		
 		// Create the GUI
 		new BeeGUI().createController();
 	}

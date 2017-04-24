@@ -55,4 +55,5 @@ public class SimulationConfig {
 	public int getWallLength() {
 		return wallLength;
 	}
+	
 }

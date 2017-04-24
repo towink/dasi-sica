@@ -48,6 +48,10 @@ public class SimulationState extends SimState {
 			this.config.numBees = numBees;
 		}	
 	}
+	
+	public int getNumBees() {
+		return this.config.numBees;
+	}
 
 	public void setNumFlowers(int numFlowers) {
 		if (numFlowers > 0) {
@@ -57,6 +61,14 @@ public class SimulationState extends SimState {
 	
 	public void setGroupingAffinity(float groupingAffinity) {
 		this.config.groupingAffinity = groupingAffinity;
+	}
+	
+	public float getGroupingAffinity() {
+		return this.config.groupingAffinity;
+	}
+	
+	public Object domGroupingAffinity(){
+		return new sim.util.Interval(0.5, 1.0);
 	}
 
 	public void setRadioView(int radioView) {

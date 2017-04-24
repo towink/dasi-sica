@@ -49,7 +49,7 @@ public class WorkerBee extends Agent {
 			
 			break;
 		case EXPLORING:
-			if (simState.schedule.getSteps() > 2500 && simState.random.nextFloat() > simState.getConfig().getGroupingAffinity())
+			if (simState.schedule.getSteps() > 0 && simState.random.nextFloat() > simState.getConfig().getGroupingAffinity())
 				group(simState);
 			else
 				move (simState);

@@ -17,6 +17,8 @@ public class SimulationConfig {
 	
 	// env mode (bounded, unbounded, toroidal)
 	public static final int ENV_MODE = Grid2D.BOUNDED;
+	
+	private static SimulationConfig instance;
 
 	// PROTECTED simulation variables so only the controller can modify them
 	protected int numBees = 1000;
@@ -26,6 +28,20 @@ public class SimulationConfig {
 	protected float percentageObstacle = 0.1f;
 	protected int numberOfWalls = 20;
 	protected int wallLength = 30;
+	
+	
+	public static SimulationConfig getConfig() {
+		if (instance == null) {
+			instance = new SimulationConfig();
+		}
+		
+		return instance;
+	}
+	
+	
+	private SimulationConfig() {
+		
+	}
 	
 	// PUBLIC getters so everyone can see the configuration
 	public int getNumBees() {

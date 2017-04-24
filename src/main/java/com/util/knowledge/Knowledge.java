@@ -66,9 +66,11 @@ public enum Knowledge {
 	public static Knowledge fromInt(int environmentValue) {
 		int size = Knowledge.values().length;
 		int index = environmentValue & 0xffff;
-		if (index >= size)
+		if (index >= size) {
 			return Knowledge.UNKNOWN;
-		else
+		}
+		else {
 			return Knowledge.values()[index];
+		}
 	}
 }

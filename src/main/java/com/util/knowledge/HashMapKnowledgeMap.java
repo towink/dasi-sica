@@ -30,16 +30,19 @@ public class HashMapKnowledgeMap implements KnowledgeMapInterface {
 	@Override
 	public boolean addKnowledge(Int2D where, Knowledge knowledge) {
 		if (this.positionKnowledge.containsKey(where))
-			if (this.positionKnowledge.get(where) != knowledge)
+			if (this.positionKnowledge.get(where) != knowledge) {
 				throw new IllegalStateException("Cannot store different knowledges about the same position");
-			else
+			}
+			else {
 				return false;	//knowledge already present
-		
+			}
+				
 		this.positionKnowledge.put(where, knowledge);
 		//if this is the first time adding this knowledge, we need to create its hashset
 		if (this.knowledgePosition.containsKey(knowledge)) {
 			this.knowledgePosition.get(knowledge).add(where);
-		} else {
+		} 
+		else {
 			HashSet<Int2D> hs = new HashSet<Int2D>();
 			hs.add(where);
 			this.knowledgePosition.put(knowledge, hs);
@@ -54,17 +57,19 @@ public class HashMapKnowledgeMap implements KnowledgeMapInterface {
 	public boolean addKnowledge(KnowledgeMapInterface kMap) {
 		boolean result = false;
 		
-		for (Entry<Int2D, Knowledge> e: kMap.getAllKnowledge())
+		for (Entry<Int2D, Knowledge> e: kMap.getAllKnowledge()) {
 			result |= this.addKnowledge(e.getKey(), e.getValue());
-		
+		}
+			
 		return result;
 	}
 
 	@Override
 	public void removeKnowledge(Knowledge knowledge) {
 		if (this.knowledgePosition.containsKey(knowledge)) {
-			for (Int2D i2d: this.knowledgePosition.remove(knowledge))
+			for (Int2D i2d: this.knowledgePosition.remove(knowledge)) {
 				this.positionKnowledge.remove(i2d);
+			}
 		}
 	}
 
@@ -108,8 +113,9 @@ public class HashMapKnowledgeMap implements KnowledgeMapInterface {
 
 	@Override
 	public boolean peekNewKnowledge(Knowledge knowledge) {
-		if (!this.knowledgeUpdatedTable.containsKey(knowledge))
+		if (!this.knowledgeUpdatedTable.containsKey(knowledge)) {
 			return false;
+		}
 		return this.knowledgeUpdatedTable.get(knowledge);
 	}
 
@@ -119,8 +125,10 @@ public class HashMapKnowledgeMap implements KnowledgeMapInterface {
 		boolean tmp = this.hasNewKnowledge;
 		this.hasNewKnowledge = false;
 		//also clear specific values
-		for (Entry<Knowledge, Boolean> e: this.knowledgeUpdatedTable.entrySet())
+		for (Entry<Knowledge, Boolean> e: this.knowledgeUpdatedTable.entrySet()) {
 			e.setValue(false);
+		}
+			
 		return tmp;
 	}
 

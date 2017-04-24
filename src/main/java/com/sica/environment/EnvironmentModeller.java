@@ -1,14 +1,15 @@
 package com.sica.environment;
 
+import com.sica.simulation.SimulationConfig;
 import com.util.knowledge.Knowledge;
 
 import ec.util.MersenneTwisterFast;
 import sim.util.Int2D;
 
 public class EnvironmentModeller {
-
+	
 	/**
-	 * Generate a hive of the given size in the given enviromnent
+	 * Generate a hive of the given size in the given environment
 	 * @param environment
 	 * @param hiveWidth
 	 * @param hiveHeight
@@ -34,19 +35,23 @@ public class EnvironmentModeller {
 	 * Generate random obstacles across the given environment.
 	 * ANY location with an EnvironmenType of EMPTY can be set as an obstacle
 	 * with the given probability. No checks are made to see if all locations are still
-	 * accessible after genreating the obstacles
+	 * accessible after generating the obstacles
 	 * @param environment
 	 * @param probability
 	 * @param rnd should be the simulation's random number generator to always give the same results
 	 */
 	public static void generateRandomObstacles (Environment environment, float probability, MersenneTwisterFast rnd) {
-		for (int x = 0; x < environment.getWidth(); x++)
-			for (int y = 0; y < environment.getHeight(); y++)
-				if (environment.hasTypeAt(x, y, Knowledge.EMPTY))
-					if (rnd.nextFloat() < probability)
+		for (int x = 0; x < environment.getWidth(); x++) {
+			for (int y = 0; y < environment.getHeight(); y++) {
+				if (environment.hasTypeAt(x, y, Knowledge.EMPTY)) {
+					if (rnd.nextFloat() < probability) {
 						environment.set(x, y, Knowledge.OBSTACLE);
+					}
+				}
+			}
+		}	
 	}
-	
+
 	/**
 	 * Places a couple of straight obstacles (walls) in the environment. It is highly unlikely that
 	 * this makes any location unaccessible.
@@ -58,8 +63,9 @@ public class EnvironmentModeller {
 	 * @param rnd should be the simulation's random number generator to always give the same results
 	 */
 	public static void generateWallObstacles (Environment environment, int count, int length, MersenneTwisterFast rnd) {
-		if(length > environment.getHeight() || length > environment.getWidth() || length <= 0)
+		if(length > environment.getHeight() || length > environment.getWidth() || length <= 0) {
 			return;
+		}
 		int rest = count;
 		while(rest > 0) {
 			boolean horizontal = rnd.nextBoolean();
@@ -69,10 +75,15 @@ public class EnvironmentModeller {
 				int wallY = rnd.nextInt(environment.getHeight());
 				for(int i = 0; i < length; i++) {
 					// check if this position is already occupied
-					if(environment.hasTypeAt(leftWallPointX + i, wallY, Knowledge.EMPTY))
+					if((environment.hasTypeAt(leftWallPointX + i, wallY, Knowledge.EMPTY)) &&
+						(!environment.inHive(new Int2D (leftWallPointX + i, wallY), 
+						new Int2D (SimulationConfig.GRID_WIDTH/2, SimulationConfig.GRID_HEIGHT/2)))) {
 						environment.set(leftWallPointX + i, wallY, Knowledge.OBSTACLE);
-					else
+					}
+						
+					else {
 						i++; // jump over it so that no dead regions can exist
+					}
 				}
 				rest--;
 			}
@@ -81,14 +92,19 @@ public class EnvironmentModeller {
 				int topWallPointY = rnd.nextInt(environment.getHeight() - length + 1);
 				int wallX = rnd.nextInt(environment.getWidth());
 				for(int i = 0; i < length; i++) {
-					if(environment.hasTypeAt(wallX, topWallPointY + i, Knowledge.EMPTY))
+					if((environment.hasTypeAt(wallX, topWallPointY + i, Knowledge.EMPTY)) &&
+						(!environment.inHive(new Int2D (wallX, topWallPointY + i), 
+						new Int2D (SimulationConfig.GRID_WIDTH/2, SimulationConfig.GRID_HEIGHT/2)))) {
 						environment.set(wallX, topWallPointY + i, Knowledge.OBSTACLE);
-					else
+					}
+						
+					else {
 						i++;
+					}
 				}
 				rest--;
 			}
 		}
 	} 
-	
+
 }

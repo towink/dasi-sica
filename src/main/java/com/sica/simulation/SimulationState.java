@@ -4,7 +4,6 @@ import com.sica.entities.EntityPlacer;
 import com.sica.environment.Environment;
 import com.sica.environment.EnvironmentModeller;
 
-import sim.display.Console;
 import sim.engine.SimState;
 import sim.field.grid.SparseGrid2D;
 

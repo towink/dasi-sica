@@ -20,9 +20,11 @@ public class Map {
 	 * Resets the state so that all cells are unexplored
 	 */
 	public void resetState() {
-		for (int i = 0; i < width; i++) 
-			for (int j = 0; j < height; j++) 
+		for (int i = 0; i < width; i++) {
+			for (int j = 0; j < height; j++) {
 				this.mapState[i][j] = false;
+			}
+		}		
 	}
 	
 	/**

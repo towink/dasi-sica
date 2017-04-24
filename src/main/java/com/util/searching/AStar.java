@@ -49,8 +49,9 @@ public class AStar {
 			//i.e: the most promising
 			Node actualNode = this.openList.poll();
 			//If we've reached our destination, return the path to it
-			if (actualNode.getPosition().equals(finalPos))
+			if (actualNode.getPosition().equals(finalPos)) {
 				return createPath(actualNode);
+			}
 			//otherwise open all valid adjacent nodes and keep looking
 			openAdjacentNodes(actualNode, finalPos, map, aState);
 		}
@@ -98,23 +99,29 @@ public class AStar {
 		int x = node.getX();
 		int y = node.getY();
 		
-		if (x > 0)						//left
+		if (x > 0) {							//left
 			openNode(x - 1, y, node, finalPos, map, aState);
-		if (x < aState.getWidth() - 1)		//right
-			openNode(x + 1, y, node, finalPos, map, aState);
-		if (y > 0) {					//up
-			openNode(x, y - 1, node, finalPos, map, aState);
-			if (x > 0)					//up left
-				openNode(x - 1, y - 1, node, finalPos, map, aState);
-			if (x < aState.getWidth() - 1) //up right
-				openNode(x + 1, y - 1, node, finalPos, map, aState);
 		}
-		if (y < aState.getHeight() - 1) { 	//down
+		if (x < aState.getWidth() - 1) {		//right
+			openNode(x + 1, y, node, finalPos, map, aState);
+		}
+		if (y > 0) {							//up
+			openNode(x, y - 1, node, finalPos, map, aState);
+			if (x > 0) {						//up left
+				openNode(x - 1, y - 1, node, finalPos, map, aState);
+			}
+			if (x < aState.getWidth() - 1) { 	//up right
+				openNode(x + 1, y - 1, node, finalPos, map, aState);
+			}
+		}
+		if (y < aState.getHeight() - 1) { 		//down
 			openNode(x, y + 1, node, finalPos, map, aState);
-			if (x > 0)					//down left
+			if (x > 0) {						//down left
 				openNode(x, y + 1, node, finalPos, map, aState);
-			if (x < aState.getWidth() - 1) //down right
+			}
+			if (x < aState.getWidth() - 1) { 	//down right
 				openNode(x, y + 1, node, finalPos, map, aState);
+			}
 		}
 	}
 

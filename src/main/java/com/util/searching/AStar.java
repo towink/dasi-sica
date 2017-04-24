@@ -1,6 +1,7 @@
 package com.util.searching;
 
 import java.util.Comparator;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.PriorityQueue;
@@ -80,11 +81,17 @@ public class AStar {
 	 */
 	private List<Int2D> createPath (Node node) {
 		LinkedList<Int2D> path = new LinkedList<Int2D>();
-		while (node != null) {
+		/*while (node != null) {
 			path.add(0, node.getPosition());
 			node = node.getParentNode();
-		}
+		}*/
 
+		Iterator<Node> iterator = node.iterator();
+		while (iterator.hasNext()) {
+			Node aux = iterator.next();
+			path.add(0, aux.getPosition());
+		}
+		
 		return path;
 	}
 

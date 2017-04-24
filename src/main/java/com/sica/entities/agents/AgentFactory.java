@@ -1,5 +1,6 @@
 package com.sica.entities.agents;
 
+import com.sica.behaviour.ObjectiveExplore;
 import com.sica.entities.Entity;
 
 public class AgentFactory {
@@ -25,7 +26,9 @@ public class AgentFactory {
 		}
 		
 		if (agentType.equals("WORKER")) {
-			return new ObjectiveDrivenWorkerBee();
+			ObjectiveDrivenWorkerBee agent = new ObjectiveDrivenWorkerBee();
+			agent.addObjective(new ObjectiveExplore());
+			return agent;
 		}
 		else if (agentType.equals("DEFENDER")) {
 			System.out.println("DEFENDER: It has not yet been implemented, returning null");

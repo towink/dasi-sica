@@ -41,6 +41,10 @@ public class Node {
 		return 0;
 	}
 	
+	public NodeIterator iterator () {
+		return new NodeIterator(this);
+	}
+	
 	// getters and setters
 	/**
 	 * @return this node's position

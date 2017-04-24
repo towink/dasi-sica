@@ -1,5 +1,7 @@
 package com.sica.simulation;
 
+import java.awt.Color;
+
 import sim.field.grid.Grid2D;
 
 /**
@@ -8,6 +10,17 @@ import sim.field.grid.Grid2D;
  *
  */
 public class SimulationConfig {
+	
+	// singleton stuff
+	private static SimulationConfig instance;
+	private SimulationConfig() {}
+	// Note that this is not called 'getConfig' so that it does not appear in GUI
+	public static SimulationConfig config() {
+		if (instance == null) {
+			instance = new SimulationConfig();
+		}
+		return instance;
+	}
 	
 	// constant parameters
 	
@@ -28,13 +41,16 @@ public class SimulationConfig {
 	
 	// type of obstacles
 	// TODO decide if manipulable in GUI, are there other types of obstacles?
-	public static final boolean WALL_OBSTACLES = false;
+	public static final boolean WALL_OBSTACLES = true;
+	
+	// sometimes it is convenient to change the background color to black, for example
+	public static final Color BACKGROUND_COLOR = Color.WHITE;
 	
 	
 	// PROTECTED simulation variables so only the controller can modify them
 	// ?? What is the controller?
-	protected int numBees = 1000;
-	protected int numWorkers = 250;
+	protected int numBees = 250;
+	protected int numWorkers = 50;
 	protected int numFlowers = 1;
 	protected float groupingAffinity = 0.95f;
 	protected int radioView = 5;
@@ -118,6 +134,8 @@ public class SimulationConfig {
 			this.wallLength = wallLength;
 	}
 	
+	// TODO maybe also wall thickness ...
+	
 	// ------------------------------------------------
 	// parameters than can be changed during simulation
 	// ------------------------------------------------
@@ -142,20 +160,6 @@ public class SimulationConfig {
 	
 	public void setRadioView(int radioView) {
 		this.radioView = radioView;
-	}
-	
-	
-	
-	
-	
-	// singleton stuff
-	private static SimulationConfig instance;
-	private SimulationConfig() {}
-	public static SimulationConfig config() {
-		if (instance == null) {
-			instance = new SimulationConfig();
-		}
-		return instance;
 	}
 	
 }

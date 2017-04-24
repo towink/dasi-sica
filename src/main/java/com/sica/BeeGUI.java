@@ -9,6 +9,7 @@ import com.sica.entities.agents.DroolsBee;
 import com.sica.entities.agents.ObjectiveDrivenWorkerBee;
 import com.sica.entities.agents.WorkerBee;
 import com.sica.environment.EnvironmentColorMap;
+import com.sica.simulation.SimulationConfig;
 import com.sica.simulation.SimulationState;
 
 import sim.display.Console;
@@ -22,6 +23,9 @@ import sim.portrayal.grid.SparseGridPortrayal2D;
 import sim.portrayal.simple.OvalPortrayal2D;
 
 public class BeeGUI extends GUIState {
+	
+	// size of the simulation frame
+	public static final int DISPLAY_SIZE = 600;
 
 	public Display2D display;
 	public JFrame frame;
@@ -107,7 +111,7 @@ public class BeeGUI extends GUIState {
 	{
 		super.init(c);
 
-		display = new Display2D(400,400,this);
+		display = new Display2D(DISPLAY_SIZE, DISPLAY_SIZE, this);
 		frame = display.createFrame();
 		c.registerFrame(frame);
 		frame.setVisible(true);
@@ -116,7 +120,7 @@ public class BeeGUI extends GUIState {
 		display.attach(environmentPortrayal,"Environment");
 		display.attach(entityPortrayal,"Entities");
 		
-		display.setBackdrop(Color.white);
+		display.setBackdrop(SimulationConfig.BACKGROUND_COLOR);
 	}
 
 	public static void main(String[] args) {

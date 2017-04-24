@@ -38,7 +38,8 @@ public class SimulationState extends SimState {
 			EnvironmentModeller.generateRandomObstacles(environment, config.percentageObstacle, this.random);
 		}
 		
-		EntityPlacer.generateBees(entities, schedule, config.numWorkers);
+		EntityPlacer.generateBees(entities, schedule, config.numBees);
+		EntityPlacer.generateWorkers(entities, schedule, config.numWorkers);
 	}
 	
 

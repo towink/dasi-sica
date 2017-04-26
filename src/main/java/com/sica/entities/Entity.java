@@ -73,7 +73,11 @@ public abstract class Entity implements Steppable {
 	 */
 	public boolean move(Direction dir, SimulationState simState, int mode) {
 		Int2D origin = simState.entities.getObjectLocation(this);
-		Int2D destination = dir.getMovementOf(origin, mode, SimulationConfig.GRID_WIDTH, SimulationConfig.GRID_HEIGHT);
+		Int2D destination = dir.getMovementOf(
+				origin,
+				mode,
+				SimulationConfig.GRID_WIDTH,
+				SimulationConfig.GRID_HEIGHT);
 		if (this.canMoveTo(destination, simState, mode)) {
 			simState.entities.setObjectLocation(this, destination);
 			return true;

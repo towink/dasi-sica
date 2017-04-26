@@ -38,6 +38,7 @@ public class Environment extends IntGrid2D {
 		return this.hasTypeAt(pos.x, pos.y, type);
 	}
 	
+	
 	/**
 	 * @param x
 	 * @param y
@@ -47,6 +48,16 @@ public class Environment extends IntGrid2D {
 	 */
 	public boolean hasTypeAt(int x, int y, Knowledge type) {
 		return Knowledge.isType(this.get(x, y), type);
+	}
+	
+
+	public int getMetadataAt(Int2D pos) {
+		return (int)Knowledge.extractMetadata(this.get(pos.x, pos.y));
+	}
+	
+	public void setMetadataAt(Int2D pos, int meta) {
+		Knowledge knowledge = Knowledge.fromInt(this.get(pos.x, pos.y));
+		this.set(pos, knowledge.inyectMetadata((short)meta));
 	}
 	
 	
@@ -68,6 +79,16 @@ public class Environment extends IntGrid2D {
 	 */
 	public void set(Int2D pos, Knowledge type) {
 		this.set(pos.x, pos.y, type.toInt());
+	}
+	
+	/**
+	 * Sets the value at the given point.
+	 * @param x
+	 * @param y
+	 * @param type
+	 */
+	public void set(Int2D pos, int envValue) {
+		this.set(pos.x, pos.y, envValue);
 	}
 	
 	

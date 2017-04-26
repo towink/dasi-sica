@@ -49,6 +49,12 @@ public class BeeGUI extends GUIState {
 	public Object getSimulationInspectedObject() { 
 		return ((SimulationState)state).getConfig();
 	}
+	
+	public Inspector getInspector() {
+		Inspector i = super.getInspector();
+		i.setVolatile(true);
+		return i;
+	}
 
 	/**
 	 * Window takes its name from here

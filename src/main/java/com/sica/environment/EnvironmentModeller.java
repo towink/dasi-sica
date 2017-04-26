@@ -40,8 +40,9 @@ public class EnvironmentModeller {
 	 */
 	public static void generateFlower(Environment env, Int2D pos, int aliment) {
 		Knowledge flower = Knowledge.FLOWER;
-		flower.inyectMetadata((short) aliment);
-		env.set(pos, flower);
+		int flowerWithMeta = flower.inyectMetadata((short) aliment);
+		env.set(pos, flowerWithMeta);
+		System.out.println(env.getMetadataAt(pos));
 	}
 	
 	/**
@@ -64,7 +65,13 @@ public class EnvironmentModeller {
 			Int2D pos = new Int2D(
 					random.nextInt(SimulationConfig.GRID_WIDTH),
 					random.nextInt(SimulationConfig.GRID_HEIGHT));
-			generateFlower(env, pos, aliment);
+			// do not place flowers into hive ...
+			if(env.inHive(pos, new Int2D (env.getWidth()/2, env.getHeight()/2))) {
+				i--;
+			}
+			else {
+				generateFlower(env, pos, aliment);
+			}
 		}
 	}
 

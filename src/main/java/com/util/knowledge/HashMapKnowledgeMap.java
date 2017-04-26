@@ -36,7 +36,7 @@ public class HashMapKnowledgeMap implements KnowledgeMapInterface {
 			else {
 				return false;	//knowledge already present
 			}
-				
+		
 		this.positionKnowledge.put(where, knowledge);
 		//if this is the first time adding this knowledge, we need to create its hashset
 		if (this.knowledgePosition.containsKey(knowledge)) {
@@ -60,8 +60,26 @@ public class HashMapKnowledgeMap implements KnowledgeMapInterface {
 		for (Entry<Int2D, Knowledge> e: kMap.getAllKnowledge()) {
 			result |= this.addKnowledge(e.getKey(), e.getValue());
 		}
-			
+
 		return result;
+	}
+	
+	@Override
+	public boolean updateKnowledge(Int2D where, Knowledge knowledge) {
+		removeKnowledge(where);
+		return addKnowledge(where, knowledge);
+	}
+	
+	@Override
+	public boolean updateKnowledge(KnowledgeMapInterface kMap) {
+		boolean result = false;
+		for (Entry<Int2D, Knowledge> e: kMap.getAllKnowledge()) {
+			result |= this.updateKnowledge(e.getKey(), e.getValue());
+		}
+		return result;
+		//this.init();
+		//this.addKnowledge(kMap);
+		//return false;
 	}
 
 	@Override

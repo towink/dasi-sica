@@ -1,6 +1,5 @@
 package com.sica.entities;
 
-import com.sica.behaviour.ObjectiveExplore;
 import com.sica.entities.agents.AgentFactory;
 import com.sica.entities.agents.DroolsBee;
 import com.sica.entities.agents.ObjectiveDrivenWorkerBee;
@@ -46,10 +45,9 @@ public class EntityPlacer {
 	 */
 	public static void generateWorkers(SparseGrid2D entities, Schedule schedule, int numWorkers) {
 		Entity agent;
-		for (int x = 0; x < 10; x++) {
+		for (int x = 0; x < numWorkers; x++) {
 			agent = AgentFactory.getAgent(AgentFactory.WORKER_BEE);
-			// maybe the next 3 lines should be included in the factory method??
-			((ObjectiveDrivenWorkerBee) agent).addObjective(new ObjectiveExplore());
+			// maybe the next 2 lines should be included in the factory method somehow??
 			entities.setObjectLocation(agent, SimulationConfig.GRID_WIDTH / 2, SimulationConfig.GRID_HEIGHT / 2);
 			schedule.scheduleRepeating(Schedule.EPOCH, 0, agent, 1);
 		}

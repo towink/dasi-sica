@@ -19,7 +19,7 @@ import sim.util.Int2D;
  * @author Tobias
  *
  */
-public class TaskGetToPosition implements Task {
+public class TaskGetToPosition extends Task {
 
 	private Int2D destination;
 
@@ -33,8 +33,8 @@ public class TaskGetToPosition implements Task {
 		// a.move(Direction.values()[simState.random.nextInt(4)], simState, Grid2D.TOROIDAL);
 		
 		// the first step in a get-to-position task is to observe the environment nearby
-		// in order to find obstacles (and other stuff like enemies ...)
-		agent.observeEnvironment(simState);
+		// in order to find obstacles
+		agent.observeEnvironment(simState, Knowledge.OBSTACLE);
 		
 		// check if agent already has a path
 		List<Int2D> path = agent.getActualPath();

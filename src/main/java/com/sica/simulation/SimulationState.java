@@ -16,6 +16,8 @@ public class SimulationState extends SimState {
 	//public static MersenneTwisterFast random;
 	
 	SimulationConfig config;
+	
+	public int aliment;
 
 	public Environment environment = Environment.getNewEnvironment(SimulationConfig.GRID_WIDTH, SimulationConfig.GRID_HEIGHT);
 	public SparseGrid2D entities = new SparseGrid2D(SimulationConfig.GRID_WIDTH, SimulationConfig.GRID_HEIGHT);
@@ -23,6 +25,8 @@ public class SimulationState extends SimState {
 	public SimulationState(long seed) { 
 		super(seed);
 		config = SimulationConfig.config();
+		config.sim = this;
+		aliment = 0;
 	}
 
 	@Override
@@ -39,7 +43,7 @@ public class SimulationState extends SimState {
 		//EnvironmentModeller.generateFlowers(environment, SimulationConfig.NORMAL_FLOWER_WIDTH, SimulationConfig.NORMAL_FLOWER_HEIGHT);
 		EnvironmentModeller.randomlyGenerateFlowers(
 				environment,
-				20,
+				config.getNumFlowers(),
 				config.getMinAlimentFlower(),
 				config.getMaxAlimentFlower(),
 				random);

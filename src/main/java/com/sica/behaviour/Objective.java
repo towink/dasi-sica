@@ -24,7 +24,10 @@ public abstract class Objective implements Comparable<Objective>{
 	 * @param a
 	 * @param simState
 	 */
-	public void step(ObjectiveDrivenAgent a, SimulationState simState) {
+	public final void step(ObjectiveDrivenAgent a, SimulationState simState) {
+		// remove tasks that are finished and call their endTask function
+		this.removeFinishedTasks(a, simState);
+		// execute next task in queue
 		if (!this.isFinished(a, simState))
 			taskQueue.peek().interactWith(a, simState);
 	}
@@ -32,10 +35,17 @@ public abstract class Objective implements Comparable<Objective>{
 	/**
 	 * @return true if all tasks in this objective have been completed
 	 */
-	public boolean isFinished(ObjectiveDrivenAgent a, SimulationState simState) {
-		this.removeFinishedTasks(a, simState);
-		return this.taskQueue.isEmpty();
-	}
+	public abstract boolean isFinished(ObjectiveDrivenAgent a, SimulationState simState); //{
+		//this.removeFinishedTasks(a, simState);
+		//return this.taskQueue.isEmpty();
+	//}
+	
+	/**
+	 * Can be overwritten to do stuff when the objective is completed
+	 * @param a
+	 * @param simState
+	 */
+	public void onFinished(ObjectiveDrivenAgent a, SimulationState simState) {}
 
 	/**
 	 * removes all finished tasks from the queue
@@ -62,9 +72,10 @@ public abstract class Objective implements Comparable<Objective>{
 	}
 	
 	/**
+	 * TODO describe
 	 * @return the priority of the objective
 	 */
-	public abstract int getPriority();
+	public int getPriority() { return 0; }
 	
 	@Override
 	public int compareTo(Objective other) {

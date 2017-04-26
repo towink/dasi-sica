@@ -11,6 +11,12 @@ import sim.field.grid.Grid2D;
  */
 public class SimulationConfig {
 	
+	// trololo
+	public SimulationState sim;
+	public int getAliment() {
+		return sim.aliment;
+	}
+	
 	// singleton stuff
 	private static SimulationConfig instance;
 	private SimulationConfig() {}
@@ -44,20 +50,20 @@ public class SimulationConfig {
 	public static final boolean WALL_OBSTACLES = true;
 	
 	// sometimes it is convenient to change the background color to black, for example
-	public static final Color BACKGROUND_COLOR = Color.WHITE;
+	public static final Color BACKGROUND_COLOR = Color.BLACK;
 	
 	
 	// PROTECTED simulation variables so only the controller can modify them
 	// ?? What is the controller?
 	
 	// agent parameters
-	protected int numBees = 250;
-	protected int numWorkers = 50;
+	protected int numBees = 0;
+	protected int numWorkers = 10;
 	protected float groupingAffinity = 0.95f;
-	protected int radioView = 5;
+	protected int radioView = 10;
 	
 	// environment parameters
-	protected int numFlowers = 1;
+	protected int numFlowers = 20;
 	protected int minAlimentFlower = 5;
 	protected int maxAlimentFlower = 20;
 	protected float percentageObstacle = 0.1f;

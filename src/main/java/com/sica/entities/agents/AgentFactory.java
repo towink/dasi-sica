@@ -1,7 +1,7 @@
 package com.sica.entities.agents;
 
-import com.sica.behaviour.ObjectiveExplore;
 import com.sica.entities.Entity;
+import com.sica.simulation.SimulationConfig;
 
 public class AgentFactory {
 
@@ -27,7 +27,7 @@ public class AgentFactory {
 		
 		if (agentType.equals("WORKER")) {
 			ObjectiveDrivenWorkerBee agent = new ObjectiveDrivenWorkerBee();
-			agent.addObjective(new ObjectiveExplore());
+			agent.addObjective(agent.new ObjectiveExplore());
 			return agent;
 		}
 		else if (agentType.equals("DEFENDER")) {

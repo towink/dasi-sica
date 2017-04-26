@@ -32,6 +32,21 @@ public interface KnowledgeMapInterface {
 	public boolean addKnowledge(KnowledgeMapInterface kMap);
 	
 	/**
+	 * 
+	 * @param where
+	 * @param knowledge
+	 * @return
+	 */
+	public boolean updateKnowledge(Int2D where, Knowledge knowledge);
+	
+	/**
+	 * 
+	 * @param kMap
+	 * @return
+	 */
+	public boolean updateKnowledge(KnowledgeMapInterface kMap);
+	
+	/**
 	 * Removes this knowledge from all places where it is found
 	 * @param knowledge
 	 */

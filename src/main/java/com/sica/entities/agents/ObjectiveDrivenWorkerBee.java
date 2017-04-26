@@ -1,32 +1,29 @@
 package com.sica.entities.agents;
 
 import java.util.Collection;
-import java.util.Iterator;
-import java.util.Random;
-
 import com.sica.behaviour.Objective;
-import com.sica.behaviour.Task;
 import com.sica.behaviour.TaskGetToPosition;
 import com.sica.behaviour.TaskOneShot;
 import com.sica.entities.Entity;
-import com.sica.entities.Entity.EntityType;
 import com.sica.simulation.SimulationConfig;
 import com.sica.simulation.SimulationState;
-import com.util.knowledge.HashMapKnowledgeMap;
 import com.util.knowledge.Knowledge;
-import com.util.knowledge.KnowledgeMapInterface;
 import com.util.movement.Direction;
-import com.util.movement.MovementFunctions;
-
-import sim.field.grid.Grid2D;
 import sim.util.Bag;
 import sim.util.Int2D;
 
+/**
+ * Represents a worker bee in the simulation.
+ * Technically it is an agent which is guided by the two objectives 'explore' and 'collect'.
+ * 
+ * One of the main parameters of this bee is flowerThreshold. This is the number of flowers it needs to think it knows
+ * before switching to the collecting objective.
+ * 
+ * @author Tobias
+ *
+ */
 public class ObjectiveDrivenWorkerBee extends ObjectiveDrivenAgent {
 	private static final long serialVersionUID = -1667202705195646436L;
-	
-	// TODO configurable
-	private static final int FLOWER_THRESHOLD = 1;
 	
 	private boolean carriesAliment;
 
@@ -57,11 +54,7 @@ public class ObjectiveDrivenWorkerBee extends ObjectiveDrivenAgent {
 		return getKnowledgeMap().getKnowledgeOf(Knowledge.FLOWER).size() >= min;
 	}
 	
-	
-	/* 
-	 * COMMON TASKS FOR BOTH OBJECTIVES OF THIS BEE
-	 * -------------------------------------------------
-	 */
+	// --- COMMON TASKS FOR BOTH OBJECTIVES OF THIS BEE ---
 	
 	private class TaskBroadcastKnowledge extends TaskOneShot {
 		@Override
@@ -70,10 +63,8 @@ public class ObjectiveDrivenWorkerBee extends ObjectiveDrivenAgent {
 		}
 	}
 	
-	/* 
-	 * OBJECTIVES OF THIS BEE
-	 * -------------------------------------------------
-	 */
+	// --- OBJECTIVES OF THIS BEE ---
+
 	
 	/**
 	 * 
@@ -88,19 +79,17 @@ public class ObjectiveDrivenWorkerBee extends ObjectiveDrivenAgent {
 		
 		@Override
 		public boolean isFinished(ObjectiveDrivenAgent a, SimulationState simState) {
-			return thinksKnowsFlowers(FLOWER_THRESHOLD);
+			return thinksKnowsFlowers(SimulationConfig.config().getFlowerThresholdWorker());
 		}
 		
 		@Override
 		public void onFinished(ObjectiveDrivenAgent a, SimulationState simState) {
+			// go collecting when we are done exploring!
 			objectives.add(new ObjectiveCollect());
 		}
 		
-		/* 
-		 * TASKS SPECIFIC TO OBJECTIVE EXPLORE
-		 * -------------------------------------------------
-		 */
-		
+		// --- TASKS SPECIFIC TO OBJECTIVE EXPLORE ---
+
 		private class TaskObserveFlowersObstacles extends TaskOneShot {
 			@Override
 			public void interactWithOneShot(ObjectiveDrivenAgent a, SimulationState simState) {
@@ -110,9 +99,9 @@ public class ObjectiveDrivenWorkerBee extends ObjectiveDrivenAgent {
 			@Override
 			public void endTask(ObjectiveDrivenAgent a, Objective obj, SimulationState simState) {
 				if(a.getKnowledgeMap().pollNewKnowledge()) {
-					//obj.addTask(new TaskBroadcastKnowledge());
+					obj.addTask(new TaskBroadcastKnowledge());
 				}
-				obj.addTask(new TaskMoveRandomly());
+				addTask(new TaskMoveRandomly());
 			}
 		}
 		
@@ -125,13 +114,12 @@ public class ObjectiveDrivenWorkerBee extends ObjectiveDrivenAgent {
 			}
 			@Override
 			public void endTask(ObjectiveDrivenAgent a, Objective obj, SimulationState simState) {
-				obj.addTask(new TaskObserveFlowersObstacles());
+				addTask(new TaskObserveFlowersObstacles());
 			}
 		}
 
 	}
 
-	
 	/**
 	 * Represents the objective to go to known flower position, take aliment
 	 * and bring it to the hive.
@@ -147,20 +135,18 @@ public class ObjectiveDrivenWorkerBee extends ObjectiveDrivenAgent {
 		
 		@Override
 		public boolean isFinished(ObjectiveDrivenAgent a, SimulationState simState) {
-			return !thinksKnowsFlowers(FLOWER_THRESHOLD);
+			return !thinksKnowsFlowers(SimulationConfig.config().getFlowerThresholdWorker());
 		}
 		
 		@Override
 		public void onFinished(ObjectiveDrivenAgent a, SimulationState simState) {
+			// when collecting is finished, switch to exploring
 			addObjective(new ObjectiveExplore());
 		}
 		
-		/* 
-		 * TASKS SPECIFIC TO OBJECTIVE COLLECT
-		 * -------------------------------------------------
-		 */
+		// --- TASKS SPECIFIC TO OBJECTIVE COLLECT ---
 		
-		// TODO what is the criterion to decide where to go next?
+		// TODO what is the criterion to decide where to go next? at the moment random ...
 		private class TaskDecideWhereToGo extends TaskOneShot {
 			private Int2D decision;
 			@Override

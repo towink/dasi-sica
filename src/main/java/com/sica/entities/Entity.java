@@ -13,6 +13,7 @@ import sim.util.Int2D;
 public abstract class Entity implements Steppable {
 	private static final long serialVersionUID = -1449354141004958564L;
 	
+	// TODO clean this up
 	public static enum EntityType {UNKNOWN, WORKER, DROOLS, OBJECTIVE_DRIVEN};
 	
 	private static int uaidGenerator = 0;	//static variable to count the number of agents created

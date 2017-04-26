@@ -49,7 +49,7 @@ public class SimulationState extends SimState {
 				random);
 		
 		// put some obstacles around
-		if(SimulationConfig.WALL_OBSTACLES) {
+		if(SimulationConfig.config().getObstacleType() == SimulationConfig.WALL_OBSTACLES) {
 			EnvironmentModeller.generateWallObstacles(environment, config.numberOfWalls, config.wallLength, this.random);
 		}
 		else {

@@ -110,7 +110,7 @@ public class ObjectiveDrivenWorkerBee extends ObjectiveDrivenAgent {
 			@Override
 			public void endTask(ObjectiveDrivenAgent a, Objective obj, SimulationState simState) {
 				if(a.getKnowledgeMap().pollNewKnowledge()) {
-					obj.addTask(new TaskBroadcastKnowledge());
+					//obj.addTask(new TaskBroadcastKnowledge());
 				}
 				obj.addTask(new TaskMoveRandomly());
 			}

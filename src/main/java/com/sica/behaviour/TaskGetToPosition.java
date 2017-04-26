@@ -12,10 +12,13 @@ import sim.util.Int2D;
  * When this task is executed on an agent, it will move to the point specified as
  * destination, computing shortest paths based on the knowledge of this agent about
  * the world.
+ * 
  * After moving to a new position, the environment is observed and knowledge about obstacles
  * is inserted.
+ * 
  * If the current path turns out to be impossible because of obstacles or other things
  * in the way, then paths are recomputed.
+ * 
  * @author Tobias
  *
  */
@@ -70,12 +73,6 @@ public class TaskGetToPosition extends Task {
 			//System.out.println("Recomputing path: no path yet");
 			agent.computePath(simState, destination);
 		}
-	}
-
-	@Override
-	public void endTask(ObjectiveDrivenAgent a, Objective obj, SimulationState simState) {
-		//System.out.println("Reached destination " + destination);
-		obj.taskFinishedCallback(this);
 	}
 
 	@Override

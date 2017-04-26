@@ -3,6 +3,26 @@ package com.sica.behaviour;
 import com.sica.entities.agents.ObjectiveDrivenAgent;
 import com.sica.simulation.SimulationState;
 
+/**
+ * Objectives are made up of tasks. The tasks themselves can be regarded as sub-objectives as well because they also
+ * dispose of the (descriptive) isFinished method. The main difference is that tasks encapsulate behavior while
+ * objectives do not.
+ * 
+ * Hints on implementing tasks:
+ * 
+ * Consider to put your task classes as inner classes into the agent (if the task is specific for this agent) or even
+ * into the objective it belongs to. In these cases, you will not need the parameters 'ObjectDrivenAgent a' and
+ * 'Objective obj', respectively.
+ * 
+ * For fairly simple tasks that are always executed in one step of the Mason simulation, there is the convenience class
+ * OneShotTask.
+ * 
+ * However, in order to enforce reusability, try to keep tasks as general as possible and declare them as public classes
+ * so that other objectives and even other agent can make use of them (an example is TaskGetToPosition).
+ * 
+ * @author Tobias
+ *
+ */
 public abstract class Task {
 	
 	/**

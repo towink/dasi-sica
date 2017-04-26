@@ -17,6 +17,7 @@ import sim.util.IntBag;
 
 /**
  * Agent whose behavior is controlled by objectives.
+ * 
  * @author Tobias
  *
  */

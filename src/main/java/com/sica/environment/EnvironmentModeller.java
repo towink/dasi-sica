@@ -42,7 +42,6 @@ public class EnvironmentModeller {
 		Knowledge flower = Knowledge.FLOWER;
 		int flowerWithMeta = flower.inyectMetadata((short) aliment);
 		env.set(pos, flowerWithMeta);
-		System.out.println(env.getMetadataAt(pos));
 	}
 	
 	/**

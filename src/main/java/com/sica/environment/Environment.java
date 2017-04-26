@@ -176,7 +176,7 @@ public class Environment extends IntGrid2D {
 		}
 
 		if (checkPos.y > maxY || checkPos.y < minY) {
-			System.out.println("X: " + checkPos.x + ", Y: " + checkPos.y);
+			// System.out.println("X: " + checkPos.x + ", Y: " + checkPos.y);
 			return false;
 		}
 

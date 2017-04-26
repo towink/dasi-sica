@@ -66,7 +66,6 @@ public class ObjectiveDrivenWorkerBee extends ObjectiveDrivenAgent {
 	private class TaskBroadcastKnowledge extends TaskOneShot {
 		@Override
 		public void interactWithOneShot(ObjectiveDrivenAgent a, SimulationState simState) {
-			//System.out.println("broadcasting knowledge ...");
 			broadcastKnowledge(simState);
 		}
 	}
@@ -136,9 +135,6 @@ public class ObjectiveDrivenWorkerBee extends ObjectiveDrivenAgent {
 	/**
 	 * Represents the objective to go to known flower position, take aliment
 	 * and bring it to the hive.
-	 * Implemented as inner class because:
-	 * - conceptually nice because the objective without the agent does not make sense
-	 * - objective has full control over agent
 	 * @author Tobias
 	 *
 	 */

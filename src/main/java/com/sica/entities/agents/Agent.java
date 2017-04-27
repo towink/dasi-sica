@@ -19,7 +19,6 @@ public abstract class Agent extends Entity {
 	 */
 	private static final long serialVersionUID = -3612132049378487984L;
 	
-	protected static AStar pathFinder;
 	protected List<Int2D> actualPath;
 	protected KnowledgeMapInterface knowledge;
 	protected Int2D objective;
@@ -29,13 +28,10 @@ public abstract class Agent extends Entity {
 		knowledge = new HashMapKnowledgeMap();
 		objective = new Int2D();
 		knowledge.addKnowledge(new Int2D(SimulationConfig.GRID_WIDTH/2, SimulationConfig.GRID_HEIGHT/2), Knowledge.HIVE);
-		if (pathFinder == null) {
-			pathFinder = new AStar(SimulationConfig.GRID_WIDTH, SimulationConfig.GRID_HEIGHT);
-		}
 	}
 
 	public void calculatePath(Int2D actualPosition) {
-		actualPath = pathFinder.findPath(actualPosition, getObjective(), knowledge);
+		actualPath = AStar.findPath(actualPosition, getObjective(), knowledge, SimulationConfig.GRID_WIDTH, SimulationConfig.GRID_HEIGHT);
 	}
 	
 	public void doStep( final SimulationState state ) {

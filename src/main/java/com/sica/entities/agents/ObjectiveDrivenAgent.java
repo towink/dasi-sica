@@ -27,7 +27,6 @@ public abstract class ObjectiveDrivenAgent extends Entity{
 	protected PriorityQueue<Objective> objectives;
 	protected KnowledgeMapInterface knowledge;
 	protected List<Int2D> actualPath;
-	public static AStar pathFinder;
 	
 	/**
 	 * Creates an agent with a initially empty knowledge and without any objectives.
@@ -38,9 +37,6 @@ public abstract class ObjectiveDrivenAgent extends Entity{
 		this.objectives = new PriorityQueue<Objective>();
 		this.knowledge = new HashMapKnowledgeMap();
 		this.actualPath = null;
-		if (pathFinder == null) {
-			pathFinder = new AStar(SimulationConfig.GRID_WIDTH, SimulationConfig.GRID_HEIGHT);
-		}
 	}
 	
 	/**
@@ -131,10 +127,7 @@ public abstract class ObjectiveDrivenAgent extends Entity{
 	 */
 	public void computePath(final SimulationState state, Int2D destination) {
 		Int2D beginPos = state.entities.getObjectLocation(this);
-		actualPath = ObjectiveDrivenAgent.pathFinder.findPath(
-				beginPos,
-				destination,
-				knowledge);
+		actualPath = AStar.findPath(beginPos, destination, knowledge, SimulationConfig.GRID_WIDTH, SimulationConfig.GRID_HEIGHT); 
 	}
 	
 	/**

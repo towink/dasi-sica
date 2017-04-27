@@ -14,22 +14,15 @@ import sim.util.Int2D;
 public class AStar {
 	private static final int IMPASSABLE = 10000;
 	
-	
-	private PriorityQueue<Node> openList;
-	Map aState;
+	//keep this comparator here in case we want to make other metrics such as Best First Search
+	private static final Comparator<Node> nodeComparator = new Comparator<Node>() {
 
-	public AStar (int width, int height) {
-		openList = new PriorityQueue<Node>(new Comparator<Node>() {
-
-			@Override
-			public int compare(Node arg0, Node arg1) {
-				return Integer.compare(arg0.getTotalCost(), arg1.getTotalCost());
-			}
-			
-		});
+		@Override
+		public int compare(Node arg0, Node arg1) {
+			return Integer.compare(arg0.getTotalCost(), arg1.getTotalCost());
+		}
 		
-		aState = new Map(width, height);
-	}
+	};
 
 	/**
 	 * Method to find the best path between the initial position and the final position
@@ -38,23 +31,24 @@ public class AStar {
 	 * @param finalPos
 	 * @return A linked list with the path or null if there is not a path
 	 */
-	public List<Int2D> findPath (Int2D initialPos, Int2D finalPos, KnowledgeMapInterface map) {
-		openList.clear();
-		aState.resetState();
+	public static List<Int2D> findPath (Int2D initialPos, Int2D finalPos, KnowledgeMapInterface map, int width, int height) {
+		//initialize the open list queue and map
+		PriorityQueue<Node> openList = new PriorityQueue<Node>(nodeComparator);
+		Map aState = new Map(width, height);
 		
 		//add the opening node
-		this.addAndOpenNewNode(new Node (initialPos, finalPos, 0, null, Node.DistanceMode.MANHATTAN), aState);
+		AStar.addAndOpenNewNode(openList, new Node (initialPos, finalPos, 0, null, Node.DistanceMode.MANHATTAN), aState);
 		//while we still have nodes to explore
 		while (openList.size() > 0) {
 			//get the first node in the queue according to its comparator's metric
 			//i.e: the most promising
-			Node actualNode = this.openList.poll();
+			Node actualNode = openList.poll();
 			//If we've reached our destination, return the path to it
 			if (actualNode.getPosition().equals(finalPos)) {
 				return createPath(actualNode);
 			}
 			//otherwise open all valid adjacent nodes and keep looking
-			openAdjacentNodes(actualNode, finalPos, map, aState);
+			openAdjacentNodes(openList, actualNode, finalPos, map, aState);
 		}
 
 		// There is not path between initialPos and finalPos
@@ -69,7 +63,7 @@ public class AStar {
 	 * @param node
 	 * @param map
 	 */
-	private void addAndOpenNewNode(Node node, Map aState) {
+	private static void addAndOpenNewNode(PriorityQueue<Node> openList, Node node, Map aState) {
 		openList.add(node);
 		aState.setVisited(node.getX(), node.getY());
 	}
@@ -79,7 +73,7 @@ public class AStar {
 	 * @param node
 	 * @return
 	 */
-	private List<Int2D> createPath (Node node) {
+	private static List<Int2D> createPath (Node node) {
 		LinkedList<Int2D> path = new LinkedList<Int2D>();
 		/*while (node != null) {
 			path.add(0, node.getPosition());
@@ -102,32 +96,32 @@ public class AStar {
 	 * @param finalPos
 	 * @param map
 	 */
-	private void openAdjacentNodes (Node node, Int2D finalPos, KnowledgeMapInterface map, Map aState) {
+	private static void openAdjacentNodes (PriorityQueue<Node> openList, Node node, Int2D finalPos, KnowledgeMapInterface map, Map aState) {
 		int x = node.getX();
 		int y = node.getY();
 		
 		if (x > 0) {							//left
-			openNode(x - 1, y, node, finalPos, map, aState);
+			openNode(openList, x - 1, y, node, finalPos, map, aState);
 		}
 		if (x < aState.getWidth() - 1) {		//right
-			openNode(x + 1, y, node, finalPos, map, aState);
+			openNode(openList, x + 1, y, node, finalPos, map, aState);
 		}
 		if (y > 0) {							//up
-			openNode(x, y - 1, node, finalPos, map, aState);
+			openNode(openList, x, y - 1, node, finalPos, map, aState);
 			if (x > 0) {						//up left
-				openNode(x - 1, y - 1, node, finalPos, map, aState);
+				openNode(openList, x - 1, y - 1, node, finalPos, map, aState);
 			}
 			if (x < aState.getWidth() - 1) { 	//up right
-				openNode(x + 1, y - 1, node, finalPos, map, aState);
+				openNode(openList, x + 1, y - 1, node, finalPos, map, aState);
 			}
 		}
 		if (y < aState.getHeight() - 1) { 		//down
-			openNode(x, y + 1, node, finalPos, map, aState);
+			openNode(openList, x, y + 1, node, finalPos, map, aState);
 			if (x > 0) {						//down left
-				openNode(x, y + 1, node, finalPos, map, aState);
+				openNode(openList, x, y + 1, node, finalPos, map, aState);
 			}
 			if (x < aState.getWidth() - 1) { 	//down right
-				openNode(x, y + 1, node, finalPos, map, aState);
+				openNode(openList, x, y + 1, node, finalPos, map, aState);
 			}
 		}
 	}
@@ -140,11 +134,11 @@ public class AStar {
 	 * @param finalPos: where we are going
 	 * @param map: the map containing useful information
 	 */
-	private void openNode (int x, int y, Node parent, Int2D finalPos, KnowledgeMapInterface map, Map aState) {
+	private static void openNode (PriorityQueue<Node> openList, int x, int y, Node parent, Int2D finalPos, KnowledgeMapInterface map, Map aState) {
 		if (!aState.isVisited(x, y)) {
-			int movementCost = this.getCost(map.getKnowledgeAt(new Int2D(x, y)));
+			int movementCost = getCost(map.getKnowledgeAt(new Int2D(x, y)));
 			if (movementCost < IMPASSABLE) {
-				this.addAndOpenNewNode(
+				addAndOpenNewNode(openList, 
 					new Node (new Int2D(x, y), finalPos, movementCost + parent.getBaseCost(), parent, Node.DistanceMode.MANHATTAN), 
 					aState);
 			} else {
@@ -159,7 +153,7 @@ public class AStar {
 	 * @param knowledge
 	 * @return
 	 */
-	public int getCost (Knowledge knowledge) {
+	public static int getCost (Knowledge knowledge) {
 		switch (knowledge) {
 		case OBSTACLE:
 			return IMPASSABLE;

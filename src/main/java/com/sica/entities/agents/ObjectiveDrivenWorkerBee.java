@@ -1,14 +1,10 @@
 package com.sica.entities.agents;
 
-import java.util.Collection;
-import com.sica.behaviour.Objective;
-import com.sica.behaviour.TaskGetToPosition;
-import com.sica.behaviour.TaskOneShot;
 import com.sica.entities.Entity;
 import com.sica.simulation.SimulationConfig;
 import com.sica.simulation.SimulationState;
 import com.util.knowledge.Knowledge;
-import com.util.movement.Direction;
+
 import sim.util.Bag;
 import sim.util.Int2D;
 

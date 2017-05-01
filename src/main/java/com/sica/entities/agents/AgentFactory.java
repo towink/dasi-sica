@@ -1,6 +1,6 @@
 package com.sica.entities.agents;
 
-import com.sica.behaviour.ObjectiveExplore;
+import com.sica.behaviour.Objectives.ObjectiveExplore;
 import com.sica.entities.Entity;
 
 import sim.util.Int2D;

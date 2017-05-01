@@ -1,5 +1,7 @@
-package com.sica.behaviour;
+package com.sica.behaviour.Objectives;
 
+import com.sica.behaviour.Tasks.TaskBroadcastKnowledge;
+import com.sica.behaviour.Tasks.TaskOneShot;
 import com.sica.entities.agents.ObjectiveDrivenAgent;
 import com.sica.entities.agents.ObjectiveDrivenWorkerBee;
 import com.sica.simulation.SimulationConfig;

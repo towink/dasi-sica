@@ -19,7 +19,7 @@ public class EntityPlacer {
 		
 		for (int x = 0; x < 0; x++) {
 			agent = AgentFactory.getAgent(AgentFactory.WORKER_BEE, home);
-			entities.setObjectLocation(agent, 50, 50);
+			entities.setObjectLocation(agent, home.x, home.y);
 			schedule.scheduleRepeating(Schedule.EPOCH, 0, agent, 1);
 		}
 		
@@ -33,7 +33,7 @@ public class EntityPlacer {
 		for(int x = 0; x < numBees; x++)
 		{
 			agent = new WorkerBee();		
-			entities.setObjectLocation(agent, entities.getWidth()/2, entities.getHeight()/2);
+			entities.setObjectLocation(agent, home.x, home.y);
 			schedule.scheduleRepeating(Schedule.EPOCH, 0, agent, 1);
 		}
 	}
@@ -59,12 +59,24 @@ public class EntityPlacer {
 	 * @param entities
 	 * @param schedule
 	 * @param numDefenders
+	 * @param home
 	 */
-	public static void generateDefenders(SparseGrid2D entities, Schedule schedule, int numDefenders) {
+	public static void generateDefenders(SparseGrid2D entities, Schedule schedule, int numDefenders, Int2D home) {
 		throw new NotImplementedException();
 	}
 	
-	// TODO methods for enemies, queen ...
+	/**
+	 * Inserts defenders in the grid.
+	 * @param entities
+	 * @param schedule
+	 * @param home
+	 */
+	public static void generateQueen(SparseGrid2D entities, Schedule schedule, Int2D home) {
+		// TODO: This method should not be able to create more than one queen in a hive 
+		throw new NotImplementedException();
+	}
+	
+	// TODO methods for enemies
 	
 	
 }

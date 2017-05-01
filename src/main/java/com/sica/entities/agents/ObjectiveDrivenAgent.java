@@ -3,7 +3,7 @@ package com.sica.entities.agents;
 import java.util.List;
 import java.util.PriorityQueue;
 
-import com.sica.behaviour.Objective;
+import com.sica.behaviour.Objectives.Objective;
 import com.sica.entities.Entity;
 import com.sica.simulation.SimulationConfig;
 import com.sica.simulation.SimulationState;

@@ -1,7 +1,9 @@
 package com.sica.entities.agents;
 
+import com.sica.behaviour.ObjectiveExplore;
 import com.sica.entities.Entity;
-import com.sica.simulation.SimulationConfig;
+
+import sim.util.Int2D;
 
 public class AgentFactory {
 
@@ -19,15 +21,15 @@ public class AgentFactory {
 	 * @param agentType
 	 * @return The agent requested or null if it does not exist
 	 */
-	public static Entity getAgent(String agentType) {
+	public static Entity getAgent(String agentType, Int2D home) {
 		agentType = agentType.toUpperCase();
 		if (agentType == null) {
 			return null;
 		}
 		
 		if (agentType.equals("WORKER")) {
-			ObjectiveDrivenWorkerBee agent = new ObjectiveDrivenWorkerBee();
-			agent.addObjective(agent.new ObjectiveExplore());
+			ObjectiveDrivenWorkerBee agent = new ObjectiveDrivenWorkerBee(home);
+			agent.addObjective(new ObjectiveExplore());
 			return agent;
 		}
 		else if (agentType.equals("DEFENDER")) {

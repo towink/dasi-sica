@@ -8,16 +8,17 @@ import com.sica.simulation.SimulationConfig;
 
 import sim.engine.Schedule;
 import sim.field.grid.SparseGrid2D;
+import sim.util.Int2D;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 public class EntityPlacer {
 
 	@Deprecated
-	public static void generateBees(SparseGrid2D entities, Schedule schedule, int numBees) {
+	public static void generateBees(SparseGrid2D entities, Schedule schedule, int numBees, Int2D home) {
 		Entity agent;
 		
 		for (int x = 0; x < 0; x++) {
-			agent = AgentFactory.getAgent(AgentFactory.WORKER_BEE);
+			agent = AgentFactory.getAgent(AgentFactory.WORKER_BEE, home);
 			entities.setObjectLocation(agent, 50, 50);
 			schedule.scheduleRepeating(Schedule.EPOCH, 0, agent, 1);
 		}
@@ -43,12 +44,12 @@ public class EntityPlacer {
 	 * @param schedule
 	 * @param numWorkers Number of workers to be inserted.
 	 */
-	public static void generateWorkers(SparseGrid2D entities, Schedule schedule, int numWorkers) {
+	public static void generateWorkers(SparseGrid2D entities, Schedule schedule, int numWorkers, Int2D home) {
 		Entity agent;
 		for (int x = 0; x < numWorkers; x++) {
-			agent = AgentFactory.getAgent(AgentFactory.WORKER_BEE);
+			agent = AgentFactory.getAgent(AgentFactory.WORKER_BEE, home);
 			// maybe the next 2 lines should be included in the factory method somehow??
-			entities.setObjectLocation(agent, SimulationConfig.GRID_WIDTH / 2, SimulationConfig.GRID_HEIGHT / 2);
+			entities.setObjectLocation(agent, home.x, home.y);
 			schedule.scheduleRepeating(Schedule.EPOCH, 0, agent, 1);
 		}
 	}

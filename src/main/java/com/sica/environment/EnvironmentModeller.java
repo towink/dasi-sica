@@ -46,7 +46,6 @@ public class EnvironmentModeller {
 	
 	/**
 	 * Puts count flowers in the environment at random spots
-	 * TODO Only place flowers on empty environment spots and maybe not into the hive
 	 * @param env
 	 * @param count
 	 * @param minAlimentFlower
@@ -65,7 +64,8 @@ public class EnvironmentModeller {
 					random.nextInt(SimulationConfig.GRID_WIDTH),
 					random.nextInt(SimulationConfig.GRID_HEIGHT));
 			// do not place flowers into hive ...
-			if(env.inHive(pos, new Int2D (env.getWidth()/2, env.getHeight()/2))) {
+			if((env.inHive(pos, new Int2D (env.getWidth()/2, env.getHeight()/2))) && 
+				(env.hasTypeAt(pos, Knowledge.EMPTY))) {
 				i--;
 			}
 			else {
@@ -79,7 +79,6 @@ public class EnvironmentModeller {
 	 * ANY location with an EnvironmenType of EMPTY can be set as an obstacle
 	 * with the given probability. No checks are made to see if all locations are still
 	 * accessible after genreating the obstacles
-	 * TODO do obstacles in hive
 	 * @param environment
 	 * @param probability
 	 * @param rnd should be the simulation's random number generator to always give the same results
@@ -87,7 +86,8 @@ public class EnvironmentModeller {
 	public static void generateRandomObstacles (Environment environment, float probability, MersenneTwisterFast rnd) {
 		for (int x = 0; x < environment.getWidth(); x++) {
 			for (int y = 0; y < environment.getHeight(); y++) {
-				if (environment.hasTypeAt(x, y, Knowledge.EMPTY)) {
+				if ((environment.hasTypeAt(x, y, Knowledge.EMPTY)) &&
+					(!environment.inHive(new Int2D (x, y), new Int2D (environment.getWidth()/2, environment.getHeight()/2)))) {
 					if (rnd.nextFloat() < probability) {
 						environment.set(x, y, Knowledge.OBSTACLE);
 					}
@@ -101,7 +101,6 @@ public class EnvironmentModeller {
 	 * this makes any location unaccessible.
 	 * There is a chance that this method does not terminate if you try to place too many
 	 * and/or too long walls, so be careful.
-	 * TODO no obstacles in hives
 	 * @param environment
 	 * @param count The number of walls to be placed.
 	 * @param length Length in grid units of the walls. Must not be too large!
@@ -122,7 +121,7 @@ public class EnvironmentModeller {
 					// check if this position is already occupied
 					if((environment.hasTypeAt(leftWallPointX + i, wallY, Knowledge.EMPTY)) &&
 						(!environment.inHive(new Int2D (leftWallPointX + i, wallY), 
-						new Int2D (SimulationConfig.GRID_WIDTH/2, SimulationConfig.GRID_HEIGHT/2)))) {
+						new Int2D (environment.getWidth()/2, environment.getHeight()/2)))) {
 						environment.set(leftWallPointX + i, wallY, Knowledge.OBSTACLE);
 					}
 						
@@ -139,7 +138,7 @@ public class EnvironmentModeller {
 				for(int i = 0; i < length; i++) {
 					if((environment.hasTypeAt(wallX, topWallPointY + i, Knowledge.EMPTY)) &&
 						(!environment.inHive(new Int2D (wallX, topWallPointY + i), 
-						new Int2D (SimulationConfig.GRID_WIDTH/2, SimulationConfig.GRID_HEIGHT/2)))) {
+						new Int2D (environment.getWidth()/2, environment.getHeight()/2)))) {
 						environment.set(wallX, topWallPointY + i, Knowledge.OBSTACLE);
 					}
 						

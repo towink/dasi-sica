@@ -27,14 +27,15 @@ public abstract class ObjectiveDrivenAgent extends Entity{
 	protected PriorityQueue<Objective> objectives;
 	protected KnowledgeMapInterface knowledge;
 	protected List<Int2D> actualPath;
+	
 	public static AStar pathFinder;
 	
 	/**
 	 * Creates an agent with a initially empty knowledge and without any objectives.
 	 * @param type The entity type of the agent to be created.
 	 */
-	public ObjectiveDrivenAgent(EntityType type) {
-		super(type);
+	public ObjectiveDrivenAgent(EntityType type, Int2D home) {
+		super(type, home);
 		this.objectives = new PriorityQueue<Objective>();
 		this.knowledge = new HashMapKnowledgeMap();
 		this.actualPath = null;

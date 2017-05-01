@@ -64,10 +64,14 @@ public class SimulationConfig {
 	protected int numBees = 0;
 	protected int radioView = 10;
 	
-	// woker
+	// worker
 	protected int numWorkers = 10;
 	protected float groupingAffinity = 0.95f;
 	protected int flowerThreshold = 2;
+	
+	//Queen
+	protected int time2Create = 10;
+	protected int cost2Create = 5;
 	
 	// --- environment parameters ---
 	
@@ -231,6 +235,25 @@ public class SimulationConfig {
 	public void setMaxAlimentFlower(int maxAlimentFlower) {
 		if(maxAlimentFlower > 0) {
 			this.maxAlimentFlower = maxAlimentFlower;
+		}
+	}
+	public int getTime2Create() {
+		return time2Create;
+	}
+	public void setTime2Create(int time2Create) {
+		if (time2Create > 0) {
+			this.time2Create = time2Create;
+		}
+	}
+	public int getCost2Create() {
+		return cost2Create;
+	}
+	public void setCost2Create(int cost2Create) {
+		if (cost2Create > 1) {
+			this.cost2Create = cost2Create;
+		}
+		else {
+			this.cost2Create = 1;
 		}
 	}
 	

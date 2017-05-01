@@ -3,6 +3,7 @@ package com.sica.entities;
 import com.sica.entities.agents.AgentFactory;
 import com.sica.entities.agents.DroolsBee;
 import com.sica.entities.agents.ObjectiveDrivenWorkerBee;
+import com.sica.entities.agents.QueenDrools;
 import com.sica.entities.agents.WorkerBee;
 import com.sica.simulation.SimulationConfig;
 
@@ -49,8 +50,24 @@ public class EntityPlacer {
 		for (int x = 0; x < numWorkers; x++) {
 			agent = AgentFactory.getAgent(AgentFactory.WORKER_BEE, home);
 			// maybe the next 2 lines should be included in the factory method somehow??
-			entities.setObjectLocation(agent, home.x, home.y);
+			entities.setObjectLocation(agent, home);
 			schedule.scheduleRepeating(Schedule.EPOCH, 0, agent, 1);
+		}
+	}
+	
+	/**
+	 * Places worker bees in the middle of the grid.
+	 * @param entities The grid holding the bees
+	 * @param schedule
+	 * @param numWorkers Number of workers to be inserted.
+	 */
+	public static void generateWorkersAfter(SparseGrid2D entities, Schedule schedule, int numWorkers, Int2D home) {
+		Entity agent;
+		for (int x = 0; x < numWorkers; x++) {
+			agent = AgentFactory.getAgent(AgentFactory.WORKER_BEE, home);
+			// maybe the next 2 lines should be included in the factory method somehow??
+			entities.setObjectLocation(agent, home);
+			schedule.scheduleRepeating(schedule.getTime(), 0, agent, 1);
 		}
 	}
 	
@@ -73,7 +90,9 @@ public class EntityPlacer {
 	 */
 	public static void generateQueen(SparseGrid2D entities, Schedule schedule, Int2D home) {
 		// TODO: This method should not be able to create more than one queen in a hive 
-		throw new NotImplementedException();
+		Entity agent = AgentFactory.getAgent(AgentFactory.QUEEN_BEE, home);
+		entities.setObjectLocation(agent, home);
+		schedule.scheduleRepeating(Schedule.EPOCH, 0, agent, 1);
 	}
 	
 	// TODO methods for enemies

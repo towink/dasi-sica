@@ -36,9 +36,8 @@ public class AgentFactory {
 			System.out.println("DEFENDER: It has not yet been implemented, returning null");
 			return null;
 		}
-		else if (agentType.equals("QUEEN")) {
-			System.out.println("QUEEN: It has not yet been implemented, returning null");
-			return null;
+		else if (agentType.equals("QUEEN")) { 
+			return new QueenDrools(home);
 		}
 		else if (agentType.equals("ENEMY")) {
 			System.out.println("ENEMY: It has not yet been implemented, returning null");

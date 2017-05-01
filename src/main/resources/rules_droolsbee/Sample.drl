@@ -2,8 +2,10 @@ package com.sica.agents
  
 import com.sica.entities.agents.DroolsBee.DroolsBeeController;
 import com.sica.entities.agents.DroolsBee;
+import com.sica.entities.agents.QueenDrools;
 import com.sica.simulation.SimulationState;
 import com.sica.simulation.SimulationConfig;
+import com.sica.entities.EntityPlacer;
 import sim.util.Int2D;
 import com.util.knowledge.Knowledge;
  

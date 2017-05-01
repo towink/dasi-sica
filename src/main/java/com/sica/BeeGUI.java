@@ -7,6 +7,7 @@ import javax.swing.JFrame;
 
 import com.sica.entities.agents.DroolsBee;
 import com.sica.entities.agents.ObjectiveDrivenWorkerBee;
+import com.sica.entities.agents.QueenDrools;
 import com.sica.entities.agents.WorkerBee;
 import com.sica.environment.EnvironmentColorMap;
 import com.sica.simulation.SimulationConfig;
@@ -78,6 +79,7 @@ public class BeeGUI extends GUIState {
 		entityPortrayal.setPortrayalForClass(WorkerBee.class, new OvalPortrayal2D(Color.BLUE, true));
 		entityPortrayal.setPortrayalForClass(DroolsBee.class, new OvalPortrayal2D(Color.GREEN, true));
 		entityPortrayal.setPortrayalForClass(ObjectiveDrivenWorkerBee.class, new OvalPortrayal2D(Color.MAGENTA, true));
+		entityPortrayal.setPortrayalForClass(QueenDrools.class, new OvalPortrayal2D(Color.WHITE, true));
 		entityPortrayal.setPortrayalForRemainder(new OvalPortrayal2D(Color.ORANGE, true));
 		
 		display.reset();

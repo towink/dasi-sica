@@ -62,8 +62,8 @@ public class SimulationState extends SimState {
 									new Int2D (SimulationConfig.GRID_WIDTH/2, SimulationConfig.GRID_HEIGHT/2));
 		EntityPlacer.generateWorkers(entities, schedule, config.numWorkers, 
 									new Int2D (SimulationConfig.GRID_WIDTH/2, SimulationConfig.GRID_HEIGHT/2));
-		EntityPlacer.generateQueen(entities, schedule, new Int2D (SimulationConfig.GRID_WIDTH/2, 
-																	SimulationConfig.GRID_HEIGHT/2));
+		EntityPlacer.generateQueen(entities, schedule, new Int2D (SimulationConfig.GRID_WIDTH/2-1, 
+																	SimulationConfig.GRID_HEIGHT/2-1));
 	}
 	
 

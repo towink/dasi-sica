@@ -47,7 +47,7 @@ public enum Knowledge {
 	 * @return
 	 */
 	public int inyectMetadata(short metadata) {
-		return (metadata << 16) | this.ordinal();
+		return (((int) metadata) << 16) | this.ordinal();
 	}
 	
 	/**

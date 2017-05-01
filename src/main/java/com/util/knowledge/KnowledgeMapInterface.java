@@ -55,8 +55,9 @@ public interface KnowledgeMapInterface {
 	/**
 	 * Remove all knowledge at the specified place
 	 * @param where
+	 * @return the Knowledge that was removed, or NULL
 	 */
-	public void removeKnowledge(Int2D where);
+	public Knowledge removeKnowledge(Int2D where);
 	
 	/**
 	 * Removes all knowledge contained in this object

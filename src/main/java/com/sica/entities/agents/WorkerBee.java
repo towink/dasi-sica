@@ -41,8 +41,7 @@ public class WorkerBee extends Agent {
 			}
 			else {
 				if (actualPath == null || knowledge.pollNewKnowledge()) {
-					Int2D location = simState.entities.getObjectLocation(this);
-					calculatePath (new Int2D(location.x, location.y));
+					this.computePath(simState, this.getObjective());
 				}
 				actualState = State.MOVING;
 			}
@@ -118,7 +117,7 @@ public class WorkerBee extends Agent {
 		if (simulation.environment.hasTypeAt(x,  y, Knowledge.FLOWER)) {
 			simulation.environment.set(x, y, Knowledge.EMPTY);
 			setObjective(getHome());
-			calculatePath(new Int2D(location.getX(), location.getY()));
+			this.computePath(simulation, this.getObjective());
 			actualState = State.MOVING;
 		}
 

@@ -31,8 +31,15 @@ public abstract class Agent extends Entity {
 		knowledge.addKnowledge(new Int2D(SimulationConfig.GRID_WIDTH/2, SimulationConfig.GRID_HEIGHT/2), Knowledge.HIVE);
 	}
 
-	public void calculatePath(Int2D actualPosition) {
-		actualPath = AStar.findPath(actualPosition, getObjective(), knowledge, SimulationConfig.GRID_WIDTH, SimulationConfig.GRID_HEIGHT);
+	/**
+	 * Sets the actualPath variable to a shortest path from the current position
+	 * to the destination based on the current knowledge
+	 * @param state
+	 * @param destination
+	 */
+	public void computePath(final SimulationState state, Int2D destination) {
+		Int2D beginPos = state.entities.getObjectLocation(this);
+		actualPath = AStar.findPath(beginPos, destination, knowledge, SimulationConfig.GRID_WIDTH, SimulationConfig.GRID_HEIGHT); 
 	}
 	
 	/*public void doStep( final SimulationState state ) {
@@ -56,7 +63,7 @@ public abstract class Agent extends Entity {
 		
 		if (changed) {
 			if ((getObjective() != null) && (actualPath != null)) {
-				calculatePath(new Int2D (location.getX(), location.getY()));
+				this.computePath(simState, getObjective());
 			}
 		}
 	}

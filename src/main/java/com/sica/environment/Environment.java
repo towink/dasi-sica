@@ -77,7 +77,6 @@ public class Environment extends IntGrid2D {
 		this.set(pos, knowledge.inyectMetadata((short)meta));
 	}
 	
-	
 	/**
 	 * Sets the type at the specified position
 	 * @param x

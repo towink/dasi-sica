@@ -17,6 +17,7 @@ public class EnvironmentModeller {
 	public static void generateHive (Environment environment, int hiveWidth, int hiveHeight) {
 		Int2D center = new Int2D (environment.getWidth()/2, environment.getHeight()/2);
 		Int2D length = new Int2D (hiveWidth, hiveHeight);
+		environment.set(SimulationConfig.GRID_WIDTH/2,  SimulationConfig.GRID_HEIGHT/2, Knowledge.HIVE);
 		environment.drawRect (center, length, Knowledge.HIVE);
 	}
 

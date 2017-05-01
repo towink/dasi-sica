@@ -66,7 +66,9 @@ public class HashMapKnowledgeMap implements KnowledgeMapInterface {
 	
 	@Override
 	public boolean updateKnowledge(Int2D where, Knowledge knowledge) {
-		removeKnowledge(where);
+		Knowledge remknowledge = removeKnowledge(where);
+		if (remknowledge == Knowledge.HIVE && knowledge != Knowledge.HIVE)
+			throw new IllegalStateException("FF");
 		return addKnowledge(where, knowledge);
 	}
 	
@@ -92,11 +94,13 @@ public class HashMapKnowledgeMap implements KnowledgeMapInterface {
 	}
 
 	@Override
-	public void removeKnowledge(Int2D where) {
+	public Knowledge removeKnowledge(Int2D where) {
 		if (this.positionKnowledge.containsKey(where)) {
 			Knowledge knowledge = this.positionKnowledge.remove(where);
 			this.knowledgePosition.get(knowledge).remove(where);
+			return knowledge;
 		}
+		return null;
 	}
 
 	@Override

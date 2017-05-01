@@ -6,7 +6,6 @@ import java.util.PriorityQueue;
 import com.sica.behaviour.Objectives.Objective;
 import com.sica.simulation.SimulationConfig;
 import com.sica.simulation.SimulationState;
-import com.util.knowledge.HashMapKnowledgeMap;
 import com.util.knowledge.Knowledge;
 import com.util.knowledge.KnowledgeMapInterface;
 import com.util.searching.AStar;
@@ -24,7 +23,6 @@ public abstract class ObjectiveDrivenAgent extends Agent {
 	private static final long serialVersionUID = -3670233969349917087L;
 
 	protected PriorityQueue<Objective> objectives;
-	protected KnowledgeMapInterface knowledge;
 	protected List<Int2D> actualPath;
 	
 	/**
@@ -35,7 +33,6 @@ public abstract class ObjectiveDrivenAgent extends Agent {
 		//super(type, home);
 		super(type);
 		this.objectives = new PriorityQueue<Objective>();
-		this.knowledge = new HashMapKnowledgeMap();
 		this.actualPath = null;
 	}
 	
@@ -119,6 +116,7 @@ public abstract class ObjectiveDrivenAgent extends Agent {
 	}
 	
 	
+	//TODO remove when this class has no knowledge
 	/**
 	 * Sets the actualPath variable to a shortest path from the current position
 	 * to the destination based on the current knowledge

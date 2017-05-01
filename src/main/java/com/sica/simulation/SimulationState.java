@@ -6,6 +6,7 @@ import com.sica.environment.EnvironmentModeller;
 
 import sim.engine.SimState;
 import sim.field.grid.SparseGrid2D;
+import sim.util.Int2D;
 
 public class SimulationState extends SimState {
 
@@ -49,7 +50,7 @@ public class SimulationState extends SimState {
 				random);
 		
 		// put some obstacles around
-		if(SimulationConfig.WALL_OBSTACLES) {
+		if(SimulationConfig.config().getObstacleType() == SimulationConfig.WALL_OBSTACLES) {
 			EnvironmentModeller.generateWallObstacles(environment, config.numberOfWalls, config.wallLength, this.random);
 		}
 		else {
@@ -57,11 +58,22 @@ public class SimulationState extends SimState {
 		}
 		
 		// let the bees out!
-		EntityPlacer.generateBees(entities, schedule, config.numBees);
-		EntityPlacer.generateWorkers(entities, schedule, config.numWorkers);
+		EntityPlacer.generateBees(entities, schedule, config.numBees, 
+									new Int2D (SimulationConfig.GRID_WIDTH/2, SimulationConfig.GRID_HEIGHT/2));
+		EntityPlacer.generateWorkers(entities, schedule, config.numWorkers, 
+									new Int2D (SimulationConfig.GRID_WIDTH/2, SimulationConfig.GRID_HEIGHT/2));
+		EntityPlacer.generateQueen(entities, schedule, new Int2D (SimulationConfig.GRID_WIDTH/2, 
+																	SimulationConfig.GRID_HEIGHT/2));
 	}
 	
 
+	public void decreaseAliment (int value) {
+		aliment -= value;
+		if (aliment < 0) {
+			aliment = 0;
+		}
+	}
+	
 	// Getters and Setters
 	
 	public SimulationConfig getConfig() {

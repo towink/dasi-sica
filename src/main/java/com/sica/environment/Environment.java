@@ -50,6 +50,23 @@ public class Environment extends IntGrid2D {
 		return Knowledge.isType(this.get(x, y), type);
 	}
 	
+	public boolean hasAlimentAt (Int2D pos) {
+		return hasTypeAt(pos, Knowledge.FLOWER);
+	}
+	
+	public boolean getAlimentAt(Int2D pos) {
+		if (hasAlimentAt(pos)) {
+			setMetadataAt(pos, getMetadataAt(pos) - 1);
+			if (getMetadataAt(pos) <= 0) {
+				set(pos, Knowledge.EMPTY);
+			}
+			
+			return true;
+		}
+		
+		return false;
+	}
+	
 
 	public int getMetadataAt(Int2D pos) {
 		return (int)Knowledge.extractMetadata(this.get(pos.x, pos.y));
@@ -171,12 +188,11 @@ public class Environment extends IntGrid2D {
 		int maxX = (int) (hivePos.getX() + SimulationConfig.HIVE_WIDTH/2);
 		int maxY = (int) (hivePos.getY() + SimulationConfig.HIVE_HEIGHT/2);
 
-		if (checkPos.x > maxX || checkPos.x < minX) {
+		if (checkPos.x >= maxX || checkPos.x <= minX) {
 			return false;
 		}
 
-		if (checkPos.y > maxY || checkPos.y < minY) {
-			// System.out.println("X: " + checkPos.x + ", Y: " + checkPos.y);
+		if (checkPos.y >= maxY || checkPos.y <= minY) {
 			return false;
 		}
 

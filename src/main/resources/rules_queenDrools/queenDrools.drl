@@ -1,0 +1,24 @@
+package com.sica.agents
+
+import com.sica.entities.agents.DroolsBee;
+import com.sica.entities.agents.QueenDrools;
+import com.sica.simulation.SimulationState;
+
+rule "Create bees"
+	when
+		$state : SimulationState()
+		queen : QueenDrools( $state.getConfig().getTime2Create() <= getCount() && $state.aliment >= $state.getConfig().getCost2Create());
+	then
+		$state.decreaseAliment($state.getConfig().getCost2Create());
+		queen.resetCount();
+		queen.createBee($state);
+end
+
+rule "Increase count to generate bees"
+	salience -10
+	when
+		$state : SimulationState()
+		queen : QueenDrools($state.getConfig().getTime2Create() > getCount())
+	then
+		queen.increaseCount();
+end

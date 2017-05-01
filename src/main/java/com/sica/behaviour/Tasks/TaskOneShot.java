@@ -1,4 +1,4 @@
-package com.sica.behaviour;
+package com.sica.behaviour.Tasks;
 
 import com.sica.entities.agents.ObjectiveDrivenAgent;
 import com.sica.simulation.SimulationState;

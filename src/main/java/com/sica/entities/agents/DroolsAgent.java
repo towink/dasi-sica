@@ -10,6 +10,8 @@ import org.kie.api.runtime.rule.FactHandle;
 import com.sica.entities.Entity;
 import com.sica.simulation.SimulationState;
 
+import sim.util.Int2D;
+
 /**
  * Agent that can be controlled via drools rule-based system
  * this abstact class leaves the key methods unimplemented so
@@ -37,6 +39,11 @@ public abstract class DroolsAgent extends Entity {
 		this.setUpAgent(kSessionName, 0);
 	}
 	
+	public DroolsAgent(String kSessionName, Int2D home) {
+		super(Entity.EntityType.DROOLS, home);
+		this.setUpAgent(kSessionName, 0);
+	}
+	
 	/**
 	 * Use this constructor if you want to set up a maximum number of
 	 * rules that can be triggered on each step. This avoids infinite
@@ -46,6 +53,11 @@ public abstract class DroolsAgent extends Entity {
 	 */
 	public DroolsAgent(String kSessionName, int maxRulesFired) {
 		super(Entity.EntityType.DROOLS);
+		this.setUpAgent(kSessionName, maxRulesFired);
+	}
+	
+	public DroolsAgent(String kSessionName, int maxRulesFired, Int2D home) {
+		super(Entity.EntityType.DROOLS, home);
 		this.setUpAgent(kSessionName, maxRulesFired);
 	}
 	
@@ -86,7 +98,7 @@ public abstract class DroolsAgent extends Entity {
 	
 
 	@Override
-	public void doStep (final SimulationState arg0) {     
+	public void doStep (final SimulationState arg0) {  
 		//let the subclass do something before rules are fired
 		this.stepBeforeFiringRules(arg0);
 		//update all the knowledge base objects so that rules can fire again

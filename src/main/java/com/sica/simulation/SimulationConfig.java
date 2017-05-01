@@ -31,7 +31,7 @@ public class SimulationConfig {
 		return instance;
 	}
 	
-	// constant parameters
+	// constant parameters - we consider them not interesting enough to be able to be changed in the GUI
 	
 	// Grid's size
 	public static final int GRID_HEIGHT = 100;
@@ -42,36 +42,51 @@ public class SimulationConfig {
 	public static final int HIVE_WIDTH = 10;
 	
 	// Flowers's size
+	@Deprecated
 	public static final int NORMAL_FLOWER_HEIGHT = 5;
+	@Deprecated
 	public static final int NORMAL_FLOWER_WIDTH = 5;
 	
 	// Environment mode (bounded, unbounded, toroidal)
 	public static final int ENV_MODE = Grid2D.BOUNDED;
-	
-	// type of obstacles
-	// TODO decide if manipulable in GUI, are there other types of obstacles?
-	public static final boolean WALL_OBSTACLES = true;
 	
 	// sometimes it is convenient to change the background color to black, for example
 	public static final Color BACKGROUND_COLOR = Color.BLACK;
 	
 	
 	// PROTECTED simulation variables so only the controller can modify them
-	// ?? What is the controller?
+	// ?? What is the controller? Why exactly are they protected??
 	
-	// agent parameters
+	// --- agent parameters ---
+	
+	// general
+	@Deprecated
 	protected int numBees = 0;
-	protected int numWorkers = 10;
-	protected float groupingAffinity = 0.95f;
 	protected int radioView = 10;
 	
-	// environment parameters
+	// worker
+	protected int numWorkers = 10;
+	protected float groupingAffinity = 0.95f;
+	protected int flowerThreshold = 2;
+	
+	//Queen
+	protected int time2Create = 10;
+	protected int cost2Create = 5;
+	
+	// --- environment parameters ---
+	
+	// obstacles
 	protected int numFlowers = 20;
 	protected int minAlimentFlower = 5;
 	protected int maxAlimentFlower = 20;
+	
+	// obstacles
 	protected float percentageObstacle = 0.1f;
 	protected int numberOfWalls = 20;
 	protected int wallLength = 20;
+	public static final int WALL_OBSTACLES = 0;
+	public static final int RANDOM_OBSTACLES = 1;
+	protected int obstacleType = 0;
 	
 	
 	/*
@@ -88,11 +103,13 @@ public class SimulationConfig {
 	// ------------------------------
 	
 	
-	// bees (deprecated)
+	// bees
+	@Deprecated
 	public int getNumBees() {
 		return numBees;
 	}
 	
+	@Deprecated
 	public void setNumBees(int numBees) {
 		if(numBees >= 0)
 			this.numBees = numBees;
@@ -119,6 +136,20 @@ public class SimulationConfig {
 	}
 	
 	// obstacles
+	
+	// type
+	public int getObstacleType() {
+		return obstacleType;
+	}
+	
+	public void setObstacleType(int obstacleType) {
+		this.obstacleType = obstacleType;
+	}
+	
+	public Object domObstacleType() {
+		String[] myStringArray = {"0", "1"};
+		return myStringArray;
+	}
 	
 	// random
 	public float getPercentageObstacle() {
@@ -177,14 +208,53 @@ public class SimulationConfig {
 		this.radioView = radioView;
 	}
 	
+	// number of flowers worker needs to know to go collecting
+	public int getFlowerThresholdWorker() {
+		return flowerThreshold;
+	}
+	
+	public void setFlowerThresholdWorker(int flowerThreshold) {
+		this.flowerThreshold = flowerThreshold;
+	}
+
 	// aliment of flowers
-	// TODO setters
 	public int getMinAlimentFlower() {
 		return minAlimentFlower;
 	}
 	
+	public void setMinAlimentFlower(int minAlimentFlower) {
+		if(minAlimentFlower > 0) {
+			this.minAlimentFlower = minAlimentFlower;
+		}
+	}
+	
 	public int getMaxAlimentFlower() {
 		return maxAlimentFlower;
+	}
+	
+	public void setMaxAlimentFlower(int maxAlimentFlower) {
+		if(maxAlimentFlower > 0) {
+			this.maxAlimentFlower = maxAlimentFlower;
+		}
+	}
+	public int getTime2Create() {
+		return time2Create;
+	}
+	public void setTime2Create(int time2Create) {
+		if (time2Create > 0) {
+			this.time2Create = time2Create;
+		}
+	}
+	public int getCost2Create() {
+		return cost2Create;
+	}
+	public void setCost2Create(int cost2Create) {
+		if (cost2Create > 1) {
+			this.cost2Create = cost2Create;
+		}
+		else {
+			this.cost2Create = 1;
+		}
 	}
 	
 }

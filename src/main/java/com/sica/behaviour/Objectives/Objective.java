@@ -1,8 +1,9 @@
-package com.sica.behaviour;
+package com.sica.behaviour.Objectives;
 
 import java.util.LinkedList;
 import java.util.Queue;
 
+import com.sica.behaviour.Tasks.Task;
 import com.sica.entities.agents.ObjectiveDrivenAgent;
 import com.sica.simulation.SimulationState;
 

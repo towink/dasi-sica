@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <kmodule xmlns="http://jboss.org/kie/6.0.0/kmodule">
-	<!-- This is where you define your rule sets -->
-    <kbase name="rules_droolsbee" packages="rules_droolsbee">
+	<!-- This is where you define your rule sets --><kbase
+		name="rules_queenDrools" packages="rules_queenDrools">
+	<ksession name="ksession-queenDrools"></ksession>
+</kbase>
+	<kbase name="rules_droolsbee" packages="rules_droolsbee">
         <ksession name="ksession-DroolsBee"/>
     </kbase>    
 </kmodule>

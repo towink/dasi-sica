@@ -3,7 +3,7 @@ package com.sica.entities.agents;
 import java.util.List;
 import java.util.PriorityQueue;
 
-import com.sica.behaviour.Objective;
+import com.sica.behaviour.Objectives.Objective;
 import com.sica.entities.Entity;
 import com.sica.simulation.SimulationConfig;
 import com.sica.simulation.SimulationState;
@@ -32,8 +32,8 @@ public abstract class ObjectiveDrivenAgent extends Entity{
 	 * Creates an agent with a initially empty knowledge and without any objectives.
 	 * @param type The entity type of the agent to be created.
 	 */
-	public ObjectiveDrivenAgent(EntityType type) {
-		super(type);
+	public ObjectiveDrivenAgent(EntityType type, Int2D home) {
+		super(type, home);
 		this.objectives = new PriorityQueue<Objective>();
 		this.knowledge = new HashMapKnowledgeMap();
 		this.actualPath = null;

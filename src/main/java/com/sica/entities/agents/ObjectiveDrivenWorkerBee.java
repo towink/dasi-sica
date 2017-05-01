@@ -1,11 +1,7 @@
 package com.sica.entities.agents;
 
-import com.sica.entities.Entity;
-import com.sica.simulation.SimulationConfig;
-import com.sica.simulation.SimulationState;
 import com.util.knowledge.Knowledge;
 
-import sim.util.Bag;
 import sim.util.Int2D;
 
 /**
@@ -26,23 +22,6 @@ public class ObjectiveDrivenWorkerBee extends ObjectiveDrivenAgent {
 	public ObjectiveDrivenWorkerBee(Int2D home) {													
 		super(EntityType.OBJECTIVE_DRIVEN, home);
 		carriesAliment = false;
-	}
-	
-	public void broadcastKnowledge(final SimulationState simState) {
-		Int2D location = simState.entities.getObjectLocation(this);
-		Bag beeBag = simState.entities.getRadialNeighbors(
-				location.getX(),
-				location.getY(),
-				simState.getConfig().getRadioView(),
-				SimulationConfig.ENV_MODE,
-				false);
-		for (Object a: beeBag) {
-			Entity ag = (Entity) a;
-			if (ag.getType() != EntityType.OBJECTIVE_DRIVEN || ag.getUAID() == this.getUAID()) {
-				continue;
-			}
-			sendKnowledge((ObjectiveDrivenWorkerBee)a); 
-		}
 	}
 	
 	// This is called 'thinks' because it does not necessarily have to be true

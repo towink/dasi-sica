@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.PriorityQueue;
 
 import com.sica.behaviour.Objectives.Objective;
-import com.sica.entities.Entity;
 import com.sica.simulation.SimulationConfig;
 import com.sica.simulation.SimulationState;
 import com.util.knowledge.HashMapKnowledgeMap;
@@ -21,7 +20,7 @@ import sim.util.IntBag;
  * @author Tobias
  *
  */
-public abstract class ObjectiveDrivenAgent extends Entity{
+public abstract class ObjectiveDrivenAgent extends Agent {
 	private static final long serialVersionUID = -3670233969349917087L;
 
 	protected PriorityQueue<Objective> objectives;
@@ -33,7 +32,8 @@ public abstract class ObjectiveDrivenAgent extends Entity{
 	 * @param type The entity type of the agent to be created.
 	 */
 	public ObjectiveDrivenAgent(EntityType type, Int2D home) {
-		super(type, home);
+		//super(type, home);
+		super(type);
 		this.objectives = new PriorityQueue<Objective>();
 		this.knowledge = new HashMapKnowledgeMap();
 		this.actualPath = null;

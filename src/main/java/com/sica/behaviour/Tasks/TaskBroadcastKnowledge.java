@@ -9,7 +9,7 @@ public class TaskBroadcastKnowledge extends TaskOneShot {
 	@Override
 	public void interactWithOneShot(ObjectiveDrivenAgent a, SimulationState simState) {
 		ObjectiveDrivenWorkerBee bee = (ObjectiveDrivenWorkerBee) a;
-		bee.broadcastKnowledge(simState);
+		a.broadcastKnowledgeToType(simState,  bee.getType());
 	}
 
 }

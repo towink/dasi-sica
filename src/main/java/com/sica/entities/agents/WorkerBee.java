@@ -3,8 +3,8 @@ package com.sica.entities.agents;
 import com.sica.entities.Entity;
 import com.sica.simulation.SimulationConfig;
 import com.sica.simulation.SimulationState;
+import com.util.BeeMath;
 import com.util.knowledge.Knowledge;
-import com.util.knowledge.KnowledgeMapInterface;
 import sim.engine.SimState;
 import sim.field.grid.Grid2D;
 import sim.util.Bag;
@@ -30,7 +30,7 @@ public class WorkerBee extends Agent {
 	@Override
 	public void doStep( final SimulationState simState ) {
 		// TODO: do something
-		super.doStep(simState);
+		//super.doStep(simState);
 
 		switch (actualState) {
 		case UPDATING:
@@ -75,11 +75,6 @@ public class WorkerBee extends Agent {
 		}	
 	}
 
-	private int sign(float number) {
-		return number < 0 ? -1 : number > 0 ? 1 : 0;
-	}
-
-
 	private void group (final SimState state) {
 		final SimulationState simulation = (SimulationState) state;
 		Int2D location = simulation.entities.getObjectLocation(this);
@@ -104,8 +99,8 @@ public class WorkerBee extends Agent {
 		float diffy = meany - (float) location.getY();
 
 		simulation.entities.setObjectLocation(this, new Int2D(
-				location.getX() + sign(diffx), 
-				location.getY() + sign(diffy)));
+				location.getX() + BeeMath.sign(diffx), 
+				location.getY() + BeeMath.sign(diffy)));
 	}
 
 	private void move (final SimState state) {
@@ -140,22 +135,12 @@ public class WorkerBee extends Agent {
 			if (ag.getType() != EntityType.WORKER)
 				continue;
 			
-			sendKnowledge((WorkerBee) a); 
+			this.sendKnowledgeTo((Agent) a); 
 		}
 		
 		knowledge.pollNewKnowledge();
 	}
-	
-	@Override
-	public void sendKnowledge (Agent receptor) {
-		WorkerBee bee = (WorkerBee) receptor;
-		bee.receiveKnowledge(knowledge);
-	}
 
-	@Override
-	public void receiveKnowledge (KnowledgeMapInterface knowledge) {
-		this.knowledge.addKnowledge(knowledge);		
-	}
 	
 	/*public final void draw(Object object, Graphics2D graphics, DrawInfo2D info) {
 

@@ -8,6 +8,7 @@ import com.util.movement.MovementFunctions;
 
 import sim.engine.SimState;
 import sim.engine.Steppable;
+import sim.util.Bag;
 import sim.util.Int2D;
 
 public abstract class Entity implements Steppable {
@@ -111,6 +112,23 @@ public abstract class Entity implements Steppable {
 		Int2D fitted = MovementFunctions.fitToGrid(p, mode, SimulationConfig.GRID_WIDTH, SimulationConfig.GRID_HEIGHT);
 		return !Knowledge.isType(simState.environment.get(fitted.x, fitted.y), Knowledge.OBSTACLE);
 	}
+	
+	
+	/**
+	 * Gets all neighboring entities.
+	 * DOES INCLUDE ITSELF!
+	 * @param simState
+	 */
+	public Bag getNeighboringEntities(SimulationState simState) {
+		Int2D location = simState.entities.getObjectLocation(this);
+		return simState.entities.getRadialNeighbors(
+				location.getX(),
+				location.getY(),
+				simState.getConfig().getRadioView(),
+				SimulationConfig.ENV_MODE,
+				false);
+	}
+	
 
 	public Int2D getHome() {
 		return home;

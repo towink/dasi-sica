@@ -13,7 +13,6 @@ import com.sica.environment.EnvironmentColorMap;
 import com.sica.simulation.SimulationConfig;
 import com.sica.simulation.SimulationState;
 
-import sim.display.Console;
 import sim.display.Controller;
 import sim.display.Display2D;
 import sim.display.GUIState;

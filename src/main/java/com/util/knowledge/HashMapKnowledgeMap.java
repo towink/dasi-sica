@@ -31,7 +31,7 @@ public class HashMapKnowledgeMap implements KnowledgeMapInterface {
 	public boolean addKnowledge(Int2D where, Knowledge knowledge) {
 		if (this.positionKnowledge.containsKey(where))
 			if (this.positionKnowledge.get(where) != knowledge) {
-				throw new IllegalStateException("Cannot store different knowledges about the same position");
+				throw new IllegalStateException("Cannot store different knowledges about the same position. Current: " + this.positionKnowledge.get(where) + " New:" + knowledge);
 			}
 			else {
 				return false;	//knowledge already present

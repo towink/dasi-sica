@@ -1,9 +1,7 @@
 package com.sica.entities;
 
-import com.sica.entities.Entity.EntityType;
 import com.sica.entities.agents.AgentFactory;
 import com.sica.entities.agents.DroolsBee;
-import com.sica.entities.agents.ObjectiveDrivenWorkerBee;
 import com.sica.entities.agents.QueenDrools;
 import com.sica.entities.agents.WorkerBee;
 import com.sica.simulation.SimulationConfig;

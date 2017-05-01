@@ -2,8 +2,6 @@ package com.sica.entities.agents;
 
 import com.util.knowledge.Knowledge;
 
-import sim.util.Int2D;
-
 /**
  * Represents a worker bee in the simulation.
  * Technically it is an agent which is guided by the two objectives 'explore' and 'collect'.
@@ -19,8 +17,8 @@ public class ObjectiveDrivenWorkerBee extends ObjectiveDrivenAgent {
 	
 	private boolean carriesAliment;
 
-	public ObjectiveDrivenWorkerBee(Int2D home) {													
-		super(EntityType.OBJECTIVE_DRIVEN, home);
+	public ObjectiveDrivenWorkerBee() {													
+		super(EntityType.OBJECTIVE_DRIVEN);
 		carriesAliment = false;
 	}
 	

@@ -4,14 +4,9 @@ import java.util.List;
 import java.util.PriorityQueue;
 
 import com.sica.behaviour.Objectives.Objective;
-import com.sica.simulation.SimulationConfig;
 import com.sica.simulation.SimulationState;
-import com.util.knowledge.Knowledge;
 import com.util.knowledge.KnowledgeMapInterface;
-import com.util.searching.AStar;
-
 import sim.util.Int2D;
-import sim.util.IntBag;
 
 /**
  * Agent whose behavior is controlled by objectives.
@@ -23,17 +18,15 @@ public abstract class ObjectiveDrivenAgent extends Agent {
 	private static final long serialVersionUID = -3670233969349917087L;
 
 	protected PriorityQueue<Objective> objectives;
-	protected List<Int2D> actualPath;
-	
 	/**
 	 * Creates an agent with a initially empty knowledge and without any objectives.
 	 * @param type The entity type of the agent to be created.
 	 */
-	public ObjectiveDrivenAgent(EntityType type, Int2D home) {
+	public ObjectiveDrivenAgent(EntityType type) {
 		//super(type, home);
 		super(type);
 		this.objectives = new PriorityQueue<Objective>();
-		this.actualPath = null;
+		//this.actualPath = null;
 	}
 	
 	/**
@@ -60,72 +53,11 @@ public abstract class ObjectiveDrivenAgent extends Agent {
 	}
 	
 	/**
-	 * 
-	 * @param receptor
-	 */
-	public void sendKnowledge(ObjectiveDrivenAgent receptor) {
-		receptor.receiveKnowledge(knowledge);
-	}
-	
-	/**
-	 * 
-	 * @param knowledge
-	 */
-	public void receiveKnowledge(KnowledgeMapInterface kMap) {
-		knowledge.updateKnowledge(kMap);
-	}
-	
-	/**
-	 * Check nearby cells for the given type and add them to the knowledge map.
-	 * Does not update meta data!
-	 * @param state
-	 */
-	public void observeEnvironment(final SimulationState simState, Knowledge type) {
-		Int2D location = simState.entities.getObjectLocation(this);
-		
-		IntBag xCoords = new IntBag();
-		IntBag yCoords = new IntBag();
-		simState.environment.getRadialNeighbors(
-				location.getX(), location.getY(),
-				simState.getConfig().getRadioView(), // range to look in
-				SimulationConfig.ENV_MODE, // mode of environment (bounded/unbound/toroidal)
-				true, // ?
-				type, // type of knowledge to look for (obstacles/flowers/...)
-				xCoords, yCoords);
-		
-		for(int i = 0; i < xCoords.numObjs; i++) {
-			Int2D pos = new Int2D(xCoords.get(i), yCoords.get(i));
-			if(Knowledge.isType(knowledge.getKnowledgeAt(pos).toInt(), Knowledge.UNKNOWN)) {
-				// agent does not know anything yet about this position - add new knowledge
-				knowledge.addKnowledge(pos, type);
-			}
-			else if(!Knowledge.isType(knowledge.getKnowledgeAt(pos).toInt(), type)) {
-				// agent has another knowledge at that position - update
-				knowledge.removeKnowledge(pos);
-				knowledge.addKnowledge(pos, type);
-			}
-		}
-	}
-	
-	/**
 	 * Adds an objective to the queue of objectives of this agent.
 	 * @param o The objective to be added
 	 */
 	public void addObjective(Objective o) {
 		this.objectives.add(o);
-	}
-	
-	
-	//TODO remove when this class has no knowledge
-	/**
-	 * Sets the actualPath variable to a shortest path from the current position
-	 * to the destination based on the current knowledge
-	 * @param state
-	 * @param destination
-	 */
-	public void computePath(final SimulationState state, Int2D destination) {
-		Int2D beginPos = state.entities.getObjectLocation(this);
-		actualPath = AStar.findPath(beginPos, destination, knowledge, SimulationConfig.GRID_WIDTH, SimulationConfig.GRID_HEIGHT); 
 	}
 	
 	/**

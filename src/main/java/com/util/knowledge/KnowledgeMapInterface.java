@@ -32,17 +32,17 @@ public interface KnowledgeMapInterface {
 	public boolean addKnowledge(KnowledgeMapInterface kMap);
 	
 	/**
-	 * 
+	 * Updates the knowledge overwriting existing stuff
 	 * @param where
 	 * @param knowledge
-	 * @return
+	 * @return true if the knowledge was updated
 	 */
 	public boolean updateKnowledge(Int2D where, Knowledge knowledge);
 	
 	/**
-	 * 
+	 * Updates the knowledge overwriting existing stuff
 	 * @param kMap
-	 * @return
+	 * @return true if the knowledge was updated
 	 */
 	public boolean updateKnowledge(KnowledgeMapInterface kMap);
 	

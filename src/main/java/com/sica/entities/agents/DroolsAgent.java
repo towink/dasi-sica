@@ -10,8 +10,6 @@ import org.kie.api.runtime.rule.FactHandle;
 import com.sica.entities.Entity;
 import com.sica.simulation.SimulationState;
 
-import sim.util.Int2D;
-
 /**
  * Agent that can be controlled via drools rule-based system
  * this abstact class leaves the key methods unimplemented so
@@ -20,7 +18,7 @@ import sim.util.Int2D;
  * @author Daniel
  *
  */
-public abstract class DroolsAgent extends Entity {
+public abstract class DroolsAgent extends Agent {
 	/**
 	 * 
 	 */
@@ -39,11 +37,6 @@ public abstract class DroolsAgent extends Entity {
 		this.setUpAgent(kSessionName, 0);
 	}
 	
-	public DroolsAgent(String kSessionName, Int2D home) {
-		super(Entity.EntityType.DROOLS, home);
-		this.setUpAgent(kSessionName, 0);
-	}
-	
 	/**
 	 * Use this constructor if you want to set up a maximum number of
 	 * rules that can be triggered on each step. This avoids infinite
@@ -56,11 +49,7 @@ public abstract class DroolsAgent extends Entity {
 		this.setUpAgent(kSessionName, maxRulesFired);
 	}
 	
-	public DroolsAgent(String kSessionName, int maxRulesFired, Int2D home) {
-		super(Entity.EntityType.DROOLS, home);
-		this.setUpAgent(kSessionName, maxRulesFired);
-	}
-	
+
 	private void setUpAgent(String kSessionName, int maxRulesFired) {
         try {
             // load up the knowledge base

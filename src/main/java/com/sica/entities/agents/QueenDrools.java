@@ -5,16 +5,14 @@ import com.sica.entities.EntityPlacer;
 import com.sica.simulation.SimulationConfig;
 import com.sica.simulation.SimulationState;
 
-import sim.util.Int2D;
-
 public class QueenDrools extends DroolsAgent{
 	
 	private static final long serialVersionUID = 7010748442357851286L;
 	
 	private int count;
 	
-	public QueenDrools (Int2D home) {
-		super("ksession-queenDrools", 1, home);
+	public QueenDrools() {
+		super("ksession-queenDrools", 1);
 		count = 0;
 	}
 	
@@ -34,7 +32,7 @@ public class QueenDrools extends DroolsAgent{
 	
 	public void createBee(SimulationState state) {
 		// TODO: Change to create workers and defenders
-		EntityPlacer.generateWorkersAfter(state.entities, state.schedule, 1, getHome());
+		EntityPlacer.generateWorkersAfter(state.entities, state.schedule, 1, state.entities.getObjectLocation(this));
 	}
 	
 	public void increaseCount () {

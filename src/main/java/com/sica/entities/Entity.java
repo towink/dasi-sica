@@ -2,10 +2,6 @@ package com.sica.entities;
 
 import com.sica.simulation.SimulationConfig;
 import com.sica.simulation.SimulationState;
-import com.util.knowledge.Knowledge;
-import com.util.movement.Direction;
-import com.util.movement.MovementFunctions;
-
 import sim.engine.SimState;
 import sim.engine.Steppable;
 import sim.util.Bag;
@@ -17,7 +13,7 @@ public abstract class Entity implements Steppable {
 	// TODO clean this up
 	public static enum EntityType {UNKNOWN, WORKER, DROOLS, OBJECTIVE_DRIVEN};
 	
-	private Int2D home;
+
 	private static int uaidGenerator = 0;	//static variable to count the number of agents created
 	private int uaid;						//unique agent identifier
 	private EntityType type = EntityType.UNKNOWN;
@@ -33,23 +29,11 @@ public abstract class Entity implements Steppable {
 	 * If it does not exist, add it
 	 * to the enum Agent.AgentType.
 	 * @param type
-	 * @param home
-	 */
-	public Entity(EntityType type, Int2D home) {
-		this.type = type;
-		this.home = home;
-	}
-	
-	/**
-	 * Main constructor of the agent class. Pass the type of
-	 * agent you are creating. If it does not exist, add it
-	 * to the enum Agent.AgentType.
-	 * @param type
 	 */
 	public Entity(EntityType type) {
 		this.type = type;
-		this.home = null;
 	}
+
 	
 	@Override
 	public void step(SimState arg0) {
@@ -79,41 +63,6 @@ public abstract class Entity implements Steppable {
 	}
 	
 	
-	
-	
-	/**
-	 * Move this entity in the specified direction with the specified grid mode
-	 * @param dir
-	 * @param simState
-	 * @param mode
-	 * @return true if the object was able to move, false otherwise
-	 */
-	public boolean move(Direction dir, SimulationState simState, int mode) {
-		Int2D origin = simState.entities.getObjectLocation(this);
-		Int2D destination = dir.getMovementOf(
-				origin,
-				mode,
-				SimulationConfig.GRID_WIDTH,
-				SimulationConfig.GRID_HEIGHT);
-		if (this.canMoveTo(destination, simState, mode)) {
-			simState.entities.setObjectLocation(this, destination);
-			return true;
-		} else {
-			return false;
-		}
-	}
-	
-	/**
-	 * @param p
-	 * @param simState
-	 * @return true if p is a valid position for this object (i.e: it can move to it) 
-	 */
-	public boolean canMoveTo(Int2D p, SimulationState simState, int mode) {
-		Int2D fitted = MovementFunctions.fitToGrid(p, mode, SimulationConfig.GRID_WIDTH, SimulationConfig.GRID_HEIGHT);
-		return !Knowledge.isType(simState.environment.get(fitted.x, fitted.y), Knowledge.OBSTACLE);
-	}
-	
-	
 	/**
 	 * Gets all neighboring entities.
 	 * DOES INCLUDE ITSELF!
@@ -128,10 +77,4 @@ public abstract class Entity implements Steppable {
 				SimulationConfig.ENV_MODE,
 				false);
 	}
-	
-
-	public Int2D getHome() {
-		return home;
-	}
-
 }

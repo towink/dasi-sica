@@ -21,10 +21,12 @@ public class WorkerBee extends Agent {
 	}
 
 	public State actualState;
+	private Int2D objective;
 
 	public WorkerBee() {
 		super(EntityType.WORKER);
 		actualState = State.EXPLORING;
+		objective = new Int2D();
 	}
 
 	@Override
@@ -34,7 +36,7 @@ public class WorkerBee extends Agent {
 
 		switch (actualState) {
 		case UPDATING:
-			sendMessages(simState);
+			this.broadcastKnowledgeToType(simState, this.getType());
 			
 			if (getObjective() == null) {
 				actualState = State.EXPLORING;
@@ -124,20 +126,24 @@ public class WorkerBee extends Agent {
 		if (!simulation.environment.hasTypeAt(x, y, Knowledge.OBSTACLE))
 				simulation.entities.setObjectLocation(this, new Int2D(x, y));
 	}
+	
+	
+	// getters and setter
+	public Int2D getObjective() {
+		return objective;
+	}
 
-	private void sendMessages(final SimulationState simState) {
-		Int2D location = simState.entities.getObjectLocation(this);
-		Bag beeBag = simState.entities.getRadialNeighbors(location.getX(), location.getY(), simState.getConfig().getRadioView(), Grid2D.TOROIDAL, true);
-
-		for (Object a: beeBag) {
-			Entity ag = (Entity) a;
-			if (ag.getType() != EntityType.WORKER)
-				continue;
-			
-			this.sendKnowledgeTo((Agent) a); 
+	public void setObjective(int x, int y) {
+		this.setObjective(new Int2D(x, y));
+	}
+	
+	public void setObjective(Int2D objective) {
+		if (objective != null) {
+			this.objective = objective;
 		}
-		
-		knowledge.pollNewKnowledge();
+		else {
+			this.objective = null;
+		}
 	}
 
 	

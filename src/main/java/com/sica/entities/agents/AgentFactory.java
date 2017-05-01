@@ -28,7 +28,7 @@ public class AgentFactory {
 		}
 		
 		if (agentType.equals("WORKER")) {
-			ObjectiveDrivenWorkerBee agent = new ObjectiveDrivenWorkerBee(home);
+			ObjectiveDrivenWorkerBee agent = new ObjectiveDrivenWorkerBee();
 			agent.addObjective(new ObjectiveExplore());
 			return agent;
 		}
@@ -37,7 +37,7 @@ public class AgentFactory {
 			return null;
 		}
 		else if (agentType.equals("QUEEN")) { 
-			return new QueenDrools(home);
+			return new QueenDrools();
 		}
 		else if (agentType.equals("ENEMY")) {
 			System.out.println("ENEMY: It has not yet been implemented, returning null");

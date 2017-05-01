@@ -1,5 +1,6 @@
 package com.sica.entities;
 
+import com.sica.entities.Entity.EntityType;
 import com.sica.entities.agents.AgentFactory;
 import com.sica.entities.agents.DroolsBee;
 import com.sica.entities.agents.ObjectiveDrivenWorkerBee;
@@ -9,6 +10,7 @@ import com.sica.simulation.SimulationConfig;
 
 import sim.engine.Schedule;
 import sim.field.grid.SparseGrid2D;
+import sim.util.Bag;
 import sim.util.Int2D;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
@@ -89,10 +91,38 @@ public class EntityPlacer {
 	 * @param home
 	 */
 	public static void generateQueen(SparseGrid2D entities, Schedule schedule, Int2D home) {
-		// TODO: This method should not be able to create more than one queen in a hive 
+		if (queenInHive(entities, home)){
+			return ;
+		}
+		
 		Entity agent = AgentFactory.getAgent(AgentFactory.QUEEN_BEE, home);
 		entities.setObjectLocation(agent, home);
 		schedule.scheduleRepeating(Schedule.EPOCH, 0, agent, 1);
+	}
+	
+	private static boolean queenInHive (SparseGrid2D entities, Int2D hivePos) {
+		boolean result = false;
+		int minX = (int) (hivePos.getX() - SimulationConfig.HIVE_WIDTH/2);
+		int minY = (int) (hivePos.getY() - SimulationConfig.HIVE_HEIGHT/2);
+		int maxX = (int) (hivePos.getX() + SimulationConfig.HIVE_WIDTH/2);
+		int maxY = (int) (hivePos.getY() + SimulationConfig.HIVE_HEIGHT/2);
+		
+		for (int x = minX; x < maxX; x++) {
+			for (int y = minY; y < maxY; y++) {
+				Bag items = entities.getObjectsAtLocation(x, y);
+				if (items != null) {
+					for (Object a: items) {
+						if (a.getClass() == QueenDrools.class) {
+							result = true;
+							System.out.println("si hay iguales");
+							break;
+						}
+					}
+				}
+			}
+		}
+		
+		return result;
 	}
 	
 	// TODO methods for enemies

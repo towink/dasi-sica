@@ -72,6 +72,10 @@ public class Environment extends IntGrid2D {
 		return (int)Knowledge.extractMetadata(this.get(pos.x, pos.y));
 	}
 	
+	public Knowledge getKnowledgeAt(Int2D pos) {
+		return Knowledge.fromInt(this.get(pos.x, pos.y));
+	}
+	
 	public void setMetadataAt(Int2D pos, int meta) {
 		Knowledge knowledge = Knowledge.fromInt(this.get(pos.x, pos.y));
 		this.set(pos, knowledge.inyectMetadata((short)meta));

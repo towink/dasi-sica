@@ -86,7 +86,7 @@ public abstract class Agent extends Entity {
 			simState.entities.setObjectLocation(this, destination);
 			return true;
 		} else {	//if we cannot move, add the knowledge so we don't fail again
-			this.knowledge.updateKnowledge(destination, Knowledge.fromInt(simState.environment.get(destination.x, destination.y)));
+			this.knowledge.updateKnowledge(destination, simState.environment.getKnowledgeAt(destination));
 			return false;
 		}
 	}
@@ -98,7 +98,7 @@ public abstract class Agent extends Entity {
 	 */
 	public boolean canMoveTo(Int2D p, SimulationState simState, int mode) {
 		Int2D fitted = MovementFunctions.fitToGrid(p, mode, SimulationConfig.GRID_WIDTH, SimulationConfig.GRID_HEIGHT);
-		return !Knowledge.isType(simState.environment.get(fitted.x, fitted.y), Knowledge.OBSTACLE);
+		return simState.environment.getKnowledgeAt(fitted) != Knowledge.OBSTACLE;
 	}
 	/////////////////////////////
 	
@@ -160,6 +160,7 @@ public abstract class Agent extends Entity {
 
 	
 	/**
+	 * Gets this agents home (probably a hive)
 	 * @return A random hive in this agent knowledge
 	 */
 	public Int2D getHome() {

@@ -58,7 +58,11 @@ public class ObjectiveCollect extends Objective {
 		public void interactWithOneShot(ObjectiveDrivenAgent a, SimulationState simState) {
 			ObjectiveDrivenWorkerBee bee = (ObjectiveDrivenWorkerBee) a;
 			Int2D pos = simState.entities.getObjectLocation(a);
-			bee.setCarriesAliment (simState.environment.getAlimentAt(pos));
+			boolean gotAliment = simState.environment.getAlimentAt(pos);
+			bee.setCarriesAliment (gotAliment);
+			if (!gotAliment) {
+				bee.getKnowledgeMap().updateKnowledge(pos, simState.environment.getKnowledgeAt(pos));
+			}
 		}
 		@Override
 		public void endTask(ObjectiveDrivenAgent a, Objective obj, SimulationState simState) {
@@ -89,7 +93,6 @@ public class ObjectiveCollect extends Objective {
 		public void interactWithOneShot(ObjectiveDrivenAgent a, SimulationState simState) {
 			a.observeEnvironment(simState, Knowledge.OBSTACLE);
 			a.observeEnvironment(simState, Knowledge.FLOWER);
-			a.observeEnvironment(simState, Knowledge.EMPTY);
 		}
 	}
 

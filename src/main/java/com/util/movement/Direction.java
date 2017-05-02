@@ -42,7 +42,7 @@ public enum Direction {
 	
 	public Int2D getMovementOf(Int2D origin, int mode, int gridWidth, int gridHeight) {
 		Int2D result = this.move(origin, mode);
-		result = MovementFunctions.fitToGrid(result, mode, gridWidth, gridHeight);
+		result = PositioningFunctions.fitToGrid(result, mode, gridWidth, gridHeight);
 		return result;
 	}
 }

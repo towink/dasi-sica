@@ -10,7 +10,7 @@ import com.util.knowledge.HashMapKnowledgeMap;
 import com.util.knowledge.Knowledge;
 import com.util.knowledge.KnowledgeMapInterface;
 import com.util.movement.Direction;
-import com.util.movement.MovementFunctions;
+import com.util.movement.PositioningFunctions;
 import com.util.searching.AStar;
 import sim.util.Bag;
 import sim.util.Int2D;
@@ -112,7 +112,7 @@ public abstract class Agent extends Entity {
 	 * @return true if p is a valid position for this object (i.e: it can move to it) 
 	 */
 	public boolean canMoveTo(Int2D p, SimulationState simState, int mode) {
-		Int2D fitted = MovementFunctions.fitToGrid(p, mode, SimulationConfig.GRID_WIDTH, SimulationConfig.GRID_HEIGHT);
+		Int2D fitted = PositioningFunctions.fitToGrid(p, mode, SimulationConfig.GRID_WIDTH, SimulationConfig.GRID_HEIGHT);
 		return simState.environment.getKnowledgeAt(fitted) != Knowledge.OBSTACLE;
 	}
 	/////////////////////////////

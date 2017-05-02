@@ -73,6 +73,15 @@ public class TwoDVector implements Serializable, Cloneable {
 	public double norm() {
 		return Math.sqrt(this.x*this.x + this.y*this.y);
 	}
+	
+	/**
+	 * Normalize this vector
+	 */
+	public void normalize() {
+		double norm = this.norm();
+		this.x /= norm;
+		this.y /= norm;
+	}
 
 	/**
 	 * Clamps the vector's coordinates between min and max

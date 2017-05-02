@@ -13,7 +13,7 @@ public class EnemySpawner extends Entity {
 
 	@Override
 	public void doStep(SimulationState simState) {
-		EntityPlacer.generateEnemies(simState.entities, simState.schedule, 10, simState.entities.getObjectLocation(this));
+		EntityPlacer.generateEnemies(simState.entities, simState.schedule, 30, simState.entities.getObjectLocation(this));
 	}
 
 }

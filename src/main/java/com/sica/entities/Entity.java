@@ -11,15 +11,17 @@ public abstract class Entity implements Steppable {
 	private static final long serialVersionUID = -1449354141004958564L;
 	
 	// TODO clean this up
+	// when you add a new entitytype, be sure to add it to isEnemy if it is a new type of enemy!
 	public static enum EntityType {UNKNOWN, 
 		WORKER, DROOLS, //legacy bees, remove in the future
-		OBJECTIVE_DRIVEN_WORKER, QUEEN, BEE_SPAWNER, ENVIRONMENT_SPAWNER, SIMPLE_ENEMY, ENEMY_SPAWNER}; 
+		OBJECTIVE_DRIVEN_WORKER, QUEEN, BEE_SPAWNER, ENVIRONMENT_SPAWNER, SIMPLE_ENEMY, ENEMY_SPAWNER, DEFENDER_BEE}; 
 	
 
 	private static int uaidGenerator = 0;	//static variable to count the number of agents created
 	private int uaid;						//unique agent identifier
 	private EntityType type = EntityType.UNKNOWN;
 	private boolean initialized = false;
+	private boolean removed = false;
 	//create a new uaid when instantiating a new agent
 	{
 		this.uaid = uaidGenerator;
@@ -40,6 +42,9 @@ public abstract class Entity implements Steppable {
 	
 	@Override
 	public void step(SimState arg0) {
+		if (this.removed)
+			return;
+		
 		if (!this.initialized) {
 			this.setUp((SimulationState) arg0);
 			this.initialized = true;
@@ -62,6 +67,15 @@ public abstract class Entity implements Steppable {
 	 */
 	public void setUp(SimulationState simState) {}
 	
+	
+	/**
+	 * Kill this agent (i.e: enemy kills bee or vice versa)
+	 * by disabling its step() method
+	 */
+	public void remove(SimulationState simState) {
+		simState.entities.remove(this);
+		this.removed = true;
+	}
 	
 	/**
 	 * Get this agent's unique agent identifier
@@ -92,5 +106,14 @@ public abstract class Entity implements Steppable {
 				simState.getConfig().getRadioView(),
 				SimulationConfig.ENV_MODE,
 				false);
+	}
+	
+	/**
+	 * Return true if this entity is an enemy of any type
+	 * @param e
+	 * @return
+	 */
+	public static boolean isEnemy(Entity e) {
+		return e.type == EntityType.SIMPLE_ENEMY; //|| e.type == EntityType.NEW_ENEMY_TYPE ...
 	}
 }

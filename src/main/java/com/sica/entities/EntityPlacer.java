@@ -11,7 +11,6 @@ import sim.engine.Schedule;
 import sim.field.grid.SparseGrid2D;
 import sim.util.Bag;
 import sim.util.Int2D;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 public class EntityPlacer {
 
@@ -80,7 +79,13 @@ public class EntityPlacer {
 	 * @param home
 	 */
 	public static void generateDefenders(SparseGrid2D entities, Schedule schedule, int numDefenders, Int2D home) {
-		throw new NotImplementedException();
+		Entity agent;
+		for (int x = 0; x < numDefenders; x++) {
+			agent = AgentFactory.getAgent(EntityType.DEFENDER_BEE);
+			// maybe the next 2 lines should be included in the factory method somehow??
+			entities.setObjectLocation(agent, home);
+			schedule.scheduleRepeating(Schedule.EPOCH, 0, agent, 1);
+		}
 	}
 	
 	/**

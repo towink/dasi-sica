@@ -5,9 +5,11 @@ import java.util.Locale;
 
 import javax.swing.JFrame;
 
+import com.sica.entities.agents.DefenderBee;
 import com.sica.entities.agents.DroolsBee;
 import com.sica.entities.agents.ObjectiveDrivenWorkerBee;
 import com.sica.entities.agents.QueenDrools;
+import com.sica.entities.agents.SimpleEnemy;
 import com.sica.entities.agents.WorkerBee;
 import com.sica.environment.EnvironmentColorMap;
 import com.sica.simulation.SimulationConfig;
@@ -75,11 +77,13 @@ public class BeeGUI extends GUIState {
 		environmentPortrayal.setMap(new EnvironmentColorMap());
 		//set up the portrayals for the agents
 		entityPortrayal.setField(simulation.entities);
-		entityPortrayal.setPortrayalForClass(WorkerBee.class, new OvalPortrayal2D(Color.BLUE, true));
-		entityPortrayal.setPortrayalForClass(DroolsBee.class, new OvalPortrayal2D(Color.GREEN, true));
+		//entityPortrayal.setPortrayalForClass(WorkerBee.class, new OvalPortrayal2D(Color.BLUE, true));
+		//entityPortrayal.setPortrayalForClass(DroolsBee.class, new OvalPortrayal2D(Color.GREEN, true));
 		entityPortrayal.setPortrayalForClass(ObjectiveDrivenWorkerBee.class, new OvalPortrayal2D(Color.MAGENTA, true));
 		entityPortrayal.setPortrayalForClass(QueenDrools.class, new OvalPortrayal2D(Color.WHITE, true));
-		entityPortrayal.setPortrayalForRemainder(new OvalPortrayal2D(Color.ORANGE, true));
+		entityPortrayal.setPortrayalForClass(DefenderBee.class, new OvalPortrayal2D(new Color(128, 178, 255), true));
+		entityPortrayal.setPortrayalForClass(SimpleEnemy.class, new OvalPortrayal2D(Color.ORANGE, true));
+		entityPortrayal.setPortrayalForRemainder(new OvalPortrayal2D(Color.GREEN, true));
 		
 		display.reset();
         display.repaint();

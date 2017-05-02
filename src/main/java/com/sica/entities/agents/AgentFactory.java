@@ -25,6 +25,8 @@ public class AgentFactory {
 			return new QueenDrools();
 		case SIMPLE_ENEMY:
 			return new SimpleEnemy();
+		case DEFENDER_BEE:
+			return new DefenderBee();
 		default:
 			throw new IllegalStateException("Cannot create the type of agent: " + type);
 		

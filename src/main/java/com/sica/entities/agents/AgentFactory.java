@@ -4,8 +4,6 @@ import com.sica.behaviour.Objectives.ObjectiveExplore;
 import com.sica.entities.Entity;
 import com.sica.entities.Entity.EntityType;
 
-import sim.util.Int2D;
-
 public class AgentFactory {	
 	/**
 	 * Create all agents of the simulation.
@@ -16,7 +14,7 @@ public class AgentFactory {
 	 * @param agentType
 	 * @return The agent requested or null if it does not exist
 	 */
-	public static Entity getAgent(EntityType type, Int2D home) {
+	public static Entity getAgent(EntityType type) {
 		switch(type) {
 		case WORKER:
 		case OBJECTIVE_DRIVEN_WORKER:
@@ -25,6 +23,8 @@ public class AgentFactory {
 			return agent;
 		case QUEEN:
 			return new QueenDrools();
+		case SIMPLE_ENEMY:
+			return new SimpleEnemy();
 		default:
 			throw new IllegalStateException("Cannot create the type of agent: " + type);
 		

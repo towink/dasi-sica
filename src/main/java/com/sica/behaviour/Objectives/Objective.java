@@ -59,6 +59,9 @@ public abstract class Objective implements Comparable<Objective> {
 	
 	/**
 	 * Overwrite if you wish to use the ObjectiveDrivenAgent's priority mechanism.
+	 * This should NOT change after creating the objective. If you wish to change it,
+	 * finish this objective and then add a new one with the new priority,
+	 * as ObjectiveDrivenAgent won't reorder its objectives after the first insertion.
 	 * @return the priority of this objective
 	 */
 	public int getPriority() {

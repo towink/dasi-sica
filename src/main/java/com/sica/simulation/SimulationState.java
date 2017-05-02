@@ -2,6 +2,7 @@ package com.sica.simulation;
 
 import com.sica.entities.EntityStorage;
 import com.sica.entities.unmovable.ColonySpawner;
+import com.sica.entities.unmovable.EnemySpawner;
 import com.sica.entities.unmovable.EnvironmentSpawner;
 import com.sica.environment.Environment;
 import sim.engine.SimState;
@@ -23,7 +24,6 @@ public class SimulationState extends SimState {
 	public SimulationState(long seed) { 
 		super(seed);
 		config = SimulationConfig.config();
-		config.sim = this;
 	}
 
 	@Override
@@ -37,6 +37,8 @@ public class SimulationState extends SimState {
 		entities.addScheduledOnceEntityAt(new EnvironmentSpawner(), new Int2D (), schedule);
 		// let the bees out!
 		entities.addScheduledOnceEntityAt(new ColonySpawner(), new Int2D (SimulationConfig.GRID_WIDTH/2, SimulationConfig.GRID_HEIGHT/2), schedule);
+		// add also some enemies
+		entities.addScheduledOnceEntityAt(new EnemySpawner(), new Int2D(0, 0), schedule);
 	}
 	
 	

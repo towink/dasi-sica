@@ -10,7 +10,6 @@ public class EnvironmentSpawner extends Entity {
 
 	public EnvironmentSpawner () {
 		super(EntityType.ENVIRONMENT_SPAWNER);
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override

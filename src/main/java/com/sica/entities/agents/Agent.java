@@ -80,13 +80,23 @@ public abstract class Agent extends Entity {
 	 * @param mode
 	 * @return true if the object was able to move, false otherwise
 	 */
-	public boolean move(Direction dir, SimulationState simState, int mode) {
-		Int2D origin = simState.entities.getObjectLocation(this);
+	public boolean moveInDirection(Direction dir, SimulationState simState, int mode) {
 		Int2D destination = dir.getMovementOf(
-				origin,
+				simState.entities.getObjectLocation(this),
 				mode,
 				SimulationConfig.GRID_WIDTH,
 				SimulationConfig.GRID_HEIGHT);
+		return this.moveTo(destination, simState, mode);
+	}
+	
+	/**
+	 * Move this entity to the specified location
+	 * @param dir
+	 * @param simState
+	 * @param mode
+	 * @return true if the object was able to move, false otherwise
+	 */
+	public boolean moveTo(Int2D destination, SimulationState simState, int mode) {
 		if (this.canMoveTo(destination, simState, mode)) { //TODO this should be the only entry point to setObjectLocation!!
 			simState.entities.setObjectLocation(this, destination);
 			return true;

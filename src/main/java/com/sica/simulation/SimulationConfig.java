@@ -13,9 +13,6 @@ import sim.field.grid.Grid2D;
 public class SimulationConfig {
 	// TODO the object registered in BeeGUI via getSimulationInspectedObject should actually be our SimulationState
 	// object
-	// I did this ugliness to have a quick solution to display the number of aliment in the GUI, but it can't stay this
-	// way :)
-	public SimulationState sim;
 
 	
 	// singleton stuff

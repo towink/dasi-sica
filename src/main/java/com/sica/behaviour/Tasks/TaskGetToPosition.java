@@ -44,7 +44,6 @@ public class TaskGetToPosition extends Task {
 		if(path != null && !path.isEmpty()) {
 			
 			// check if this path already goes to this tasks destination
-			// TODO use either Int2D or java.awt.Point throughout whole project ...
 			if(path.get(path.size() - 1).equals(destination)) {
 				
 				// now we try to move to the next point in the path

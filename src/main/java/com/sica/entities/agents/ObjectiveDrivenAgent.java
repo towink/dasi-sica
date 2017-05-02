@@ -23,10 +23,8 @@ public abstract class ObjectiveDrivenAgent extends Agent {
 	 * @param type The entity type of the agent to be created.
 	 */
 	public ObjectiveDrivenAgent(EntityType type) {
-		//super(type, home);
 		super(type);
 		this.objectives = new PriorityQueue<Objective>();
-		//this.actualPath = null;
 	}
 	
 	/**

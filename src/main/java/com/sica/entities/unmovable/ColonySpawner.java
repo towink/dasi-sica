@@ -14,7 +14,6 @@ public class ColonySpawner extends Entity {
 	
 	public ColonySpawner() {
 		super(EntityType.BEE_SPAWNER);
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override

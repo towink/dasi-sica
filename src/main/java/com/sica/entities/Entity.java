@@ -13,7 +13,7 @@ public abstract class Entity implements Steppable {
 	// TODO clean this up
 	public static enum EntityType {UNKNOWN, 
 		WORKER, DROOLS, //legacy bees, remove in the future
-		OBJECTIVE_DRIVEN_WORKER, QUEEN, BEE_SPAWNER, ENVIRONMENT_SPAWNER}; 
+		OBJECTIVE_DRIVEN_WORKER, QUEEN, BEE_SPAWNER, ENVIRONMENT_SPAWNER, SIMPLE_ENEMY, ENEMY_SPAWNER}; 
 	
 
 	private static int uaidGenerator = 0;	//static variable to count the number of agents created

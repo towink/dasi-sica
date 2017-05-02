@@ -49,7 +49,7 @@ public class ObjectiveExplore extends Objective {
 		public void interactWithOneShot(ObjectiveDrivenAgent a, SimulationState simState) {
 			// randomly pick a direction and move
 			Direction randomDir = Direction.values()[simState.random.nextInt(Direction.values().length)];
-			a.move(randomDir, simState, SimulationConfig.ENV_MODE);
+			a.moveInDirection(randomDir, simState, SimulationConfig.ENV_MODE);
 		}
 		@Override
 		public void endTask(ObjectiveDrivenAgent a, Objective obj, SimulationState simState) {

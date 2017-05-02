@@ -5,16 +5,6 @@ import com.sica.entities.agents.QueenDrools;
 import com.sica.simulation.SimulationState;
 import sim.util.Int2D;
 
-/*rule "Create bees"
-	when
-		state : SimulationState()
-		queen : QueenDrools( state.getConfig().getTime2Create() <= getCount() && state.aliment >= state.getConfig().getCost2Create());
-	then
-		state.decreaseAliment(state.getConfig().getCost2Create());
-		queen.resetCount();
-		queen.createBee(state);
-end*/
-
 rule "Create bees"
 	when
 		state : SimulationState()
@@ -33,12 +23,3 @@ rule "Increase count to generate bees"
 	then
 		queen.increaseCount();
 end
-
-/*
-	get location type
-	check that it is a hive
-	if it is, check that it has food
-	if it has food, spawn new bee
-
-
-*/

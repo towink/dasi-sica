@@ -110,6 +110,15 @@ public abstract class DroolsAgent extends Agent {
 	}
 	
 	/**
+	 * Removes the given object from the knowledge base
+	 * @param o
+	 */
+	public void removeObjectFromKnowledgeBase(Object o) {
+		FactHandle fh = this.kSession.getFactHandle(o);
+		this.kSession.delete(fh);
+	}
+	
+	/**
 	 * Function needed to call fireAllRules() more than one time on
 	 * the same object. Otherwise the rule motor ignores objects that had rules already fired on them.
 	 * One could also rebuild the rule engine on each step, but this approach seems more 

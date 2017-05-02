@@ -83,7 +83,11 @@ public class ObjectiveCollect extends Objective {
 		public void interactWithOneShot(ObjectiveDrivenAgent a, SimulationState simState) {
 			ObjectiveDrivenWorkerBee bee = (ObjectiveDrivenWorkerBee) a;
 			if(bee.getCarriesAliment()) {
-				simState.aliment++;
+				Int2D location = simState.entities.getObjectLocation(a);
+				if (simState.environment.hasTypeAt(location, Knowledge.HIVE)) {
+					int aliment = simState.environment.getMetadataAt(location);
+					simState.environment.setMetadataAt(location, aliment + 1);
+				}
 			}
 		}
 	}

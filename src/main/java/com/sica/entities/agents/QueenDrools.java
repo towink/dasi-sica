@@ -4,12 +4,17 @@ package com.sica.entities.agents;
 import com.sica.entities.EntityPlacer;
 import com.sica.simulation.SimulationConfig;
 import com.sica.simulation.SimulationState;
+import com.util.knowledge.Knowledge;
+
+import sim.util.Int2D;
 
 public class QueenDrools extends DroolsAgent{
 	
 	private static final long serialVersionUID = 7010748442357851286L;
 	
 	private int count;
+	private int availableFood;
+	private Int2D location;
 	
 	public QueenDrools() {
 		super("ksession-queenDrools", 1);
@@ -19,6 +24,11 @@ public class QueenDrools extends DroolsAgent{
 	@Override
 	public void stepBeforeFiringRules(SimulationState arg0) {
 		this.addObjectToKnowledgeBase(arg0);
+		this.location = arg0.entities.getObjectLocation(this);
+		if (arg0.environment.hasTypeAt(location, Knowledge.HIVE))
+			this.availableFood = arg0.environment.getMetadataAt(location);
+		else
+			this.availableFood = 0;
 	}
 	
 	@Override
@@ -47,6 +57,14 @@ public class QueenDrools extends DroolsAgent{
 	
 	public int getCount() {
 		return count;
+	}
+	
+	public int getAvailableFood() {
+		return this.availableFood;
+	}
+	
+	public Int2D getLocation() {
+		return this.location;
 	}
 
 }

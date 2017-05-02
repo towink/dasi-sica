@@ -16,9 +16,7 @@ public class SimulationConfig {
 	// I did this ugliness to have a quick solution to display the number of aliment in the GUI, but it can't stay this
 	// way :)
 	public SimulationState sim;
-	public int getAliment() {
-		return sim.aliment;
-	}
+
 	
 	// singleton stuff
 	private static SimulationConfig instance;

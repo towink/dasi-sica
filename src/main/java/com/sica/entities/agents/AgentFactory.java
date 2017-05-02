@@ -2,16 +2,11 @@ package com.sica.entities.agents;
 
 import com.sica.behaviour.Objectives.ObjectiveExplore;
 import com.sica.entities.Entity;
+import com.sica.entities.Entity.EntityType;
 
 import sim.util.Int2D;
 
-public class AgentFactory {
-
-	public static final String WORKER_BEE = "WORKER";
-	public static final String DEFENDER_BEE = "DEFENDER";
-	public static final String QUEEN_BEE = "QUEEN";
-	public static final String ENEMY = "ENEMY";
-	
+public class AgentFactory {	
 	/**
 	 * Create all agents of the simulation.
 	 * WORKER to worker bee
@@ -21,29 +16,18 @@ public class AgentFactory {
 	 * @param agentType
 	 * @return The agent requested or null if it does not exist
 	 */
-	public static Entity getAgent(String agentType, Int2D home) {
-		agentType = agentType.toUpperCase();
-		if (agentType == null) {
-			return null;
-		}
-		
-		if (agentType.equals("WORKER")) {
+	public static Entity getAgent(EntityType type, Int2D home) {
+		switch(type) {
+		case WORKER:
+		case OBJECTIVE_DRIVEN_WORKER:
 			ObjectiveDrivenWorkerBee agent = new ObjectiveDrivenWorkerBee();
 			agent.addObjective(new ObjectiveExplore());
 			return agent;
-		}
-		else if (agentType.equals("DEFENDER")) {
-			System.out.println("DEFENDER: It has not yet been implemented, returning null");
-			return null;
-		}
-		else if (agentType.equals("QUEEN")) { 
+		case QUEEN:
 			return new QueenDrools();
-		}
-		else if (agentType.equals("ENEMY")) {
-			System.out.println("ENEMY: It has not yet been implemented, returning null");
-			return null;
-		}
+		default:
+			throw new IllegalStateException("Cannot create the type of agent: " + type);
 		
-		return null;
+		}
 	}
 }

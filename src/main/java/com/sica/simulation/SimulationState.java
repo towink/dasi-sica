@@ -1,11 +1,10 @@
 package com.sica.simulation;
 
-import com.sica.entities.EntityPlacer;
+import com.sica.entities.EntityStorage;
+import com.sica.entities.unmovable.ColonySpawner;
+import com.sica.entities.unmovable.EnvironmentSpawner;
 import com.sica.environment.Environment;
-import com.sica.environment.EnvironmentModeller;
-
 import sim.engine.SimState;
-import sim.field.grid.SparseGrid2D;
 import sim.util.Int2D;
 
 public class SimulationState extends SimState {
@@ -16,12 +15,12 @@ public class SimulationState extends SimState {
 	// is it a good idea to make it global?
 	//public static MersenneTwisterFast random;
 	
-	SimulationConfig config;
+	public SimulationConfig config;
 	
 	public int aliment;
 
 	public Environment environment = Environment.getNewEnvironment(SimulationConfig.GRID_WIDTH, SimulationConfig.GRID_HEIGHT);
-	public SparseGrid2D entities = new SparseGrid2D(SimulationConfig.GRID_WIDTH, SimulationConfig.GRID_HEIGHT);
+	public EntityStorage entities = new EntityStorage(SimulationConfig.GRID_WIDTH, SimulationConfig.GRID_HEIGHT);
 	
 	public SimulationState(long seed) { 
 		super(seed);
@@ -35,35 +34,12 @@ public class SimulationState extends SimState {
 		super.start();
 
 		environment = Environment.getNewEnvironment(SimulationConfig.GRID_WIDTH, SimulationConfig.GRID_HEIGHT);
-		entities = new SparseGrid2D(SimulationConfig.GRID_WIDTH, SimulationConfig.GRID_HEIGHT);
+		entities = new EntityStorage(SimulationConfig.GRID_WIDTH, SimulationConfig.GRID_HEIGHT);
 		
-		// place the hive
-		EnvironmentModeller.generateHive(environment, SimulationConfig.HIVE_WIDTH, SimulationConfig.HIVE_HEIGHT);
-		
-		// let some flowers grow
-		//EnvironmentModeller.generateFlowers(environment, SimulationConfig.NORMAL_FLOWER_WIDTH, SimulationConfig.NORMAL_FLOWER_HEIGHT);
-		EnvironmentModeller.randomlyGenerateFlowers(
-				environment,
-				config.getNumFlowers(),
-				config.getMinAlimentFlower(),
-				config.getMaxAlimentFlower(),
-				random);
-		
-		// put some obstacles around
-		if(SimulationConfig.config().getObstacleType() == SimulationConfig.WALL_OBSTACLES) {
-			EnvironmentModeller.generateWallObstacles(environment, config.numberOfWalls, config.wallLength, this.random);
-		}
-		else {
-			EnvironmentModeller.generateRandomObstacles(environment, config.percentageObstacle, this.random);
-		}
-		
+		// make the environment
+		entities.addScheduledOnceEntityAt(new EnvironmentSpawner(), new Int2D (), schedule);
 		// let the bees out!
-		EntityPlacer.generateBees(entities, schedule, config.numBees, 
-									new Int2D (SimulationConfig.GRID_WIDTH/2, SimulationConfig.GRID_HEIGHT/2));
-		EntityPlacer.generateWorkers(entities, schedule, config.numWorkers, 
-									new Int2D (SimulationConfig.GRID_WIDTH/2, SimulationConfig.GRID_HEIGHT/2));
-		EntityPlacer.generateQueen(entities, schedule, new Int2D (SimulationConfig.GRID_WIDTH/2-1, 
-																	SimulationConfig.GRID_HEIGHT/2-1));
+		entities.addScheduledOnceEntityAt(new ColonySpawner(), new Int2D (SimulationConfig.GRID_WIDTH/2, SimulationConfig.GRID_HEIGHT/2), schedule);
 	}
 	
 

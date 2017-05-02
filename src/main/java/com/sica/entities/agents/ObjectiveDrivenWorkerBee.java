@@ -18,7 +18,7 @@ public class ObjectiveDrivenWorkerBee extends ObjectiveDrivenAgent {
 	private boolean carriesAliment;
 
 	public ObjectiveDrivenWorkerBee() {													
-		super(EntityType.OBJECTIVE_DRIVEN);
+		super(EntityType.OBJECTIVE_DRIVEN_WORKER);
 		carriesAliment = false;
 	}
 	

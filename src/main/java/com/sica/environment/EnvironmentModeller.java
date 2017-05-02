@@ -14,6 +14,7 @@ public class EnvironmentModeller {
 	 * @param hiveWidth
 	 * @param hiveHeight
 	 */
+	@Deprecated
 	public static void generateHive (Environment environment, int hiveWidth, int hiveHeight) {
 		Int2D center = new Int2D (environment.getWidth()/2, environment.getHeight()/2);
 		Int2D length = new Int2D (hiveWidth, hiveHeight);

@@ -1,5 +1,6 @@
 package com.sica.entities;
 
+import com.sica.entities.Entity.EntityType;
 import com.sica.entities.agents.AgentFactory;
 import com.sica.entities.agents.DroolsBee;
 import com.sica.entities.agents.QueenDrools;
@@ -19,7 +20,7 @@ public class EntityPlacer {
 		Entity agent;
 		
 		for (int x = 0; x < 0; x++) {
-			agent = AgentFactory.getAgent(AgentFactory.WORKER_BEE, home);
+			agent = AgentFactory.getAgent(EntityType.OBJECTIVE_DRIVEN_WORKER, home);
 			entities.setObjectLocation(agent, home.x, home.y);
 			schedule.scheduleRepeating(Schedule.EPOCH, 0, agent, 1);
 		}
@@ -48,7 +49,7 @@ public class EntityPlacer {
 	public static void generateWorkers(SparseGrid2D entities, Schedule schedule, int numWorkers, Int2D home) {
 		Entity agent;
 		for (int x = 0; x < numWorkers; x++) {
-			agent = AgentFactory.getAgent(AgentFactory.WORKER_BEE, home);
+			agent = AgentFactory.getAgent(EntityType.OBJECTIVE_DRIVEN_WORKER, home);
 			// maybe the next 2 lines should be included in the factory method somehow??
 			entities.setObjectLocation(agent, home);
 			schedule.scheduleRepeating(Schedule.EPOCH, 0, agent, 1);
@@ -64,7 +65,7 @@ public class EntityPlacer {
 	public static void generateWorkersAfter(SparseGrid2D entities, Schedule schedule, int numWorkers, Int2D home) {
 		Entity agent;
 		for (int x = 0; x < numWorkers; x++) {
-			agent = AgentFactory.getAgent(AgentFactory.WORKER_BEE, home);
+			agent = AgentFactory.getAgent(EntityType.OBJECTIVE_DRIVEN_WORKER, home);
 			// maybe the next 2 lines should be included in the factory method somehow??
 			entities.setObjectLocation(agent, home);
 			schedule.scheduleRepeating(schedule.getTime(), 0, agent, 1);
@@ -93,7 +94,7 @@ public class EntityPlacer {
 			return ;
 		}
 		
-		Entity agent = AgentFactory.getAgent(AgentFactory.QUEEN_BEE, home);
+		Entity agent = AgentFactory.getAgent(EntityType.QUEEN, home);
 		entities.setObjectLocation(agent, home);
 		schedule.scheduleRepeating(Schedule.EPOCH, 0, agent, 1);
 	}

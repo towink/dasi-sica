@@ -25,9 +25,14 @@ public abstract class Agent extends Entity {
 	
 	public Agent (EntityType type) {
 		super(type);
-		this.knowledge = new HashMapKnowledgeMap();
-		this.knowledge.addKnowledge(new Int2D(SimulationConfig.GRID_WIDTH/2, SimulationConfig.GRID_HEIGHT/2), Knowledge.HIVE);	
+		this.knowledge = new HashMapKnowledgeMap();	
 	}
+	
+	@Override
+	public void setUp(SimulationState simState) {
+		this.observeEnvironment(simState, Knowledge.HIVE);
+	}
+	
 
 	//////BEHAVIOR FUNCTIONS
 	/**

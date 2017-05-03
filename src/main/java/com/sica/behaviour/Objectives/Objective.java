@@ -1,8 +1,7 @@
 package com.sica.behaviour.Objectives;
 
+import java.util.Deque;
 import java.util.LinkedList;
-import java.util.Queue;
-
 import com.sica.behaviour.Tasks.Task;
 import com.sica.entities.agents.ObjectiveDrivenAgent;
 import com.sica.simulation.SimulationState;
@@ -32,7 +31,9 @@ import com.sica.simulation.SimulationState;
  */
 public abstract class Objective implements Comparable<Objective> {
 
-	protected Queue<Task> taskQueue;
+	private Deque<Task> taskQueue;
+	private Task currentTask;
+	
 	
 	/**
 	 * Create an objective, composed of an (initially empty) queue of tasks to be executed in order
@@ -75,29 +76,44 @@ public abstract class Objective implements Comparable<Objective> {
 	 * @param simState
 	 */
 	public final void step(ObjectiveDrivenAgent a, SimulationState simState) {
-		// remove tasks that are finished and call their endTask function
-		this.removeFinishedTasks(a, simState);
-		// execute next task in queue
-		if (!this.isFinished(a, simState))
-			taskQueue.peek().interactWith(a, simState);
-	}
-
-	/**
-	 * removes all finished tasks from the queue and calls their endTasks funtions.
-	 * @param a
-	 * @param simState
-	 */
-	private void removeFinishedTasks(ObjectiveDrivenAgent a, SimulationState simState) {
-		while (!this.taskQueue.isEmpty() && this.taskQueue.peek().isFinished(a, simState))
-			this.taskQueue.poll().endTask(a, this, simState);
+		//if we have no current task
+		if (currentTask == null) {
+			if (taskQueue.isEmpty()) {
+				throw new IllegalStateException("This objective has no tasks and it is not finished either! Fix it!");
+			} else {
+				currentTask = taskQueue.pollFirst();//get a new task
+				currentTask.startTask(a, simState);
+			}
+		}
+		
+		if (!currentTask.isFinished(a, simState)) {	//if we've not finished the task, interact with it
+			currentTask.interactWith(a, simState);
+		} else {									//otherwise end it
+			//do it this way to ensure the exception	
+			//at addTask is not triggered if the task
+			//spawns new ones
+			Task task = currentTask;
+			currentTask = null;
+			task.endTask(a, this, simState);
+		} 
 	}
 	
 	/**
-	 * Adds a task to this objective.
+	 * Adds a task to this objective after all the others
 	 * @param t
 	 */
-	public void addTask(Task t) {
-		taskQueue.add(t);
+	public void addTaskLast(Task t) {
+		taskQueue.addLast(t);
+	}
+	
+	/**
+	 * Adds a task to this objetive befor all the others
+	 * @param t
+	 */
+	public void addTaskFirst(Task t) {
+		if (currentTask != null)
+			throw new IllegalStateException("Can't add a task while another is still being executed!!");
+		taskQueue.addFirst(t);
 	}
 	
 	@Override

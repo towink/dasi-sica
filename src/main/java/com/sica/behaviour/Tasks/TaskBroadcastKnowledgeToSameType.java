@@ -4,7 +4,12 @@ import com.sica.entities.agents.ObjectiveDrivenAgent;
 import com.sica.entities.agents.ObjectiveDrivenWorkerBee;
 import com.sica.simulation.SimulationState;
 
-public class TaskBroadcastKnowledge extends TaskOneShot {
+/**
+ * Broadcast knowledge to all agents of the same type
+ * @author Tobias, Daniel
+ *
+ */
+public class TaskBroadcastKnowledgeToSameType extends TaskOneShot {
 
 	@Override
 	public void interactWithOneShot(ObjectiveDrivenAgent a, SimulationState simState) {

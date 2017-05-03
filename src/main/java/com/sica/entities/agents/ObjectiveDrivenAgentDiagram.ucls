@@ -67,8 +67,12 @@
   </class>  
   <association id="8">    
     <end type="SOURCE" refId="1" navigable="false">      
-      <attribute id="9" name="objectives"/>      
-      <multiplicity id="10" minimum="0" maximum="2147483647"/>    
+      <attribute id="9" name="objectives">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="10" minimum="0" maximum="2147483647">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
     </end>    
     <end type="TARGET" refId="2" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
@@ -79,21 +83,21 @@
   </generalization>  
   <association id="12">    
     <end type="SOURCE" refId="2" navigable="false">      
-      <attribute id="13" name="taskQueue"/>      
-      <multiplicity id="14" minimum="0" maximum="2147483647"/>    
+      <attribute id="13" name="taskQueue">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="14" minimum="0" maximum="2147483647">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
     </end>    
     <end type="TARGET" refId="3" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
   <dependency id="15">    
-    <end type="SOURCE" refId="2"/>    
-    <end type="TARGET" refId="6"/>  
-  </dependency>  
-  <dependency id="16">    
     <end type="SOURCE" refId="1"/>    
     <end type="TARGET" refId="7"/>  
   </dependency>  
-  <realization id="17">    
+  <realization id="16">    
     <end type="SOURCE" refId="2"/>    
     <end type="TARGET" refId="4"/>  
   </realization>  

@@ -1,9 +1,9 @@
 package com.sica.behaviour.Objectives;
 
-import java.util.Collection;
-
-import com.sica.behaviour.Tasks.TaskBroadcastKnowledge;
+import com.sica.behaviour.Tasks.TaskBroadcastKnowledgeToSameType;
 import com.sica.behaviour.Tasks.TaskGetToPosition;
+import com.sica.behaviour.Tasks.TaskGoToRandomPlaceWithKnowledge;
+import com.sica.behaviour.Tasks.TaskObserveEnvironment;
 import com.sica.behaviour.Tasks.TaskOneShot;
 import com.sica.entities.agents.ObjectiveDrivenAgent;
 import com.sica.entities.agents.ObjectiveDrivenWorkerBee;
@@ -17,7 +17,7 @@ public class ObjectiveCollect extends Objective {
 
 	public ObjectiveCollect() {
 		super();
-		addTask(new TaskDecideWhereToGo());
+		addTaskLast(new TaskDecideWhereToGo());
 	}
 	
 	@Override
@@ -36,20 +36,12 @@ public class ObjectiveCollect extends Objective {
 	
 	// TODO what is the criterion to decide where to go next? at the moment random ...
 	private class TaskDecideWhereToGo extends TaskOneShot {
-		private Int2D decision;
 		@Override
-		public void interactWithOneShot(ObjectiveDrivenAgent a, SimulationState simState) {
-			Collection<Int2D> flowerPositions = a.getKnowledgeMap().getKnowledgeOf(Knowledge.FLOWER);
-			if(flowerPositions.isEmpty()) {
-				throw new IllegalStateException("no flower pos known");
-			}
-			int i = simState.random.nextInt(flowerPositions.size());
-			decision = (Int2D) flowerPositions.toArray()[i];
-		}
+		public void interactWithOneShot(ObjectiveDrivenAgent a, SimulationState simState) {	}
 		@Override
 		public void endTask(ObjectiveDrivenAgent a, Objective obj, SimulationState simState) {
-			addTask(new TaskGetToPosition(decision));
-			addTask(new TaskGrabAlimentFromCurrentPos());
+			obj.addTaskLast(new TaskGoToRandomPlaceWithKnowledge(Knowledge.FLOWER, true));
+			obj.addTaskLast(new TaskGrabAlimentFromCurrentPos());
 		}
 	}
 	
@@ -67,14 +59,14 @@ public class ObjectiveCollect extends Objective {
 		@Override
 		public void endTask(ObjectiveDrivenAgent a, Objective obj, SimulationState simState) {
 			ObjectiveDrivenWorkerBee bee = (ObjectiveDrivenWorkerBee) a;
-			obj.addTask(new TaskObserveEnvironment());
+			obj.addTaskLast(new TaskObserveEnvironmentObstacleFlower());
 			// only go back to hive if we really grabbed aliment
 			if(bee.getCarriesAliment()) {
-				obj.addTask(new TaskGetToPosition(a.getHome()));
-				obj.addTask(new TaskLeaveAlimentInHive());
-				obj.addTask(new TaskBroadcastKnowledge());
+				obj.addTaskLast(new TaskGetToPosition(a.getHome()));
+				obj.addTaskLast(new TaskLeaveAlimentInHive());
+				obj.addTaskLast(new TaskBroadcastKnowledgeToSameType());
 			}
-			obj.addTask(new TaskDecideWhereToGo());
+			obj.addTaskLast(new TaskDecideWhereToGo());
 		}
 	}
 	
@@ -92,12 +84,15 @@ public class ObjectiveCollect extends Objective {
 		}
 	}
 	
-	private class TaskObserveEnvironment extends TaskOneShot {
+	private class TaskObserveEnvironmentObstacleFlower extends TaskOneShot {
 		@Override
-		public void interactWithOneShot(ObjectiveDrivenAgent a, SimulationState simState) {
-			a.observeEnvironment(simState, Knowledge.OBSTACLE);
-			a.observeEnvironment(simState, Knowledge.FLOWER);
+		public void endTask(ObjectiveDrivenAgent a, Objective obj, SimulationState simState) {
+			obj.addTaskFirst(new TaskObserveEnvironment(Knowledge.FLOWER));
+			obj.addTaskFirst(new TaskObserveEnvironment(Knowledge.OBSTACLE));
 		}
+		
+		@Override
+		public void interactWithOneShot(ObjectiveDrivenAgent a, SimulationState simState) {}
 	}
 
 }

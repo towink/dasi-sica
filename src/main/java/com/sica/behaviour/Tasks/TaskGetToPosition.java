@@ -1,11 +1,8 @@
 package com.sica.behaviour.Tasks;
 
-import java.util.List;
-
 import com.sica.entities.agents.ObjectiveDrivenAgent;
 import com.sica.simulation.SimulationConfig;
 import com.sica.simulation.SimulationState;
-import com.util.knowledge.Knowledge;
 import sim.util.Int2D;
 
 /**
@@ -33,7 +30,9 @@ public class TaskGetToPosition extends Task {
 
 	@Override
 	public void interactWith(ObjectiveDrivenAgent agent, SimulationState simState) {
-		// a.move(Direction.values()[simState.random.nextInt(4)], simState, Grid2D.TOROIDAL);
+		if (!agent.followPath(simState))
+			agent.computePath(simState, destination);
+		/*// a.move(Direction.values()[simState.random.nextInt(4)], simState, Grid2D.TOROIDAL);
 		
 		// the first step in a get-to-position task is to observe the environment nearby
 		// in order to find obstacles
@@ -71,7 +70,7 @@ public class TaskGetToPosition extends Task {
 			// agent has no actual path - calculate it
 			//System.out.println("Recomputing path: no path yet");
 			agent.computePath(simState, destination);
-		}
+		}*/
 	}
 
 	@Override
@@ -79,9 +78,7 @@ public class TaskGetToPosition extends Task {
 		// if the destination (for some strange reason) is an obstacle then
 		// we say that this objective is immediately finished
 		return simState.entities.getObjectLocation(a).equals(this.destination)
-			|| simState.environment.hasTypeAt(
-					destination,
-					Knowledge.OBSTACLE);
+			|| !a.canMoveTo(destination, simState, SimulationConfig.ENV_MODE);
 	}
 
 }

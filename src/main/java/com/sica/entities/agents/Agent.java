@@ -1,6 +1,5 @@
 package com.sica.entities.agents;
 
-import java.util.Collection;
 import java.util.List;
 
 import com.sica.entities.Entity;
@@ -21,6 +20,7 @@ public abstract class Agent extends Entity {
 	
 	protected List<Int2D> actualPath;
 	protected KnowledgeMapInterface knowledge;
+	protected Int2D home; //where was this agent born?
 	
 	
 	public Agent (EntityType type) {
@@ -31,6 +31,7 @@ public abstract class Agent extends Entity {
 	@Override
 	public void setUp(SimulationState simState) {
 		this.observeEnvironment(simState, Knowledge.HIVE);
+		this.home = simState.entities.getObjectLocation(this);
 	}
 	
 
@@ -44,6 +45,14 @@ public abstract class Agent extends Entity {
 	public void computePath(final SimulationState state, Int2D destination) {
 		Int2D beginPos = state.entities.getObjectLocation(this);
 		actualPath = AStar.findPath(beginPos, destination, knowledge, SimulationConfig.GRID_WIDTH, SimulationConfig.GRID_HEIGHT); 
+	}
+	
+	/**
+	 * Make this agent forget its current path
+	 * (maybe it bumped into something)
+	 */
+	public void forgetPath() {
+		actualPath = null;
 	}
 	
 	/**
@@ -87,6 +96,22 @@ public abstract class Agent extends Entity {
 				SimulationConfig.GRID_WIDTH,
 				SimulationConfig.GRID_HEIGHT);
 		return this.moveTo(destination, simState, mode);
+	}
+	
+	/**
+	 * Follow this agent's internal path. The first position in the path is 
+	 * removed, so that further calls to this function will move the agent
+	 * further into the path. If for some reason the agent cannot move to
+	 * a position, it will add the knowledge about that position to its internal
+	 * knowledge, so that a later call to .calculatePath() will take it into account.
+	 * @param simState
+	 * @return true if there was a path within the agent, it was not empty,
+	 * 			and the agent was able to move to the next place in it
+	 */
+	public boolean followPath(SimulationState simState) {
+		if(actualPath != null && !actualPath.isEmpty())
+			return this.moveTo(actualPath.remove(0), simState, SimulationConfig.ENV_MODE); 
+		return false;
 	}
 	
 	/**
@@ -175,17 +200,11 @@ public abstract class Agent extends Entity {
 
 	
 	/**
-	 * Gets this agents home (probably a hive)
-	 * @return A random hive in this agent knowledge
+	 * Gets this agent's home (i.e: where this agent spawned)
+	 * @return the point where this agent was spawned
 	 */
 	public Int2D getHome() {
-		Collection<Int2D> knownHomes = knowledge.getKnowledgeOf(Knowledge.HIVE);
-		if (!knownHomes.isEmpty()) { //if we know of a home, return the first in the list
-			return knowledge.getKnowledgeOf(Knowledge.HIVE).iterator().next();
-		} else {
-			//could return the center of the map, but we can better troubleshoot if bees start going to the top left corner
-			return new Int2D(0, 0);
-		}
+		return this.home;
 	}
 
 }

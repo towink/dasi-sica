@@ -55,8 +55,6 @@ public class SimulationConfig {
 	// --- agent parameters ---
 	
 	// general
-	@Deprecated
-	protected int numBees = 0;
 	protected int radioView = 10;
 	protected int time4Season = 1000;
 	
@@ -97,19 +95,6 @@ public class SimulationConfig {
 	// ------------------------------
 	// parameters to set up the world
 	// ------------------------------
-	
-	
-	// bees
-	@Deprecated
-	public int getNumBees() {
-		return numBees;
-	}
-	
-	@Deprecated
-	public void setNumBees(int numBees) {
-		if(numBees >= 0)
-			this.numBees = numBees;
-	}
 	
 	// worker bees
 	public int getNumWorkers() {

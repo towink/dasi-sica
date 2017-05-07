@@ -13,7 +13,7 @@ public abstract class Entity implements Steppable {
 	// TODO clean this up
 	// when you add a new entitytype, be sure to add it to isEnemy if it is a new type of enemy!
 	public static enum EntityType {UNKNOWN, 
-		WORKER, DROOLS, //legacy bees, remove in the future
+		DROOLS, //legacy bees, remove in the future
 		OBJECTIVE_DRIVEN_WORKER, QUEEN, BEE_SPAWNER, ENVIRONMENT_SPAWNER, SIMPLE_ENEMY, ENEMY_SPAWNER, DEFENDER_BEE, SEASON}; 
 	
 

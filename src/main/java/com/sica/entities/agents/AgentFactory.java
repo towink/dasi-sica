@@ -16,7 +16,6 @@ public class AgentFactory {
 	 */
 	public static Entity getAgent(EntityType type) {
 		switch(type) {
-		case WORKER:
 		case OBJECTIVE_DRIVEN_WORKER:
 			ObjectiveDrivenWorkerBee agent = new ObjectiveDrivenWorkerBee();
 			agent.addObjective(new ObjectiveExplore());

@@ -2,7 +2,7 @@ package com.sica.behaviour.Objectives;
 
 import com.sica.behaviour.Tasks.TaskBroadcastKnowledge;
 import com.sica.behaviour.Tasks.TaskOneShot;
-import com.sica.entities.agents.ObjectiveDrivenAgent;
+import com.sica.entities.agents.Agent;
 import com.sica.entities.agents.ObjectiveDrivenWorkerBee;
 import com.sica.simulation.SimulationConfig;
 import com.sica.simulation.SimulationState;
@@ -16,28 +16,30 @@ public class ObjectiveExplore extends Objective {
 	}
 	
 	@Override
-	public boolean isFinished(ObjectiveDrivenAgent a, SimulationState simState) {
+	public boolean isFinished(Agent a, SimulationState simState) {
 		ObjectiveDrivenWorkerBee bee = (ObjectiveDrivenWorkerBee) a;
 		return bee.thinksKnowsFlowers(SimulationConfig.config().getFlowerThresholdWorker());
 	}
 	
 	@Override
-	public void onFinished(ObjectiveDrivenAgent a, SimulationState simState) {
+	public void onFinished(Agent a, SimulationState simState) {
 		// go collecting when we are done exploring!
-		a.addObjective(new ObjectiveCollect());
+		ObjectiveDrivenWorkerBee bee = (ObjectiveDrivenWorkerBee) a;
+		bee.addObjective(new ObjectiveCollect());
 	}
 	
 	// --- TASKS SPECIFIC TO OBJECTIVE EXPLORE ---
 
 	private class TaskObserveFlowersObstacles extends TaskOneShot {
 		@Override
-		public void interactWithOneShot(ObjectiveDrivenAgent a, SimulationState simState) {
+		public void interactWithOneShot(Agent a, SimulationState simState) {
 			a.observeEnvironment(simState, Knowledge.OBSTACLE);
 			a.observeEnvironment(simState, Knowledge.FLOWER);
 		}
 		@Override
-		public void endTask(ObjectiveDrivenAgent a, Objective obj, SimulationState simState) {
-			if(a.getKnowledgeMap().pollNewKnowledge()) {
+		public void endTask(Agent a, Objective obj, SimulationState simState) {
+			ObjectiveDrivenWorkerBee bee = (ObjectiveDrivenWorkerBee) a;
+			if(bee.getKnowledgeMap().pollNewKnowledge()) {
 				obj.addTask(new TaskBroadcastKnowledge());
 			}
 			addTask(new TaskMoveRandomly());
@@ -46,13 +48,13 @@ public class ObjectiveExplore extends Objective {
 	
 	private class TaskMoveRandomly extends TaskOneShot {
 		@Override
-		public void interactWithOneShot(ObjectiveDrivenAgent a, SimulationState simState) {
+		public void interactWithOneShot(Agent a, SimulationState simState) {
 			// randomly pick a direction and move
 			Direction randomDir = Direction.values()[simState.random.nextInt(Direction.values().length)];
 			a.moveInDirection(randomDir, simState, SimulationConfig.ENV_MODE);
 		}
 		@Override
-		public void endTask(ObjectiveDrivenAgent a, Objective obj, SimulationState simState) {
+		public void endTask(Agent a, Objective obj, SimulationState simState) {
 			addTask(new TaskObserveFlowersObstacles());
 		}
 	}

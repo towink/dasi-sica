@@ -5,7 +5,7 @@ import java.util.Collection;
 import com.sica.behaviour.Tasks.TaskBroadcastKnowledge;
 import com.sica.behaviour.Tasks.TaskGetToPosition;
 import com.sica.behaviour.Tasks.TaskOneShot;
-import com.sica.entities.agents.ObjectiveDrivenAgent;
+import com.sica.entities.agents.Agent;
 import com.sica.entities.agents.ObjectiveDrivenWorkerBee;
 import com.sica.simulation.SimulationConfig;
 import com.sica.simulation.SimulationState;
@@ -21,15 +21,16 @@ public class ObjectiveCollect extends Objective {
 	}
 	
 	@Override
-	public boolean isFinished(ObjectiveDrivenAgent a, SimulationState simState) {
+	public boolean isFinished(Agent a, SimulationState simState) {
 		ObjectiveDrivenWorkerBee bee = (ObjectiveDrivenWorkerBee) a;
 		return !bee.thinksKnowsFlowers(SimulationConfig.config().getFlowerThresholdWorker());
 	}
 	
 	@Override
-	public void onFinished(ObjectiveDrivenAgent a, SimulationState simState) {
+	public void onFinished(Agent a, SimulationState simState) {
 		// when collecting is finished, switch to exploring
-		a.addObjective(new ObjectiveExplore());
+		ObjectiveDrivenWorkerBee bee = (ObjectiveDrivenWorkerBee) a;
+		bee.addObjective(new ObjectiveExplore());
 	}
 	
 	// --- TASKS SPECIFIC TO OBJECTIVE COLLECT ---
@@ -38,8 +39,9 @@ public class ObjectiveCollect extends Objective {
 	private class TaskDecideWhereToGo extends TaskOneShot {
 		private Int2D decision;
 		@Override
-		public void interactWithOneShot(ObjectiveDrivenAgent a, SimulationState simState) {
-			Collection<Int2D> flowerPositions = a.getKnowledgeMap().getKnowledgeOf(Knowledge.FLOWER);
+		public void interactWithOneShot(Agent a, SimulationState simState) {
+			ObjectiveDrivenWorkerBee bee = (ObjectiveDrivenWorkerBee) a;
+			Collection<Int2D> flowerPositions = bee.getKnowledgeMap().getKnowledgeOf(Knowledge.FLOWER);
 			if(flowerPositions.isEmpty()) {
 				throw new IllegalStateException("no flower pos known");
 			}
@@ -47,7 +49,7 @@ public class ObjectiveCollect extends Objective {
 			decision = (Int2D) flowerPositions.toArray()[i];
 		}
 		@Override
-		public void endTask(ObjectiveDrivenAgent a, Objective obj, SimulationState simState) {
+		public void endTask(Agent a, Objective obj, SimulationState simState) {
 			addTask(new TaskGetToPosition(decision));
 			addTask(new TaskGrabAlimentFromCurrentPos());
 		}
@@ -55,7 +57,7 @@ public class ObjectiveCollect extends Objective {
 	
 	private class TaskGrabAlimentFromCurrentPos extends TaskOneShot {
 		@Override
-		public void interactWithOneShot(ObjectiveDrivenAgent a, SimulationState simState) {
+		public void interactWithOneShot(Agent a, SimulationState simState) {
 			ObjectiveDrivenWorkerBee bee = (ObjectiveDrivenWorkerBee) a;
 			Int2D pos = simState.entities.getObjectLocation(a);
 			boolean gotAliment = simState.environment.getAlimentAt(pos);
@@ -65,7 +67,7 @@ public class ObjectiveCollect extends Objective {
 			}
 		}
 		@Override
-		public void endTask(ObjectiveDrivenAgent a, Objective obj, SimulationState simState) {
+		public void endTask(Agent a, Objective obj, SimulationState simState) {
 			ObjectiveDrivenWorkerBee bee = (ObjectiveDrivenWorkerBee) a;
 			obj.addTask(new TaskObserveEnvironment());
 			// only go back to hive if we really grabbed aliment
@@ -80,7 +82,7 @@ public class ObjectiveCollect extends Objective {
 	
 	private class TaskLeaveAlimentInHive extends TaskOneShot {
 		@Override
-		public void interactWithOneShot(ObjectiveDrivenAgent a, SimulationState simState) {
+		public void interactWithOneShot(Agent a, SimulationState simState) {
 			ObjectiveDrivenWorkerBee bee = (ObjectiveDrivenWorkerBee) a;
 			if(bee.getCarriesAliment()) {
 				Int2D location = simState.entities.getObjectLocation(a);
@@ -94,7 +96,7 @@ public class ObjectiveCollect extends Objective {
 	
 	private class TaskObserveEnvironment extends TaskOneShot {
 		@Override
-		public void interactWithOneShot(ObjectiveDrivenAgent a, SimulationState simState) {
+		public void interactWithOneShot(Agent a, SimulationState simState) {
 			a.observeEnvironment(simState, Knowledge.OBSTACLE);
 			a.observeEnvironment(simState, Knowledge.FLOWER);
 		}

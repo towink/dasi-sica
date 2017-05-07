@@ -80,8 +80,8 @@ public class BeeGUI extends GUIState {
 		entityPortrayal.setPortrayalForClass(ObjectiveDrivenWorkerBee.class, new OvalPortrayal2D(Color.MAGENTA, true));
 		entityPortrayal.setPortrayalForClass(QueenDrools.class, new OvalPortrayal2D(Color.WHITE, true));
 		entityPortrayal.setPortrayalForClass(DefenderBee.class, new OvalPortrayal2D(new Color(128, 178, 255), true));
-		entityPortrayal.setPortrayalForClass(SimpleEnemy.class, new OvalPortrayal2D(Color.ORANGE, true));
-		entityPortrayal.setPortrayalForRemainder(new OvalPortrayal2D(Color.GREEN, true));
+		entityPortrayal.setPortrayalForClass(SimpleEnemy.class, new OvalPortrayal2D(Color.GREEN, true));
+		entityPortrayal.setPortrayalForRemainder(new OvalPortrayal2D(Color.ORANGE, true));
 		
 		display.reset();
         display.repaint();

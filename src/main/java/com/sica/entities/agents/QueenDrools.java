@@ -1,6 +1,9 @@
 package com.sica.entities.agents;
 
 
+import java.util.PriorityQueue;
+
+import com.sica.behaviour.Objectives.Objective;
 import com.sica.entities.EntityPlacer;
 import com.sica.simulation.SimulationConfig;
 import com.sica.simulation.SimulationState;
@@ -11,14 +14,18 @@ import sim.util.Int2D;
 public class QueenDrools extends DroolsAgent{
 	
 	private static final long serialVersionUID = 7010748442357851286L;
+	public boolean waiting = false;
 	
 	private int count;
 	private int availableFood;
 	private Int2D location;
 	
+	protected PriorityQueue<Objective> objectives;
+	
 	public QueenDrools() {
 		super("ksession-queenDrools", 1);
 		count = 0;
+		this.objectives = new PriorityQueue<Objective>();
 	}
 	
 	@Override
@@ -33,6 +40,14 @@ public class QueenDrools extends DroolsAgent{
 	
 	@Override
 	public void stepAfterFiringRules(SimulationState arg0) {
+		if (!this.objectives.isEmpty()) {
+			this.objectives.peek().step(this, arg0);
+			
+			if (this.objectives.peek().isFinished(this, arg0)) {
+				this.objectives.peek().onFinished(this, arg0);
+				this.objectives.poll();
+			}
+		}
 	}
 
 	@Override
@@ -43,6 +58,10 @@ public class QueenDrools extends DroolsAgent{
 	public void createBee(SimulationState state) {
 		// TODO: Change to create workers and defenders
 		EntityPlacer.generateWorkersAfter(state.entities, state.schedule, 1, state.entities.getObjectLocation(this));
+	}
+	
+	public void addObjective (Objective objective) {
+		this.objectives.add(objective);
 	}
 	
 	public void increaseCount () {

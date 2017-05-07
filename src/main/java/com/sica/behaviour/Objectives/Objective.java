@@ -4,7 +4,7 @@ import java.util.LinkedList;
 import java.util.Queue;
 
 import com.sica.behaviour.Tasks.Task;
-import com.sica.entities.agents.ObjectiveDrivenAgent;
+import com.sica.entities.agents.Agent;
 import com.sica.simulation.SimulationState;
 
 /**
@@ -48,14 +48,14 @@ public abstract class Objective implements Comparable<Objective> {
 	 * @param simState
 	 * @return true if the agent has achieved this objective
 	 */
-	public abstract boolean isFinished(ObjectiveDrivenAgent a, SimulationState simState);
+	public abstract boolean isFinished(Agent a, SimulationState simState);
 	
 	/**
 	 * Can be overwritten to do stuff when the objective is completed.
 	 * @param a
 	 * @param simState
 	 */
-	public void onFinished(ObjectiveDrivenAgent a, SimulationState simState) {}
+	public void onFinished(Agent a, SimulationState simState) {}
 	
 	/**
 	 * Overwrite if you wish to use the ObjectiveDrivenAgent's priority mechanism.
@@ -74,12 +74,13 @@ public abstract class Objective implements Comparable<Objective> {
 	 * @param a
 	 * @param simState
 	 */
-	public final void step(ObjectiveDrivenAgent a, SimulationState simState) {
+	public final void step(Agent a, SimulationState simState) {
 		// remove tasks that are finished and call their endTask function
 		this.removeFinishedTasks(a, simState);
 		// execute next task in queue
-		if (!this.isFinished(a, simState))
+		if (!this.isFinished(a, simState)) {
 			taskQueue.peek().interactWith(a, simState);
+		}
 	}
 
 	/**
@@ -87,9 +88,11 @@ public abstract class Objective implements Comparable<Objective> {
 	 * @param a
 	 * @param simState
 	 */
-	private void removeFinishedTasks(ObjectiveDrivenAgent a, SimulationState simState) {
-		while (!this.taskQueue.isEmpty() && this.taskQueue.peek().isFinished(a, simState))
+	private void removeFinishedTasks(Agent a, SimulationState simState) {
+		while (!this.taskQueue.isEmpty() && this.taskQueue.peek().isFinished(a, simState)) {
 			this.taskQueue.poll().endTask(a, this, simState);
+		}
+			
 	}
 	
 	/**

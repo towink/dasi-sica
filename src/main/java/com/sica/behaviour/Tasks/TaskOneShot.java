@@ -1,6 +1,6 @@
 package com.sica.behaviour.Tasks;
 
-import com.sica.entities.agents.ObjectiveDrivenAgent;
+import com.sica.entities.agents.Agent;
 import com.sica.simulation.SimulationState;
 
 /**
@@ -17,18 +17,18 @@ public abstract class TaskOneShot extends Task {
 	 * @param a
 	 * @param simState
 	 */
-	public abstract void interactWithOneShot(ObjectiveDrivenAgent a, SimulationState simState);
+	public abstract void interactWithOneShot(Agent a, SimulationState simState);
 	
 	private boolean finished = false;
 
 	@Override
-	public final void interactWith(ObjectiveDrivenAgent a, SimulationState simState) {
+	public final void interactWith(Agent a, SimulationState simState) {
 		interactWithOneShot(a, simState);
 		finished = true;
 	}
 
 	@Override
-	public final boolean isFinished(ObjectiveDrivenAgent a, SimulationState simState) {
+	public final boolean isFinished(Agent a, SimulationState simState) {
 		return finished;
 	}
 

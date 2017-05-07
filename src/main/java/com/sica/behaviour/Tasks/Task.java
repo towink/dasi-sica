@@ -1,7 +1,7 @@
 package com.sica.behaviour.Tasks;
 
 import com.sica.behaviour.Objectives.Objective;
-import com.sica.entities.agents.ObjectiveDrivenAgent;
+import com.sica.entities.agents.Agent;
 import com.sica.simulation.SimulationState;
 
 /**
@@ -32,18 +32,18 @@ public abstract class Task {
 	 * @param a
 	 * @param simState
 	 */
-	public abstract void interactWith(ObjectiveDrivenAgent a, SimulationState simState);
+	public abstract void interactWith(Agent a, SimulationState simState);
 	
 	/**
 	 * Called by the Objective when the task is finished. Might be useful to set up stuff
 	 * @param a
 	 * @param obj A reference to the objective this task is part of
 	 */
-	public void endTask(ObjectiveDrivenAgent a, Objective obj, SimulationState simState) {}
+	public void endTask(Agent a, Objective obj, SimulationState simState) {}
 	
 	/**
 	 * @return true if the task has finished executing
 	 */
-	public abstract boolean isFinished(ObjectiveDrivenAgent a, SimulationState simState);
+	public abstract boolean isFinished(Agent a, SimulationState simState);
 	
 }

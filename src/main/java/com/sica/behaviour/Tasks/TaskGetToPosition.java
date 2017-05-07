@@ -2,7 +2,8 @@ package com.sica.behaviour.Tasks;
 
 import java.util.List;
 
-import com.sica.entities.agents.ObjectiveDrivenAgent;
+import com.sica.entities.agents.Agent;
+import com.sica.entities.agents.ObjectiveDrivenWorkerBee;
 import com.sica.simulation.SimulationConfig;
 import com.sica.simulation.SimulationState;
 import com.util.knowledge.Knowledge;
@@ -32,15 +33,16 @@ public class TaskGetToPosition extends Task {
 	
 
 	@Override
-	public void interactWith(ObjectiveDrivenAgent agent, SimulationState simState) {
+	public void interactWith(Agent agent, SimulationState simState) {
 		// a.move(Direction.values()[simState.random.nextInt(4)], simState, Grid2D.TOROIDAL);
 		
 		// the first step in a get-to-position task is to observe the environment nearby
 		// in order to find obstacles
+		ObjectiveDrivenWorkerBee bee = (ObjectiveDrivenWorkerBee) agent;
 		agent.observeEnvironment(simState, Knowledge.OBSTACLE);
 		
 		// check if agent already has a path
-		List<Int2D> path = agent.getActualPath();
+		List<Int2D> path = bee.getActualPath();
 		if(path != null && !path.isEmpty()) {
 			
 			// check if this path already goes to this tasks destination
@@ -75,7 +77,7 @@ public class TaskGetToPosition extends Task {
 	}
 
 	@Override
-	public boolean isFinished(ObjectiveDrivenAgent a, SimulationState simState) {
+	public boolean isFinished(Agent a, SimulationState simState) {
 		// if the destination (for some strange reason) is an obstacle then
 		// we say that this objective is immediately finished
 		return simState.entities.getObjectLocation(a).equals(this.destination)

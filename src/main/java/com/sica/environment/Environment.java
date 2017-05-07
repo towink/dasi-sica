@@ -134,6 +134,20 @@ public class Environment extends IntGrid2D {
 		}	
 	}
 	
+	/**
+	 * Change every type to EMPTY
+	 * @param type to change to EMPTY
+	 */
+	public void removeAll (Knowledge type) {
+		for (int i = 0; i < this.width; i++) {
+			for (int j = 0; j < this.height; j++) {
+				if (this.hasTypeAt(i,  j, type)) {
+					this.set(i, j, Knowledge.EMPTY);
+				}
+			}
+		}
+		
+	}
 	
 	/**
 	 * Draw a hollow rectangle of the specified size and type on to the environment

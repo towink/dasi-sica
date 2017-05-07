@@ -58,6 +58,7 @@ public class SimulationConfig {
 	@Deprecated
 	protected int numBees = 0;
 	protected int radioView = 10;
+	protected int time4Season = 1000;
 	
 	// worker
 	protected int numWorkers = 10;
@@ -251,5 +252,15 @@ public class SimulationConfig {
 			this.cost2Create = 1;
 		}
 	}
-	
+	public int getTime4Season() {
+		return this.time4Season;
+	}
+	public void setTime4Season(int time4Season) {
+		if (time4Season > 1000) {
+			this.time4Season = time4Season;
+		}
+		else {
+			this.time4Season = 1000;
+		}
+	}
 }

@@ -118,7 +118,6 @@ public class EntityPlacer {
 					for (Object a: items) {
 						if (a.getClass() == QueenDrools.class) {
 							result = true;
-							System.out.println("si hay iguales");
 							break;
 						}
 					}

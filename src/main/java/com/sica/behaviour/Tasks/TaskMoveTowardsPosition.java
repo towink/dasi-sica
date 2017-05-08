@@ -28,7 +28,7 @@ public class TaskMoveTowardsPosition extends Task {
 
 	@Override
 	public void interactWith(ObjectiveDrivenAgent agent, SimulationState simState) {
-		if (!agent.followPath(simState))
+		if (!agent.followCurrentPath(simState))
 			agent.computePath(simState, destination);
 		this.currSteps++;
 	}

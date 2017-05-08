@@ -30,7 +30,7 @@ public class TaskGetToPosition extends Task {
 
 	@Override
 	public void interactWith(ObjectiveDrivenAgent agent, SimulationState simState) {
-		if (!agent.followPath(simState))
+		if (!agent.followCurrentPath(simState))
 			agent.computePath(simState, destination);
 		/*// a.move(Direction.values()[simState.random.nextInt(4)], simState, Grid2D.TOROIDAL);
 		

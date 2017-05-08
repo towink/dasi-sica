@@ -18,9 +18,9 @@ import sim.util.IntBag;
 public abstract class Agent extends Entity {
 	private static final long serialVersionUID = -3612132049378487984L;
 	
-	protected List<Int2D> actualPath;
-	protected KnowledgeMapInterface knowledge;
-	protected Int2D home; //where was this agent born?
+	protected List<Int2D> actualPath;			//actual path that the agent is using to get somewhere
+	protected KnowledgeMapInterface knowledge;	//knowledge that this agent has about the environment
+	protected Int2D home; 						//automatically set to where this agent spawned
 	
 	
 	public Agent (EntityType type) {
@@ -108,7 +108,7 @@ public abstract class Agent extends Entity {
 	 * @return true if there was a path within the agent, it was not empty,
 	 * 			and the agent was able to move to the next place in it
 	 */
-	public boolean followPath(SimulationState simState) {
+	public boolean followCurrentPath(SimulationState simState) {
 		if(actualPath != null && !actualPath.isEmpty())
 			return this.moveTo(actualPath.remove(0), simState, SimulationConfig.ENV_MODE); 
 		return false;

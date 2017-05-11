@@ -41,9 +41,7 @@ public class EnvironmentModeller {
 	 * @param aliment
 	 */
 	public static void generateFlower(Environment env, Int2D pos, int aliment) {
-		Knowledge flower = Knowledge.FLOWER;
-		int flowerWithMeta = flower.inyectMetadata((short) aliment);
-		env.set(pos, flowerWithMeta);
+		env.setMetadataAndTypeAt(pos, (short) aliment, Knowledge.FLOWER);
 	}
 	
 	/**

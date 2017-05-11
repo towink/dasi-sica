@@ -9,7 +9,7 @@ public class ObjectiveCreateBee extends Objective {
 
 	public ObjectiveCreateBee() {
 		super();
-		addTask(new TaskCreateBee());
+		addTaskFirst(new TaskCreateBee());
 	}
 	
 	@Override

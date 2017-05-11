@@ -3,7 +3,7 @@ package com.util.knowledge;
 import java.util.Map.Entry;
 
 import com.util.data.IterableSet;
-
+import ec.util.MersenneTwisterFast;
 import sim.util.Int2D;
 
 /**
@@ -92,6 +92,13 @@ public interface KnowledgeMapInterface {
 	 * @return all the knowledge within this map
 	 */
 	public IterableSet<Entry<Int2D, Knowledge>> getAllKnowledge();
+	
+	/**
+	 * @param knowledge
+	 * @param random 
+	 * @return a random position in this knowledge of the given Knowledge type
+	 */
+	public Int2D getRandomPositionOfKnowledge(Knowledge knowledge, MersenneTwisterFast random);
 	
 	/**
 	 * @return true if any knowledge changed since the last time pollNewKnowledge was called

@@ -8,6 +8,7 @@ import java.util.NoSuchElementException;
 
 import com.util.data.IterableSet;
 
+import ec.util.MersenneTwisterFast;
 import sim.util.Int2D;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
@@ -264,21 +265,9 @@ public class ArrayKnowledgeMap extends GenericKnowledgeMap {
 	}
 
 	@Override
-	public boolean peekNewKnowledge() {
+	public Int2D getRandomPositionOfKnowledge(Knowledge knowledge, MersenneTwisterFast random) {
 		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean peekNewKnowledge(Knowledge knowledge) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean pollNewKnowledge() {
-		// TODO Auto-generated method stub
-		return false;
+		return null;
 	}
 
 }

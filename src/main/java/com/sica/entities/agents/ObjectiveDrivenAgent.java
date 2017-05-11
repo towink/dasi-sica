@@ -5,7 +5,6 @@ import java.util.PriorityQueue;
 
 import com.sica.behaviour.Objectives.Objective;
 import com.sica.simulation.SimulationState;
-import com.util.knowledge.KnowledgeMapInterface;
 import sim.util.Int2D;
 
 /**
@@ -56,14 +55,6 @@ public abstract class ObjectiveDrivenAgent extends Agent {
 	 */
 	public void addObjective(Objective o) {
 		this.objectives.add(o);
-	}
-	
-	/**
-	 * 
-	 * @return
-	 */
-	public KnowledgeMapInterface getKnowledgeMap() {
-		return knowledge;
 	}
 	
 	/**

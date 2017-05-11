@@ -1,6 +1,7 @@
 package com.sica.behaviour.Objectives;
 
-import com.sica.behaviour.Tasks.TaskBroadcastKnowledge;
+import com.sica.behaviour.Tasks.TaskBroadcastKnowledgeToSameType;
+import com.sica.behaviour.Tasks.TaskObserveEnvironment;
 import com.sica.behaviour.Tasks.TaskOneShot;
 import com.sica.entities.agents.Agent;
 import com.sica.entities.agents.ObjectiveDrivenWorkerBee;
@@ -12,7 +13,7 @@ import com.util.movement.Direction;
 public class ObjectiveExplore extends Objective {
 
 	public ObjectiveExplore() {
-		taskQueue.add(new TaskMoveRandomly());
+		this.addTaskLast(new TaskMoveRandomly());
 	}
 	
 	@Override
@@ -32,17 +33,16 @@ public class ObjectiveExplore extends Objective {
 
 	private class TaskObserveFlowersObstacles extends TaskOneShot {
 		@Override
-		public void interactWithOneShot(Agent a, SimulationState simState) {
-			a.observeEnvironment(simState, Knowledge.OBSTACLE);
-			a.observeEnvironment(simState, Knowledge.FLOWER);
-		}
+		public void interactWithOneShot(Agent a, SimulationState simState) {}
+		
 		@Override
 		public void endTask(Agent a, Objective obj, SimulationState simState) {
-			ObjectiveDrivenWorkerBee bee = (ObjectiveDrivenWorkerBee) a;
-			if(bee.getKnowledgeMap().pollNewKnowledge()) {
-				obj.addTask(new TaskBroadcastKnowledge());
+			obj.addTaskFirst(new TaskObserveEnvironment(Knowledge.FLOWER));
+			obj.addTaskFirst(new TaskObserveEnvironment(Knowledge.OBSTACLE));
+			if(a.getKnowledgeMap().pollNewKnowledge()) {
+				obj.addTaskLast(new TaskBroadcastKnowledgeToSameType());
 			}
-			addTask(new TaskMoveRandomly());
+			addTaskLast(new TaskMoveRandomly());
 		}
 	}
 	
@@ -55,7 +55,7 @@ public class ObjectiveExplore extends Objective {
 		}
 		@Override
 		public void endTask(Agent a, Objective obj, SimulationState simState) {
-			addTask(new TaskObserveFlowersObstacles());
+			addTaskLast(new TaskObserveFlowersObstacles());
 		}
 	}
 

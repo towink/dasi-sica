@@ -61,7 +61,7 @@ public abstract class Entity implements Steppable {
 	
 	
 	/**
-	 * Called ONCE on its first step, just before doStep
+	 * Called ONCE on its first step, just before doStep.
 	 * Override if needed
 	 * @param simState
 	 */

@@ -9,7 +9,7 @@ public class ObjectiveWait2Create extends Objective {
 
 	public ObjectiveWait2Create() {
 		super();
-		addTask(new TaskWait2Create());
+		addTaskFirst(new TaskWait2Create());
 	}
 	
 	@Override

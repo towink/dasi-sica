@@ -67,22 +67,38 @@ public class Environment extends IntGrid2D {
 		return false;
 	}
 	
-
-	public int getMetadataAt(Int2D pos) {
-		return (int)Knowledge.extractMetadata(this.get(pos.x, pos.y));
+	/**
+	 * Gets the metadata at the given position
+	 * @param pos
+	 * @return
+	 */
+	public short getMetadataAt(Int2D pos) {
+		return Knowledge.extractMetadata(this.get(pos.x, pos.y));
 	}
 	
+	/**
+	 * Gets the knowledge at the given position
+	 * @param pos
+	 * @return
+	 */
 	public Knowledge getKnowledgeAt(Int2D pos) {
 		return Knowledge.fromInt(this.get(pos.x, pos.y));
 	}
 	
+	/**
+	 * Sets the metadata at the given position.
+	 * Existing knowledge is preserved
+	 * @param pos
+	 * @param meta
+	 */
 	public void setMetadataAt(Int2D pos, int meta) {
 		Knowledge knowledge = Knowledge.fromInt(this.get(pos.x, pos.y));
 		this.set(pos, knowledge.inyectMetadata((short)meta));
 	}
 	
 	/**
-	 * Sets the type at the specified position
+	 * Sets the type at the specified position,
+	 * overwriting existing metadata
 	 * @param x
 	 * @param y
 	 * @param type
@@ -92,7 +108,8 @@ public class Environment extends IntGrid2D {
 	}
 	
 	/**
-	 * Sets the type at the specified position
+	 * Sets the type at the specified position,
+	 * overwriting existing metadata
 	 * @param x
 	 * @param y
 	 * @param type
@@ -102,12 +119,26 @@ public class Environment extends IntGrid2D {
 	}
 	
 	/**
+	 * Sets the given metadata and knowledge at the given position
+	 * @param pos
+	 * @param metadata
+	 * @param knowledge
+	 */
+	public void setMetadataAndTypeAt(Int2D pos, short metadata, Knowledge knowledge) {
+		int value = knowledge.inyectMetadata(metadata);
+		this.set(pos, value);
+	}
+	
+	/**
 	 * Sets the value at the given point.
+	 * The value includes both metadata and type.
+	 * The former is not checked for validity, so call 
+	 * this only if you know what you are doing.
 	 * @param x
 	 * @param y
 	 * @param type
 	 */
-	public void set(Int2D pos, int envValue) {
+	private void set(Int2D pos, int envValue) {
 		this.set(pos.x, pos.y, envValue);
 	}
 	
@@ -196,10 +227,10 @@ public class Environment extends IntGrid2D {
 	 * @param hivePos
 	 * @return true if checkPos is inside the hive, otherwise false
 	 * 
-	 *  true if this environment has the specified type
+	 * true if this environment has the specified type
 	 * at the specified coordinates
 	 */
-	public  boolean inHive (Int2D checkPos, Int2D hivePos) {
+	public boolean inHive (Int2D checkPos, Int2D hivePos) {
 		int minX = (int) (hivePos.getX() - SimulationConfig.HIVE_WIDTH/2);
 		int minY = (int) (hivePos.getY() - SimulationConfig.HIVE_HEIGHT/2);
 		int maxX = (int) (hivePos.getX() + SimulationConfig.HIVE_WIDTH/2);

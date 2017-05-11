@@ -7,7 +7,7 @@ import java.util.Iterator;
 import java.util.Map.Entry;
 
 import com.util.data.IterableSet;
-
+import ec.util.MersenneTwisterFast;
 import sim.util.Int2D;
 
 public class HashMapKnowledgeMap extends GenericKnowledgeMap {
@@ -132,6 +132,19 @@ public class HashMapKnowledgeMap extends GenericKnowledgeMap {
 		value += "\n\tObstacles: " + this.knowledgePosition.getOrDefault(Knowledge.OBSTACLE, new HashSet<Int2D>()).size();
 		value += "\n}";
 		return value;
+	}
+
+
+	@Override
+	public Int2D getRandomPositionOfKnowledge(Knowledge knowledge, MersenneTwisterFast random) {
+		HashSet<Int2D> choices = this.knowledgePosition.get(knowledge);
+		if (choices == null)
+			return null;
+		//wow so cool https://stackoverflow.com/questions/21092086/get-random-element-from-collection
+		return choices.stream()
+			.skip(random.nextLong(choices.size()))
+			.findFirst()
+			.orElse(null);
 	}
 
 

@@ -35,7 +35,16 @@ public abstract class Task {
 	public abstract void interactWith(Agent a, SimulationState simState);
 	
 	/**
+	 * Called ONCE by Objective before any interactWith() are called.
+	 * Override if needed.
+	 * @param a
+	 * @param simState
+	 */
+	public void startTask(Agent a, SimulationState simState) {}
+	
+	/**
 	 * Called by the Objective when the task is finished. Might be useful to set up stuff
+	 * like adding new tasks and stuff.
 	 * @param a
 	 * @param obj A reference to the objective this task is part of
 	 */
@@ -45,5 +54,4 @@ public abstract class Task {
 	 * @return true if the task has finished executing
 	 */
 	public abstract boolean isFinished(Agent a, SimulationState simState);
-	
 }

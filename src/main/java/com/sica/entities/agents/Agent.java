@@ -25,7 +25,8 @@ public abstract class Agent extends Entity {
 	
 	public Agent (EntityType type) {
 		super(type);
-		this.knowledge = new HashMapKnowledgeMap();	
+		this.knowledge = new HashMapKnowledgeMap();
+		//this.knowledge = new ArrayKnowledgeMap(SimulationConfig.GRID_WIDTH, SimulationConfig.GRID_HEIGHT);
 	}
 	
 	@Override

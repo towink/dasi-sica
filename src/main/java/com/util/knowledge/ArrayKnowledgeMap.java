@@ -266,8 +266,14 @@ public class ArrayKnowledgeMap extends GenericKnowledgeMap {
 
 	@Override
 	public Int2D getRandomPositionOfKnowledge(Knowledge knowledge, MersenneTwisterFast random) {
-		// TODO Auto-generated method stub
-		return null;
+		IterableSet<Int2D> choices = this.getKnowledgeOf(knowledge);
+		if (!choices.iterator().hasNext())
+			return null;
+		int index = random.nextInt(choices.size());
+		Iterator<Int2D> it = choices.iterator();
+		while(index-->0)
+			it.next();
+		return it.next();
 	}
 
 }

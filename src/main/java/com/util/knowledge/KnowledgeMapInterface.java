@@ -1,7 +1,8 @@
 package com.util.knowledge;
 
-import java.util.Collection;
 import java.util.Map.Entry;
+
+import com.util.data.IterableSet;
 
 import sim.util.Int2D;
 
@@ -15,6 +16,9 @@ import sim.util.Int2D;
  *
  */
 public interface KnowledgeMapInterface {
+	
+
+	
 	
 	/**
 	 * Adds knowledge of the environment in a certain position
@@ -82,12 +86,12 @@ public interface KnowledgeMapInterface {
 	 * @param knowledge
 	 * @return All the positions where the given knowledge is found
 	 */
-	public Collection<Int2D> getKnowledgeOf(Knowledge knowledge);
+	public IterableSet<Int2D> getKnowledgeOf(Knowledge knowledge);
 	
 	/**
 	 * @return all the knowledge within this map
 	 */
-	public Collection<Entry<Int2D, Knowledge>> getAllKnowledge();
+	public IterableSet<Entry<Int2D, Knowledge>> getAllKnowledge();
 	
 	/**
 	 * @return true if any knowledge changed since the last time pollNewKnowledge was called

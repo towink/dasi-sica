@@ -1,11 +1,11 @@
 package com.sica.entities.agents;
 
-import java.util.Collection;
 import java.util.List;
 
 import com.sica.entities.Entity;
 import com.sica.simulation.SimulationConfig;
 import com.sica.simulation.SimulationState;
+import com.util.data.IterableSet;
 import com.util.knowledge.HashMapKnowledgeMap;
 import com.util.knowledge.Knowledge;
 import com.util.knowledge.KnowledgeMapInterface;
@@ -179,7 +179,7 @@ public abstract class Agent extends Entity {
 	 * @return A random hive in this agent knowledge
 	 */
 	public Int2D getHome() {
-		Collection<Int2D> knownHomes = knowledge.getKnowledgeOf(Knowledge.HIVE);
+		IterableSet<Int2D> knownHomes = knowledge.getKnowledgeOf(Knowledge.HIVE);
 		if (!knownHomes.isEmpty()) { //if we know of a home, return the first in the list
 			return knowledge.getKnowledgeOf(Knowledge.HIVE).iterator().next();
 		} else {

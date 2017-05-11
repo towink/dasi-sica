@@ -12,6 +12,6 @@ public abstract class IterableSet<T> implements Iterable<T> {
 	 * @return true if this IterableSet has nothing
 	 */
 	public boolean isEmpty() {
-		return this.size() == 0;
+		return this.size() <= 0;
 	}
 }

@@ -1,7 +1,5 @@
 package com.sica.behaviour.Objectives;
 
-import java.util.Collection;
-
 import com.sica.behaviour.Tasks.TaskBroadcastKnowledge;
 import com.sica.behaviour.Tasks.TaskGetToPosition;
 import com.sica.behaviour.Tasks.TaskOneShot;
@@ -9,6 +7,7 @@ import com.sica.entities.agents.Agent;
 import com.sica.entities.agents.ObjectiveDrivenWorkerBee;
 import com.sica.simulation.SimulationConfig;
 import com.sica.simulation.SimulationState;
+import com.util.data.IterableSet;
 import com.util.knowledge.Knowledge;
 
 import sim.util.Int2D;
@@ -41,12 +40,14 @@ public class ObjectiveCollect extends Objective {
 		@Override
 		public void interactWithOneShot(Agent a, SimulationState simState) {
 			ObjectiveDrivenWorkerBee bee = (ObjectiveDrivenWorkerBee) a;
-			Collection<Int2D> flowerPositions = bee.getKnowledgeMap().getKnowledgeOf(Knowledge.FLOWER);
+			IterableSet<Int2D> flowerPositions = bee.getKnowledgeMap().getKnowledgeOf(Knowledge.FLOWER);
 			if(flowerPositions.isEmpty()) {
 				throw new IllegalStateException("no flower pos known");
 			}
-			int i = simState.random.nextInt(flowerPositions.size());
-			decision = (Int2D) flowerPositions.toArray()[i];
+			decision = flowerPositions.iterator().next();
+			//TODO make randomness great again
+			//int i = simState.random.nextInt(flowerPositions.size());
+			//decision = (Int2D) flowerPositions.toArray()[i];
 		}
 		@Override
 		public void endTask(Agent a, Objective obj, SimulationState simState) {

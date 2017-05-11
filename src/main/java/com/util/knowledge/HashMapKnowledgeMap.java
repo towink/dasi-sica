@@ -1,10 +1,12 @@
 package com.util.knowledge;
 
 import java.util.Collection;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Map.Entry;
+
+import com.util.data.IterableSet;
 
 import sim.util.Int2D;
 
@@ -12,23 +14,21 @@ public class HashMapKnowledgeMap extends GenericKnowledgeMap {
 	
 	private HashMap<Int2D, Knowledge> positionKnowledge;
 	private HashMap<Knowledge, HashSet<Int2D>> knowledgePosition;
-	private HashMap<Knowledge, Boolean> knowledgeUpdatedTable;
-	private boolean hasNewKnowledge;
+
 	
 	public HashMapKnowledgeMap() {
 		this.init();
 	}
 	
-	
-	private void init() {
+	@Override
+	protected void init() {
+		super.init();
 		this.positionKnowledge = new HashMap<Int2D, Knowledge>();
 		this.knowledgePosition = new HashMap<Knowledge, HashSet<Int2D>>();
-		this.knowledgeUpdatedTable = new HashMap<Knowledge, Boolean>();
-		this.hasNewKnowledge = false;
 	}
 
 	@Override
-	public boolean addKnowledge(Int2D where, Knowledge knowledge) {
+	public boolean doAddKnowledge(Int2D where, Knowledge knowledge) {
 		if (this.positionKnowledge.containsKey(where))
 			if (this.positionKnowledge.get(where) != knowledge) {
 				throw new IllegalStateException("Cannot store different knowledges about the same position. Current: " + this.positionKnowledge.get(where) + " New:" + knowledge);
@@ -48,8 +48,6 @@ public class HashMapKnowledgeMap extends GenericKnowledgeMap {
 			this.knowledgePosition.put(knowledge, hs);
 		}
 		
-		this.knowledgeUpdatedTable.put(knowledge, true);
-		this.hasNewKnowledge = true;
 		return true;
 	}	
 
@@ -88,40 +86,43 @@ public class HashMapKnowledgeMap extends GenericKnowledgeMap {
 	}
 
 	@Override
-	public Collection<Int2D> getKnowledgeOf(Knowledge knowledge) {
-		return Collections.unmodifiableCollection(this.knowledgePosition.getOrDefault(knowledge, new HashSet<Int2D>()));
+	public IterableSet<Int2D> getKnowledgeOf(Knowledge knowledge) {
+		
+		return new IterableSet<Int2D>() {
+			Collection<Int2D> res = knowledgePosition.getOrDefault(knowledge, new HashSet<Int2D>());
+			@Override
+			public Iterator<Int2D> iterator() {
+				return res.iterator();
+			}
+
+			@Override
+			public int size() {
+				return res.size();
+			}
+			
+		};
+		//return Collections.unmodifiableCollection(this.knowledgePosition.getOrDefault(knowledge, new HashSet<Int2D>()));
 	}
 
 	@Override
-	public Collection<Entry<Int2D, Knowledge>> getAllKnowledge() {
-		return Collections.unmodifiableCollection(this.positionKnowledge.entrySet());
+	public IterableSet<Entry<Int2D, Knowledge>> getAllKnowledge() {
+		return new IterableSet<Entry<Int2D, Knowledge>>() {
+
+			@Override
+			public Iterator<Entry<Int2D, Knowledge>> iterator() {
+				return positionKnowledge.entrySet().iterator();
+			}
+
+			@Override
+			public int size() {
+				return positionKnowledge.entrySet().size();
+			}
+			
+		};
+		//return Collections.unmodifiableCollection(this.positionKnowledge.entrySet());
 	}
 	
-	@Override
-	public boolean peekNewKnowledge() {
-		return this.hasNewKnowledge;
-	}
 
-	@Override
-	public boolean peekNewKnowledge(Knowledge knowledge) {
-		if (!this.knowledgeUpdatedTable.containsKey(knowledge)) {
-			return false;
-		}
-		return this.knowledgeUpdatedTable.get(knowledge);
-	}
-
-
-	@Override
-	public boolean pollNewKnowledge() {
-		boolean tmp = this.hasNewKnowledge;
-		this.hasNewKnowledge = false;
-		//also clear specific values
-		for (Entry<Knowledge, Boolean> e: this.knowledgeUpdatedTable.entrySet()) {
-			e.setValue(false);
-		}
-			
-		return tmp;
-	}
 
 	@Override
 	public String toString () {

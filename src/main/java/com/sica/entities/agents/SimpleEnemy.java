@@ -1,9 +1,8 @@
 package com.sica.entities.agents;
 
-import java.util.Collection;
-
 import com.sica.simulation.SimulationConfig;
 import com.sica.simulation.SimulationState;
+import com.util.data.IterableSet;
 import com.util.knowledge.Knowledge;
 
 import sim.util.Int2D;
@@ -65,7 +64,7 @@ public class SimpleEnemy extends Agent {
 			}
 			break;
 		case APPROACHING:
-			Collection<Int2D> hives = this.knowledge.getKnowledgeOf(Knowledge.HIVE);
+			IterableSet<Int2D> hives = this.knowledge.getKnowledgeOf(Knowledge.HIVE);
 			//go to the first known hive
 			this.computePath(simState, hives.iterator().next());
 			this.state = State.START_MOVING;

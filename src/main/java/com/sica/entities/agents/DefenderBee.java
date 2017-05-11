@@ -1,10 +1,9 @@
 package com.sica.entities.agents;
 
-import java.util.Collection;
-
 import com.sica.entities.Entity;
 import com.sica.simulation.SimulationConfig;
 import com.sica.simulation.SimulationState;
+import com.util.data.IterableSet;
 import com.util.knowledge.Knowledge;
 import com.util.movement.PositioningFunctions;
 
@@ -29,7 +28,7 @@ public class DefenderBee extends Agent {
 		switch(this.state) {
 		case FINDING_TRENCH: {
 			//decide which hive you are defending, if we don't have a hive just die in peace
-			Collection<Int2D> hives = this.knowledge.getKnowledgeOf(Knowledge.HIVE);
+			IterableSet<Int2D> hives = this.knowledge.getKnowledgeOf(Knowledge.HIVE);
 			if (hives.isEmpty()) {
 				this.state = State.REEVALUATE_LIFE; //I HAVE NO PURPOSE
 				break;

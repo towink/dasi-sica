@@ -56,8 +56,8 @@ public class SimulationConfig {
 	
 	// general
 	protected int radioView = 10;
-	protected int time4Season = 1000;
-	protected int time2Die = 4;
+	protected int time4Season = 1000;			// they are "step units"
+	protected int time2Die = 4;					// they are "season units"
 	
 	// worker
 	protected int numWorkers = 10;
@@ -65,11 +65,15 @@ public class SimulationConfig {
 	protected int flowerThreshold = 2;
 	
 	//defender
-	protected float percentageDefender = 10f;
+	protected float percentageDefender = 10f; 		
 	
 	//Queen
 	protected int time2Create = 10;
 	protected int cost2Create = 5;
+	
+	//enemies
+	protected int time4Enemies = 2;			//they are "season units"
+	protected int enemies4Season = 30;
 	
 	// --- environment parameters ---
 	
@@ -281,5 +285,25 @@ public class SimulationConfig {
 	
 	public Object domPercentageDefender(){
 		return new sim.util.Interval(0.001, 99.999);
+	}
+	
+	public int getTime4Enemies () {
+		return this.time4Enemies;
+	}
+	
+	public void setTime4Enemies (int time4Enemies) {
+		if (time4Enemies > 0) {
+			this.time4Enemies = time4Enemies;
+		}
+	}
+	
+	public void setEnemies4Season (int enemies4Season) {
+		if (enemies4Season > 0) {
+			this.enemies4Season = enemies4Season;
+		}
+	}
+	
+	public int getEnemies4Season () {
+		return this.enemies4Season;
 	}
 }

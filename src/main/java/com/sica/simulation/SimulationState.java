@@ -31,7 +31,7 @@ public class SimulationState extends SimState {
 	@Override
 	public void start() {
 		super.start();
-
+		
 		environment = Environment.getNewEnvironment(SimulationConfig.GRID_WIDTH, SimulationConfig.GRID_HEIGHT);
 		entities = new EntityStorage(SimulationConfig.GRID_WIDTH, SimulationConfig.GRID_HEIGHT);
 		
@@ -40,7 +40,13 @@ public class SimulationState extends SimState {
 		// let the bees out!
 		entities.addScheduledOnceEntityAt(new ColonySpawner(), new Int2D (SimulationConfig.GRID_WIDTH/2, SimulationConfig.GRID_HEIGHT/2), schedule);
 		// add also some enemies
-		entities.addScheduledOnceEntityAt(new EnemySpawner(), new Int2D(0, 0), schedule);
+		EnemySpawner.createSpawner(new Int2D(0, 0));
+		EnemySpawner.getSpawner().putPosition(new Int2D (0, 0));
+		EnemySpawner.getSpawner().putPosition(new Int2D (0, config.GRID_HEIGHT - 1));
+		EnemySpawner.getSpawner().putPosition(new Int2D (config.GRID_WIDTH - 1, config.GRID_HEIGHT - 1));
+		EnemySpawner.getSpawner().putPosition(new Int2D (config.GRID_WIDTH - 1, 0));
+		entities.addScheduledRepeatingEntityAt(EnemySpawner.getSpawner(), EnemySpawner.getSpawner().getPosition(), schedule);
+		
 		// add the seasonController
 		entities.addScheduledRepeatingEntityAt(new Season(SeasonTypes.SPRING), new Int2D(), schedule);
 	}

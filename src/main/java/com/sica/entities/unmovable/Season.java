@@ -50,6 +50,7 @@ public class Season extends Entity {
 	private void changeSeason (SimulationState simState) {
 		this.count = 0;
 		this.season = SeasonTypes.nextSeason(this.season);
+		EnemySpawner.getSpawner().increaseSeasonCount();
 		simState.environment.removeAll(Knowledge.FLOWER);
 		
 		Bag agents = simState.getEntities().getAllObjects();

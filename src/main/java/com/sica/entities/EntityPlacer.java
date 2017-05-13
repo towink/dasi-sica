@@ -1,10 +1,14 @@
 package com.sica.entities;
 
+import java.util.ArrayList;
+
 import com.sica.entities.Entity.EntityType;
 import com.sica.entities.agents.AgentFactory;
 import com.sica.entities.agents.QueenDrools;
 import com.sica.simulation.SimulationConfig;
+import com.sica.simulation.SimulationState;
 
+import ec.util.MersenneTwisterFast;
 import sim.engine.Schedule;
 import sim.field.grid.SparseGrid2D;
 import sim.util.Bag;
@@ -119,7 +123,15 @@ public class EntityPlacer {
 		}
 	}
 	
-	// TODO methods for enemies
+	public static void generateEnemies(EntityStorage entities, Schedule schedule, int numEnemies, ArrayList<Int2D> locations, MersenneTwisterFast random) {
+		Entity agent;
+		for (int x = 0; x < numEnemies; x++) {
+			agent = AgentFactory.getAgent(EntityType.SIMPLE_ENEMY);
+			// maybe the next 2 lines should be included in the factory method somehow??
+			entities.setObjectLocation(agent, locations.get(random.nextInt(locations.size())));
+			schedule.scheduleRepeating(schedule.getTime(), 0, agent, 1);
+		}
+	}
 	
 	
 }

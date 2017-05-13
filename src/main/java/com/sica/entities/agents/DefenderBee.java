@@ -38,6 +38,10 @@ public class DefenderBee extends Agent {
 		return DefenderBee.uaidGenerator - DefenderBee.uaidDead;
 	}
 	
+	public static int deathCount() {
+		return DefenderBee.uaidDead;
+	}
+	
 	@Override
 	public void die (SimulationState simState) {
 		DefenderBee.uaidDead += 1;

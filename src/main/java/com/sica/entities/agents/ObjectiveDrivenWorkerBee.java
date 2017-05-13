@@ -54,6 +54,10 @@ public class ObjectiveDrivenWorkerBee extends ObjectiveDrivenAgent {
 		return ObjectiveDrivenWorkerBee.uaidGenerator - ObjectiveDrivenWorkerBee.uaidDead;
 	}
 	
+	public static int deathCount() {
+		return ObjectiveDrivenWorkerBee.uaidDead;
+	}
+	
 	@Override
 	public void die (SimulationState simState) {
 		ObjectiveDrivenWorkerBee.uaidDead += 1;

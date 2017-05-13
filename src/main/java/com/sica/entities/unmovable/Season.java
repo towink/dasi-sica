@@ -1,9 +1,16 @@
 package com.sica.entities.unmovable;
 
+import org.apache.poi.poifs.crypt.EncryptionMode;
+
 import com.sica.entities.Entity;
+import com.sica.entities.agents.Agent;
+import com.sica.entities.agents.DefenderBee;
+import com.sica.entities.agents.ObjectiveDrivenWorkerBee;
 import com.sica.environment.EnvironmentModeller;
 import com.sica.simulation.SimulationState;
 import com.util.knowledge.Knowledge;
+
+import sim.util.Bag;
 
 public class Season extends Entity {
 
@@ -44,12 +51,34 @@ public class Season extends Entity {
 		this.count = 0;
 		this.season = SeasonTypes.nextSeason(this.season);
 		simState.environment.removeAll(Knowledge.FLOWER);
+		
+		Bag agents = simState.getEntities().getAllObjects();
+		for (Object o : agents) {
+			Entity entity = (Entity) o;
+			if (isBee2(o.getClass())) {
+				Agent agent = (Agent) entity;
+				if (agent.dead()) {
+					entity.remove(simState);
+				}
+			}
+		}
+		
 		EnvironmentModeller.randomlyGenerateFlowers(simState.environment, 
 													getNumFlowers(simState), 
 													simState.config.getMinAlimentFlower(), 
 													simState.config.getMaxAlimentFlower(), 
 													simState.random);
 		
+	}
+	
+	private boolean isBee (EntityType type) {
+		return type == EntityType.DEFENDER_BEE ||
+				type == EntityType.OBJECTIVE_DRIVEN_WORKER;
+	}
+	
+	private boolean isBee2 (Class c) {
+		return c == ObjectiveDrivenWorkerBee.class ||
+				c == DefenderBee.class;
 	}
 	
 	/**

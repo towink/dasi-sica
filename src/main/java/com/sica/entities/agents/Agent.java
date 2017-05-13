@@ -21,11 +21,13 @@ public abstract class Agent extends Entity {
 	protected List<Int2D> actualPath;			//actual path that the agent is using to get somewhere
 	protected KnowledgeMapInterface knowledge;	//knowledge that this agent has about the environment
 	protected Int2D home; 						//automatically set to where this agent spawned
+	protected int seasonCount;
 	
 	
 	public Agent (EntityType type) {
 		super(type);
 		this.knowledge = new HashMapKnowledgeMap();
+		this.seasonCount = 0;
 		//this.knowledge = new ArrayKnowledgeMap(SimulationConfig.GRID_WIDTH, SimulationConfig.GRID_HEIGHT);
 	}
 	
@@ -35,6 +37,15 @@ public abstract class Agent extends Entity {
 		this.home = simState.entities.getObjectLocation(this);
 	}
 	
+	
+	public boolean dead () {
+		this.seasonCount += 1;
+		if (this.seasonCount >= SimulationConfig.config().getTime2Die()) {
+			return true;
+		}
+		
+		return false;
+	}
 
 	//////BEHAVIOR FUNCTIONS
 	/**

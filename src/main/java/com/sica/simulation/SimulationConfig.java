@@ -57,6 +57,7 @@ public class SimulationConfig {
 	// general
 	protected int radioView = 10;
 	protected int time4Season = 1000;
+	protected int time2Die = 4;
 	
 	// worker
 	protected int numWorkers = 10;
@@ -241,11 +242,19 @@ public class SimulationConfig {
 		return this.time4Season;
 	}
 	public void setTime4Season(int time4Season) {
-		if (time4Season > 1000) {
+		if (time4Season > 100) {
 			this.time4Season = time4Season;
 		}
 		else {
-			this.time4Season = 1000;
+			this.time4Season = 100;
+		}
+	}
+	public int getTime2Die() {
+		return this.time2Die;
+	}
+	public void setTime2Die(int time2Die) {
+		if (time2Create > 0) {
+			this.time2Create = time2Create;
 		}
 	}
 }

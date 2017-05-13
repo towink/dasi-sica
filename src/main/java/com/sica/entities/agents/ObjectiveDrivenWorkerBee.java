@@ -1,5 +1,6 @@
 package com.sica.entities.agents;
 
+import com.sica.simulation.SimulationState;
 import com.util.knowledge.Knowledge;
 
 /**
@@ -15,8 +16,17 @@ import com.util.knowledge.Knowledge;
 public class ObjectiveDrivenWorkerBee extends ObjectiveDrivenAgent {
 	private static final long serialVersionUID = -1667202705195646436L;
 	
+	private static int uaidGenerator = 0;
+	private static int uaidDead = 0;
+	
 	private boolean carriesAliment;
-
+	private int uaid;
+	
+	{
+		this.uaid = uaidGenerator;
+		ObjectiveDrivenWorkerBee.uaidGenerator++;
+	}
+	
 	public ObjectiveDrivenWorkerBee() {													
 		super(EntityType.OBJECTIVE_DRIVEN_WORKER);
 		carriesAliment = false;
@@ -36,4 +46,17 @@ public class ObjectiveDrivenWorkerBee extends ObjectiveDrivenAgent {
 		this.carriesAliment = carriesAliment;
 	}
 	
+	public int getUAIDWorker () {
+		return this.uaid;
+	}
+	
+	public static int count () {
+		return ObjectiveDrivenWorkerBee.uaidGenerator - ObjectiveDrivenWorkerBee.uaidDead;
+	}
+	
+	@Override
+	public void die (SimulationState simState) {
+		ObjectiveDrivenWorkerBee.uaidDead += 1;
+		remove(simState);
+	}
 }

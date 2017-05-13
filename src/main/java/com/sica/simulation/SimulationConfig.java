@@ -64,6 +64,9 @@ public class SimulationConfig {
 	protected float groupingAffinity = 0.95f;
 	protected int flowerThreshold = 2;
 	
+	//defender
+	protected float percentageDefender = 10f;
+	
 	//Queen
 	protected int time2Create = 10;
 	protected int cost2Create = 5;
@@ -219,17 +222,21 @@ public class SimulationConfig {
 			this.maxAlimentFlower = maxAlimentFlower;
 		}
 	}
+	
 	public int getTime2Create() {
 		return time2Create;
 	}
+	
 	public void setTime2Create(int time2Create) {
 		if (time2Create > 0) {
 			this.time2Create = time2Create;
 		}
 	}
+	
 	public int getCost2Create() {
 		return cost2Create;
 	}
+	
 	public void setCost2Create(int cost2Create) {
 		if (cost2Create > 1) {
 			this.cost2Create = cost2Create;
@@ -238,9 +245,11 @@ public class SimulationConfig {
 			this.cost2Create = 1;
 		}
 	}
+	
 	public int getTime4Season() {
 		return this.time4Season;
 	}
+	
 	public void setTime4Season(int time4Season) {
 		if (time4Season > 100) {
 			this.time4Season = time4Season;
@@ -249,12 +258,28 @@ public class SimulationConfig {
 			this.time4Season = 100;
 		}
 	}
+	
 	public int getTime2Die() {
 		return this.time2Die;
 	}
+	
 	public void setTime2Die(int time2Die) {
-		if (time2Create > 0) {
-			this.time2Create = time2Create;
+		if (time2Die > 0) {
+			this.time2Die = time2Die;
 		}
+	}
+	
+	public void setPercentageDefender (float percentageDefender) {
+		if (percentageDefender > 0f && percentageDefender < 100f) {
+			this.percentageDefender = percentageDefender;
+		}
+	}
+	
+	public float getPercentageDefender () {
+		return this.percentageDefender;
+	}
+	
+	public Object domPercentageDefender(){
+		return new sim.util.Interval(0.001, 99.999);
 	}
 }

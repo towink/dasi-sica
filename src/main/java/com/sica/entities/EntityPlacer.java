@@ -55,9 +55,17 @@ public class EntityPlacer {
 		Entity agent;
 		for (int x = 0; x < numDefenders; x++) {
 			agent = AgentFactory.getAgent(EntityType.DEFENDER_BEE);
-			// maybe the next 2 lines should be included in the factory method somehow??
 			entities.setObjectLocation(agent, home);
 			schedule.scheduleRepeating(Schedule.EPOCH, 0, agent, 1);
+		}
+	}
+	
+	public static void generateDefendersAfter(SparseGrid2D entities, Schedule schedule, int numDefenders, Int2D home) {
+		Entity agent;
+		for (int x = 0; x < numDefenders; x++) {
+			agent = AgentFactory.getAgent(EntityType.DEFENDER_BEE);
+			entities.setObjectLocation(agent, home);
+			schedule.scheduleRepeating(schedule.getTime(), 0, agent, 1);
 		}
 	}
 	

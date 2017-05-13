@@ -13,12 +13,35 @@ import sim.util.Int2D;
 public class DefenderBee extends Agent {
 	private static final long serialVersionUID = 1746904605899616287L;
 	
+	private static int uaidGenerator = 0;
+	private static int uaidDead = 0;
+	
 	private enum State {FINDING_TRENCH, MOVING_TO_TRENCH, GUARDING_COLONY, MOVING_TO_ENEMY, ATTACK, REEVALUATE_LIFE}
 	private State state;
+	private int uaid;
+	
+	{
+		this.uaid = uaidGenerator;
+		DefenderBee.uaidGenerator++;
+	}
 
 	public DefenderBee() {
 		super(EntityType.DEFENDER_BEE);
 		this.state = State.FINDING_TRENCH;
+	}
+	
+	public int getUAIDDefender () {
+		return this.uaid;
+	}
+	
+	public static int count () {
+		return DefenderBee.uaidGenerator - DefenderBee.uaidDead;
+	}
+	
+	@Override
+	public void die (SimulationState simState) {
+		DefenderBee.uaidDead += 1;
+		remove(simState);
 	}
 
 	@Override

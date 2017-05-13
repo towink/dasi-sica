@@ -46,6 +46,8 @@ public abstract class Agent extends Entity {
 		
 		return false;
 	}
+	
+	public void die(SimulationState simState) {}
 
 	//////BEHAVIOR FUNCTIONS
 	/**

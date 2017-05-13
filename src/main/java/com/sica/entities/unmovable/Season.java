@@ -55,10 +55,10 @@ public class Season extends Entity {
 		Bag agents = simState.getEntities().getAllObjects();
 		for (Object o : agents) {
 			Entity entity = (Entity) o;
-			if (isBee2(o.getClass())) {
+			if (isBee(entity.getType())) {
 				Agent agent = (Agent) entity;
 				if (agent.dead()) {
-					entity.remove(simState);
+					agent.die(simState);
 				}
 			}
 		}

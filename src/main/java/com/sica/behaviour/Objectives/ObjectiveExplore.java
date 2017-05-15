@@ -20,14 +20,17 @@ public class ObjectiveExplore extends Objective {
 
 	private Int2D objective;
 	
-	public ObjectiveExplore() {
-		this.addTaskLast(new TaskMoveThenObserve());
+	public ObjectiveExplore(Int2D where) {
+		this.addTaskLast(new TaskMoveThenObserve(where));
+		this.objective = where;
 	}
 	
 	@Override
 	public boolean isFinished(Agent a, SimulationState simState) {
 		ObjectiveDrivenWorkerBee bee = (ObjectiveDrivenWorkerBee) a;
-		return bee.thinksKnowsFlowers(SimulationConfig.config().getFlowerThresholdWorker());
+		return bee.thinksKnowsFlowers(SimulationConfig.config().getFlowerThresholdWorker()) 
+				|| !a.canMoveTo(objective, simState, SimulationConfig.ENV_MODE) 
+				|| simState.entities.getObjectLocation(a).equals(objective);
 	}
 	
 	@Override
@@ -50,14 +53,20 @@ public class ObjectiveExplore extends Objective {
 			if(a.getKnowledgeMap().pollNewKnowledge()) {
 				obj.addTaskLast(new TaskBroadcastKnowledgeToSameType());
 			}
-			addTaskLast(new TaskMoveThenObserve());
+			addTaskLast(new TaskMoveThenObserve(objective));
 		}
 	}
 	
 	private class TaskMoveThenObserve extends TaskMoveRandomly {
-		public TaskMoveThenObserve() {
+
+		public TaskMoveThenObserve(Int2D n) {
 			super(SimulationConfig.config().getWorkerMovesBeforeUpdating());
 		}
+		
+		//make this class inherit from TaskMoveTowardsPosition and uncomment this for quicker detecting food sources
+		/*public TaskMoveThenObserve(Int2D destination) {
+			super(destination, SimulationConfig.config().getWorkerMovesBeforeUpdating());
+		}*/
 
 		@Override
 		public void endTask(Agent a, Objective obj, SimulationState simState) {
@@ -68,7 +77,7 @@ public class ObjectiveExplore extends Objective {
 			else {	//go back home if dangers are nearby and repeat
 				addTaskLast(new TaskGetToPosition(a.getHome()));
 				addTaskLast(new TaskWarnEnemyDetected(pos));
-				addTaskLast(new TaskMoveThenObserve());
+				addTaskLast(new TaskMoveThenObserve(objective));
 			}
 		}
 	}

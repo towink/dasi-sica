@@ -1,10 +1,12 @@
 package com.sica.entities.agents;
 
+import com.sica.entities.Entity;
 import com.sica.simulation.SimulationConfig;
 import com.sica.simulation.SimulationState;
 import com.util.data.IterableSet;
 import com.util.knowledge.Knowledge;
 
+import sim.util.Bag;
 import sim.util.Int2D;
 
 public class SimpleEnemy extends Agent {
@@ -42,6 +44,17 @@ public class SimpleEnemy extends Agent {
 			}
 			break;
 		case MOVING:
+			//first check for bees and kill them if we can (we also die)
+			Bag bees = simState.entities.getObjectsAtLocation(simState.entities.getObjectLocation(this));
+			for (Object o: bees) {
+				Entity bee = (Entity) o;
+				if (Entity.isBee(bee)) {
+					bee.die(simState);
+					this.die(simState);
+					return;
+				}
+			}
+			//if we are on a free cell go on with our lives
 			if (this.actualPath != null && !this.actualPath.isEmpty()) {
 				if (!this.moveTo(this.actualPath.remove(0), simState, SimulationConfig.ENV_MODE)) {
 					//cannot move, knowledge is automatically updated, so go to decide again

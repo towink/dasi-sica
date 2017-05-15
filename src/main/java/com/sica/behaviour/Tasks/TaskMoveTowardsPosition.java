@@ -13,32 +13,32 @@ import sim.util.Int2D;
  * @author Daniel
  *
  */
-public class TaskMoveTowardsPosition extends Task {
+public class TaskMoveTowardsPosition extends TaskFiniteTimes {
 
 	private Int2D destination;
-	private int maxSteps;
-	private int currSteps;
 
 	public TaskMoveTowardsPosition(Int2D destination, int maxSteps) {
+		super(maxSteps);
 		this.destination = destination;
-		this.maxSteps = maxSteps;
-		this.currSteps = 0;
 	}
 	
 
 	@Override
-	public void interactWith(Agent agent, SimulationState simState) {
-		if (!agent.followCurrentPath(simState))
-			agent.computePath(simState, destination);
-		this.currSteps++;
+	public void interactOneTime(Agent a, SimulationState simState) {
+		if (!a.followCurrentPath(simState))
+			a.computePath(simState, destination);
 	}
+	
+
 
 	@Override
 	public boolean isFinished(Agent a, SimulationState simState) {
 		// if the destination (for some strange reason) is an obstacle then
 		// we say that this objective is immediately finished
-		return simState.entities.getObjectLocation(a).equals(this.destination)
-			|| !a.canMoveTo(destination, simState, SimulationConfig.ENV_MODE)
-			|| this.currSteps >= this.maxSteps;
+		return super.isFinished(a, simState) || simState.entities.getObjectLocation(a).equals(this.destination)
+				|| !a.canMoveTo(destination, simState, SimulationConfig.ENV_MODE);
 	}
+
+
+
 }

@@ -109,11 +109,20 @@ public abstract class Entity implements Steppable {
 	}
 	
 	/**
-	 * Return true if this entity is an enemy of any type
 	 * @param e
-	 * @return
+	 * @return true if this entity is an enemy of any type
 	 */
 	public static boolean isEnemy(Entity e) {
 		return e.type == EntityType.SIMPLE_ENEMY; //|| e.type == EntityType.NEW_ENEMY_TYPE ...
+	}
+	
+	/**
+	 * @param e
+	 * @return true if the given entity is a bee (of any type)
+	 */
+	public static boolean isBee(Entity e) {
+		return e.type == EntityType.DEFENDER_BEE 
+				|| e.type == EntityType.QUEEN
+				|| e.type == EntityType.OBJECTIVE_DRIVEN_WORKER;
 	}
 }

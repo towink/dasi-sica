@@ -1,6 +1,6 @@
 package com.sica.entities.agents;
 
-import com.sica.behaviour.Objectives.ObjectiveExplore;
+import com.sica.behaviour.Objectives.ObjectiveFindUnexploredTerrain;
 import com.sica.entities.Entity;
 import com.sica.entities.Entity.EntityType;
 
@@ -18,7 +18,7 @@ public class AgentFactory {
 		switch(type) {
 		case OBJECTIVE_DRIVEN_WORKER:
 			ObjectiveDrivenWorkerBee agent = new ObjectiveDrivenWorkerBee();
-			agent.addObjective(new ObjectiveExplore());
+			agent.addObjective(new ObjectiveFindUnexploredTerrain());
 			return agent;
 		case QUEEN:
 			return new QueenDrools();

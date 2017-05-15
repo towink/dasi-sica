@@ -36,12 +36,6 @@ public class SimulationConfig {
 	public static final int HIVE_HEIGHT = 10;
 	public static final int HIVE_WIDTH = 10;
 	
-	// Flowers's size
-	@Deprecated
-	public static final int NORMAL_FLOWER_HEIGHT = 5;
-	@Deprecated
-	public static final int NORMAL_FLOWER_WIDTH = 5;
-	
 	// Environment mode (bounded, unbounded, toroidal)
 	public static final int ENV_MODE = Grid2D.BOUNDED;
 	
@@ -63,10 +57,10 @@ public class SimulationConfig {
 	protected int numWorkers = 10;
 	protected float groupingAffinity = 0.95f;
 	protected int flowerThreshold = 2;
-	protected int workerMovesBeforeUpdating = 5; //number of times a worker bee moves randomly before scanning
+	protected int workerMovesBeforeUpdating = 2; //number of times a worker bee moves randomly before scanning
 
 	//defender
-	protected float percentageDefender = 10f; 		
+	protected float percentageDefender = 30f; 		
 	
 	//Queen
 	protected int time2Create = 10;

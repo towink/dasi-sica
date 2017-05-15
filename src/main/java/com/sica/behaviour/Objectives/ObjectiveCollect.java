@@ -31,7 +31,7 @@ public class ObjectiveCollect extends Objective {
 	public void onFinished(Agent a, SimulationState simState) {
 		// when collecting is finished, switch to exploring
 		ObjectiveDrivenWorkerBee bee = (ObjectiveDrivenWorkerBee) a;
-		bee.addObjective(new ObjectiveExplore());
+		bee.addObjective(new ObjectiveFindUnexploredTerrain());
 	}
 	
 	// --- TASKS SPECIFIC TO OBJECTIVE COLLECT ---

@@ -42,9 +42,9 @@ public class SimulationState extends SimState {
 		// add also some enemies
 		EnemySpawner.createSpawner(new Int2D(0, 0));
 		EnemySpawner.getSpawner().putPosition(new Int2D (0, 0));
-		EnemySpawner.getSpawner().putPosition(new Int2D (0, config.GRID_HEIGHT - 1));
-		EnemySpawner.getSpawner().putPosition(new Int2D (config.GRID_WIDTH - 1, config.GRID_HEIGHT - 1));
-		EnemySpawner.getSpawner().putPosition(new Int2D (config.GRID_WIDTH - 1, 0));
+		EnemySpawner.getSpawner().putPosition(new Int2D (0, SimulationConfig.GRID_HEIGHT - 1));
+		EnemySpawner.getSpawner().putPosition(new Int2D (SimulationConfig.GRID_WIDTH - 1, SimulationConfig.GRID_HEIGHT - 1));
+		EnemySpawner.getSpawner().putPosition(new Int2D (SimulationConfig.GRID_WIDTH - 1, 0));
 		entities.addScheduledRepeatingEntityAt(EnemySpawner.getSpawner(), EnemySpawner.getSpawner().getPosition(), schedule);
 		
 		// add the seasonController

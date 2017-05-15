@@ -1,11 +1,7 @@
 package com.sica.entities.unmovable;
 
-import org.apache.poi.poifs.crypt.EncryptionMode;
-
 import com.sica.entities.Entity;
 import com.sica.entities.agents.Agent;
-import com.sica.entities.agents.DefenderBee;
-import com.sica.entities.agents.ObjectiveDrivenWorkerBee;
 import com.sica.environment.EnvironmentModeller;
 import com.sica.simulation.SimulationState;
 import com.util.knowledge.Knowledge;
@@ -59,7 +55,7 @@ public class Season extends Entity {
 			if (isBee(entity.getType())) {
 				Agent agent = (Agent) entity;
 				if (agent.dead()) {
-					agent.die(simState);
+					agent.remove(simState);
 				}
 			}
 		}
@@ -75,11 +71,6 @@ public class Season extends Entity {
 	private boolean isBee (EntityType type) {
 		return type == EntityType.DEFENDER_BEE ||
 				type == EntityType.OBJECTIVE_DRIVEN_WORKER;
-	}
-	
-	private boolean isBee2 (Class c) {
-		return c == ObjectiveDrivenWorkerBee.class ||
-				c == DefenderBee.class;
 	}
 	
 	/**

@@ -51,7 +51,13 @@ public class EnemySpawner extends Entity {
 	@Override
 	public void doStep(SimulationState simState) {
 		if (this.seasonCont >= simState.config.getTime4Enemies()) {
-			EntityPlacer.generateEnemies(simState.entities, simState.schedule, simState.config.getEnemies4Season(), this.positions, simState.random);
+			for (int i = 0; i < simState.getConfig().getEnemies4Season(); i++) {
+				EntityPlacer.deployEntity(
+						EntityType.SIMPLE_ENEMY, 
+						simState.entities, 
+						this.positions.get(simState.random.nextInt(this.positions.size())), 
+						simState.schedule);
+			}
 			this.seasonCont = 0;
 		}
 		

@@ -3,7 +3,6 @@ package com.sica.entities.agents;
 import com.sica.entities.Entity;
 import com.sica.simulation.SimulationConfig;
 import com.sica.simulation.SimulationState;
-import com.util.data.IterableSet;
 import com.util.knowledge.Knowledge;
 import com.util.movement.PositioningFunctions;
 
@@ -13,40 +12,16 @@ import sim.util.Int2D;
 public class DefenderBee extends Agent {
 	private static final long serialVersionUID = 1746904605899616287L;
 	
-	private static int uaidGenerator = 0;
-	private static int uaidDead = 0;
-	
+
 	private enum State {FINDING_TRENCH, MOVING_TO_TRENCH, GUARDING_COLONY, MOVING_TO_ENEMY, ATTACK, REEVALUATE_LIFE}
 	private State state;
-	private int uaid;
-	
-	{
-		this.uaid = uaidGenerator;
-		DefenderBee.uaidGenerator++;
-	}
+
 
 	public DefenderBee() {
 		super(EntityType.DEFENDER_BEE);
 		this.state = State.FINDING_TRENCH;
 	}
-	
-	public int getUAIDDefender () {
-		return this.uaid;
-	}
-	
-	public static int count () {
-		return DefenderBee.uaidGenerator - DefenderBee.uaidDead;
-	}
-	
-	public static int deathCount() {
-		return DefenderBee.uaidDead;
-	}
-	
-	@Override
-	public void die (SimulationState simState) {
-		DefenderBee.uaidDead += 1;
-		remove(simState);
-	}
+
 
 	@Override
 	//TODO some repeated code and stuff, probably cleaner to extract it to an objective driven bee, 
@@ -55,12 +30,11 @@ public class DefenderBee extends Agent {
 		switch(this.state) {
 		case FINDING_TRENCH: {
 			//decide which hive you are defending, if we don't have a hive just die in peace
-			IterableSet<Int2D> hives = this.knowledge.getKnowledgeOf(Knowledge.HIVE);
-			if (hives.isEmpty()) {
+			Int2D site = this.knowledge.getRandomPositionOfKnowledge(Knowledge.HIVE, simState.random);
+			if (site == null) {
 				this.state = State.REEVALUATE_LIFE; //I HAVE NO PURPOSE
 				break;
 			} 
-			Int2D site = hives.iterator().next(); //TODO make it random, it is cooler
 			/*Int2D location = simState.entities.getObjectLocation(this);
 			//TODO probably extract this to a function 
 			Bag entityBag = simState.entities.getRadialNeighbors(location.x, location.y, SimulationConfig.config().getRadioView(), SimulationConfig.ENV_MODE, true);
@@ -158,7 +132,7 @@ public class DefenderBee extends Agent {
 			for (Object o: entityBag) {
 				Entity entity = (Entity) o;
 				if (Entity.isEnemy(entity)) {
-					entity.remove(simState);  //kill it with FIRE!
+					entity.remove(simState);
 					killed = true;
 				}
 			}

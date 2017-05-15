@@ -57,12 +57,12 @@ public class QueenDrools extends DroolsAgent{
 	
 	public void createBee(SimulationState state) {
 		
-		float aux = (ObjectiveDrivenWorkerBee.count() * state.config.getPercentageDefender()) / 100;
-		if (aux < DefenderBee.count() || state.config.getNumWorkers() > ObjectiveDrivenWorkerBee.count()) {
-			EntityPlacer.generateWorkersAfter(state.entities, state.schedule, 1, state.entities.getObjectLocation(this));
+		float aux = (state.entities.getNumberOf(EntityType.OBJECTIVE_DRIVEN_WORKER) * state.config.getPercentageDefender()) / 100;
+		if (aux < state.entities.getNumberOf(EntityType.DEFENDER_BEE) || state.config.getNumWorkers() > state.entities.getNumberOf(EntityType.OBJECTIVE_DRIVEN_WORKER)) {
+			EntityPlacer.deployEntity(EntityType.OBJECTIVE_DRIVEN_WORKER, state.entities, state.entities.getObjectLocation(this), state.schedule);
 		}
 		else {
-			EntityPlacer.generateDefendersAfter(state.entities, state.schedule, 1, state.entities.getObjectLocation(this));
+			EntityPlacer.deployEntity(EntityType.DEFENDER_BEE, state.entities, state.entities.getObjectLocation(this), state.schedule);
 		}
 	}
 	

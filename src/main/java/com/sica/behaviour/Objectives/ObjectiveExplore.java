@@ -1,6 +1,7 @@
 package com.sica.behaviour.Objectives;
 
 import com.sica.behaviour.Tasks.TaskBroadcastKnowledgeToSameType;
+import com.sica.behaviour.Tasks.TaskMoveRandomly;
 import com.sica.behaviour.Tasks.TaskObserveEnvironment;
 import com.sica.behaviour.Tasks.TaskOneShot;
 import com.sica.entities.agents.Agent;
@@ -8,12 +9,11 @@ import com.sica.entities.agents.ObjectiveDrivenWorkerBee;
 import com.sica.simulation.SimulationConfig;
 import com.sica.simulation.SimulationState;
 import com.util.knowledge.Knowledge;
-import com.util.movement.Direction;
 
 public class ObjectiveExplore extends Objective {
 
 	public ObjectiveExplore() {
-		this.addTaskLast(new TaskMoveRandomly());
+		this.addTaskLast(new TaskMoveThenObserve());
 	}
 	
 	@Override
@@ -42,17 +42,15 @@ public class ObjectiveExplore extends Objective {
 			if(a.getKnowledgeMap().pollNewKnowledge()) {
 				obj.addTaskLast(new TaskBroadcastKnowledgeToSameType());
 			}
-			addTaskLast(new TaskMoveRandomly());
+			addTaskLast(new TaskMoveThenObserve());
 		}
 	}
 	
-	private class TaskMoveRandomly extends TaskOneShot {
-		@Override
-		public void interactWithOneShot(Agent a, SimulationState simState) {
-			// randomly pick a direction and move
-			Direction randomDir = Direction.values()[simState.random.nextInt(Direction.values().length)];
-			a.moveInDirection(randomDir, simState, SimulationConfig.ENV_MODE);
+	private class TaskMoveThenObserve extends TaskMoveRandomly {
+		public TaskMoveThenObserve() {
+			super(SimulationConfig.config().getWorkerMovesBeforeUpdating());
 		}
+
 		@Override
 		public void endTask(Agent a, Objective obj, SimulationState simState) {
 			addTaskLast(new TaskObserveFlowersObstacles());

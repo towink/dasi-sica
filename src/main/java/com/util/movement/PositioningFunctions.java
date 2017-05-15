@@ -1,12 +1,16 @@
 package com.util.movement;
 
+import com.sica.entities.Entity;
+import com.sica.entities.Entity.EntityType;
 import com.sica.simulation.SimulationConfig;
+import com.sica.simulation.SimulationState;
 import com.util.TwoDVector;
 import com.util.knowledge.Knowledge;
 import com.util.knowledge.KnowledgeMapInterface;
 
 import ec.util.MersenneTwisterFast;
 import sim.field.grid.Grid2D;
+import sim.util.Bag;
 import sim.util.Int2D;
 
 public class PositioningFunctions {
@@ -107,6 +111,31 @@ public class PositioningFunctions {
 			timeout++;
 		}
 		return destination;
+	}
+	
+	/**
+	 * Gets the center of the entity swarm sent in the bag
+	 * if the type is restricted, only objects of the given
+	 * type are taken into account, otherwise all objects
+	 * are used
+	 * @param simState
+	 * @param entityBag
+	 * @param restrictType
+	 * @param type
+	 * @return
+	 */
+	public static Int2D getSwarmCentroid(SimulationState simState, Bag entityBag, boolean restrictType, EntityType type) {
+		float ax = 0, ay = 0, count = 0; //accumulators to calculate the centroid
+		for (Object o: entityBag) {
+			Entity e = (Entity) o;
+			if (!restrictType || e.getType() == type) {
+				Int2D otherlocation = simState.entities.getObjectLocation(e);
+				ax += otherlocation.x;
+				ay += otherlocation.y;
+				count++;
+			}
+		}
+		return new Int2D((int) (ax / count), (int) (ay / count));
 	}
 	
 }

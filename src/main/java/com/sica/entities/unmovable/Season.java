@@ -55,7 +55,7 @@ public class Season extends Entity {
 			if (isBee(entity.getType())) {
 				Agent agent = (Agent) entity;
 				if (agent.dead()) {
-					agent.remove(simState);
+					agent.die(simState);
 				}
 			}
 		}

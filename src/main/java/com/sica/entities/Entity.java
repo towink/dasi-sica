@@ -72,7 +72,7 @@ public abstract class Entity implements Steppable {
 	 * Kill this agent (i.e: enemy kills bee or vice versa)
 	 * by disabling its step() method
 	 */
-	public void remove(SimulationState simState) {
+	public void die(SimulationState simState) {
 		simState.entities.remove(this);
 		this.removed = true;
 	}

@@ -89,6 +89,7 @@ public class ObjectiveCollect extends Objective {
 	private class TaskObserveEnvironmentObstacleFlower extends TaskOneShot {
 		@Override
 		public void endTask(Agent a, Objective obj, SimulationState simState) {
+			//obj.addTaskFirst(new TaskAvoidEnemies());
 			obj.addTaskFirst(new TaskObserveEnvironment(Knowledge.FLOWER));
 			obj.addTaskFirst(new TaskObserveEnvironment(Knowledge.OBSTACLE));
 		}

@@ -3,9 +3,12 @@ package com.sica.entities;
 import java.util.EnumMap;
 
 import com.sica.entities.Entity.EntityType;
+import com.sica.simulation.SimulationConfig;
+import com.sica.simulation.SimulationState;
 
 import sim.engine.Schedule;
 import sim.field.grid.SparseGrid2D;
+import sim.util.Bag;
 import sim.util.Int2D;
 
 public class EntityStorage extends SparseGrid2D {
@@ -71,5 +74,23 @@ public class EntityStorage extends SparseGrid2D {
 	 */
 	public int getNumberOf(EntityType type) {
 		return this.agentQuantity.getOrDefault(type, 0);
+	}
+	
+	/**
+	 * get all entities of the given type around the given position 
+	 * @param simState
+	 * @param pos
+	 * @param type
+	 * @return
+	 */
+	public Bag getRadialEntities(SimulationState simState, Int2D pos, EntityType type) {
+		Bag enemies = simState.entities.getRadialNeighbors(pos.getX(), pos.getY(), simState.config.getRadioView(), SimulationConfig.ENV_MODE, true);
+		Bag res = new Bag();
+		//retrieve only the interesting entities
+		for (Object o: enemies)
+			if (((Entity) o).getType() == type)
+				res.add(o);
+		
+		return res;
 	}
 }

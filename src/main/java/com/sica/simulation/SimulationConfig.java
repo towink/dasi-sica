@@ -63,7 +63,8 @@ public class SimulationConfig {
 	protected int numWorkers = 10;
 	protected float groupingAffinity = 0.95f;
 	protected int flowerThreshold = 2;
-	
+	protected int workerMovesBeforeUpdating = 5;
+
 	//defender
 	protected float percentageDefender = 10f; 		
 	
@@ -305,5 +306,13 @@ public class SimulationConfig {
 	
 	public int getEnemies4Season () {
 		return this.enemies4Season;
+	}
+	
+	public void setWorkerMovesBeforeUpdating(int workerMovesBeforeUpdating) {
+		this.workerMovesBeforeUpdating = workerMovesBeforeUpdating;
+	}
+	
+	public int getWorkerMovesBeforeUpdating() {
+		return this.workerMovesBeforeUpdating;
 	}
 }

@@ -35,22 +35,6 @@ public class DefenderBee extends Agent {
 				this.state = State.REEVALUATE_LIFE; //I HAVE NO PURPOSE
 				break;
 			} 
-			/*Int2D location = simState.entities.getObjectLocation(this);
-			//TODO probably extract this to a function 
-			Bag entityBag = simState.entities.getRadialNeighbors(location.x, location.y, SimulationConfig.config().getRadioView(), SimulationConfig.ENV_MODE, true);
-			int ax = 0, ay = 0, count = 0; //accumulators to calculate the centroid
-			for (Object o: entityBag) {
-				Entity e = (Entity) o;
-				if (e.getType() == this.getType()) {
-					Int2D otherlocation = simState.entities.getObjectLocation(e);
-					ax += otherlocation.x;
-					ay += otherlocation.y;
-					count++;
-				}
-			}
-			Int2D swarmCentroid = new Int2D(ax / count, ay / count);*/
-			//EXTRACT UP TO HERE
-			
 			//calculate a point which is as far as possible from the swarm centroid, while
 			//still being close to the hive we are defending
 			//make sure it is not on a known obstacle as well!!
@@ -132,7 +116,7 @@ public class DefenderBee extends Agent {
 			for (Object o: entityBag) {
 				Entity entity = (Entity) o;
 				if (Entity.isEnemy(entity)) {
-					entity.remove(simState);
+					entity.die(simState);
 					killed = true;
 				}
 			}

@@ -63,7 +63,7 @@ public class SimulationConfig {
 	protected int numWorkers = 10;
 	protected float groupingAffinity = 0.95f;
 	protected int flowerThreshold = 2;
-	protected int workerMovesBeforeUpdating = 5;
+	protected int workerMovesBeforeUpdating = 5; //number of times a worker bee moves randomly before scanning
 
 	//defender
 	protected float percentageDefender = 10f; 		

@@ -206,6 +206,15 @@ public abstract class Agent extends Entity {
 	public void receiveKnowledgeFrom (Agent sender) {
 	        this.knowledge.updateKnowledge(sender.knowledge);
 	}
+	
+	/**
+	 * Used to share bits of knowledge
+	 * @param where
+	 * @param knowledge
+	 */
+	public void receiveBitOfKnowledge(Int2D where, Knowledge knowledge) { 
+		this.knowledge.updateKnowledge(where, knowledge);
+	}
 	/////////////////////////////////
 	
 	

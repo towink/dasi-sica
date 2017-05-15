@@ -1,17 +1,25 @@
 package com.sica.behaviour.Objectives;
 
 import com.sica.behaviour.Tasks.TaskBroadcastKnowledgeToSameType;
+import com.sica.behaviour.Tasks.TaskGetToPosition;
 import com.sica.behaviour.Tasks.TaskMoveRandomly;
 import com.sica.behaviour.Tasks.TaskObserveEnvironment;
 import com.sica.behaviour.Tasks.TaskOneShot;
+import com.sica.behaviour.Tasks.TaskWarnEnemyDetected;
+import com.sica.entities.Entity.EntityType;
 import com.sica.entities.agents.Agent;
 import com.sica.entities.agents.ObjectiveDrivenWorkerBee;
 import com.sica.simulation.SimulationConfig;
 import com.sica.simulation.SimulationState;
 import com.util.knowledge.Knowledge;
 
+import sim.util.Bag;
+import sim.util.Int2D;
+
 public class ObjectiveExplore extends Objective {
 
+	private Int2D objective;
+	
 	public ObjectiveExplore() {
 		this.addTaskLast(new TaskMoveThenObserve());
 	}
@@ -53,7 +61,15 @@ public class ObjectiveExplore extends Objective {
 
 		@Override
 		public void endTask(Agent a, Objective obj, SimulationState simState) {
-			addTaskLast(new TaskObserveFlowersObstacles());
+			Int2D pos = simState.entities.getObjectLocation(a);
+			Bag enemyBag = simState.entities.getRadialEntities(simState, pos, EntityType.SIMPLE_ENEMY);
+			if (enemyBag.isEmpty()) //if there are no enemies, keep goin'
+				addTaskLast(new TaskObserveFlowersObstacles());
+			else {	//go back home if dangers are nearby and repeat
+				addTaskLast(new TaskGetToPosition(a.getHome()));
+				addTaskLast(new TaskWarnEnemyDetected(pos));
+				addTaskLast(new TaskMoveThenObserve());
+			}
 		}
 	}
 

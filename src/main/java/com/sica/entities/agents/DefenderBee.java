@@ -13,8 +13,9 @@ public class DefenderBee extends Agent {
 	private static final long serialVersionUID = 1746904605899616287L;
 	
 
-	private enum State {FINDING_TRENCH, MOVING_TO_TRENCH, GUARDING_COLONY, MOVING_TO_ENEMY, ATTACK, REEVALUATE_LIFE}
+	private enum State {FINDING_TRENCH, MOVING_TO_TRENCH, GUARDING_COLONY, MOVING_TO_ENEMY, ATTACK, REEVALUATE_LIFE, RECEIVED_ALARM}
 	private State state;
+	private Int2D alarm;
 
 
 	public DefenderBee() {
@@ -142,6 +143,19 @@ public class DefenderBee extends Agent {
 			//maybe reading a book is a better choice
 			break;
 		}
+		case RECEIVED_ALARM: {
+			this.computePath(simState, this.alarm);
+			this.state = State.MOVING_TO_ENEMY;
+			break;
+		}
+		}
+	}
+	
+	@Override
+	public void receiveBitOfKnowledge(Int2D where, Knowledge knowledge) {
+		if (knowledge == Knowledge.ENEMY && this.state == State.GUARDING_COLONY) {
+			this.alarm = where;
+			this.state = State.RECEIVED_ALARM;
 		}
 	}
 

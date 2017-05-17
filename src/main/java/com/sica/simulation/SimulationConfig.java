@@ -2,6 +2,9 @@ package com.sica.simulation;
 
 import java.awt.Color;
 
+import com.sica.entities.Entity.EntityType;
+import com.util.knowledge.Knowledge;
+
 import sim.field.grid.Grid2D;
 
 /**
@@ -13,16 +16,21 @@ import sim.field.grid.Grid2D;
 public class SimulationConfig {
 	// TODO the object registered in BeeGUI via getSimulationInspectedObject should actually be our SimulationState
 	// object
-
 	
 	// singleton stuff
+	static {
+		instance = new SimulationConfig();
+	}
 	private static SimulationConfig instance;
+	private SimulationState state;
 	private SimulationConfig() {}
 	// Note that this is not called 'getConfig' so that it does not appear in GUI
+	public void loadConfig(SimulationState simState) {
+		this.state = simState;
+	}
+	
+	
 	public static SimulationConfig config() {
-		if (instance == null) {
-			instance = new SimulationConfig();
-		}
 		return instance;
 	}
 	
@@ -57,7 +65,7 @@ public class SimulationConfig {
 	protected int numWorkers = 10;
 	protected float groupingAffinity = 0.95f;
 	protected int flowerThreshold = 2;
-	protected int workerMovesBeforeUpdating = 2; //number of times a worker bee moves randomly before scanning
+	protected int workerMovesBeforeUpdating = 5; //number of times a worker bee moves randomly before scanning
 
 	//percentage of the total bees that should be defending
 	protected float percentageDefender = 50f; 		
@@ -309,4 +317,52 @@ public class SimulationConfig {
 	public int getWorkerMovesBeforeUpdating() {
 		return this.workerMovesBeforeUpdating;
 	}
+	
+	
+	//////ALL VARIABLES WITH ONLY GETTERS BELOW
+	/**
+	 * @return the number of workers in this propertywatcher's simulationstate
+	 */
+	public int getWorkers() {
+		return this.state.entities.getNumberOf(EntityType.OBJECTIVE_DRIVEN_WORKER);
+	}
+	
+	/**
+	 * @return the number of defenders in this propertywatcher's simulationstate
+	 */
+	public int getDefenders() {
+		return this.state.entities.getNumberOf(EntityType.DEFENDER_BEE);
+	}
+	
+	/**
+	 * @return the number of queens in this propertywatcher's simulationstate
+	 */
+	public int getQueens() {
+		return this.state.entities.getNumberOf(EntityType.QUEEN);
+	}
+	
+	/**
+	 * @return the number of total bees in this propertywatcher's simulationstate
+	 */
+	public int getBees() {
+		return this.getWorkers() + this.getDefenders() + this.getQueens();
+	}
+	
+	/**
+	 * @return the number of enemies in this propertywatcher's simulationstate
+	 */
+	public int getEnemies() {
+		return this.state.entities.getNumberOf(EntityType.SIMPLE_ENEMY);
+	}
+	
+	/**
+	 * @return the number of flowers in this propertywatcher's simulationstate
+	 */
+	public int getFlowers() {
+		return this.state.environment.getCountOf(Knowledge.FLOWER);
+	}
+	
+	
+	
+	
 }

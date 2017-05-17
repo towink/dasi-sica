@@ -7,7 +7,6 @@ import org.kie.api.runtime.KieContainer;
 import org.kie.api.runtime.KieSession;
 import org.kie.api.runtime.rule.FactHandle;
 
-import com.sica.entities.Entity;
 import com.sica.simulation.SimulationState;
 
 /**
@@ -32,8 +31,8 @@ public abstract class DroolsAgent extends Agent {
 	 * session uses.
 	 * @param kSessionName
 	 */
-	public DroolsAgent(String kSessionName) {
-		super(Entity.EntityType.DROOLS);
+	public DroolsAgent(String kSessionName, EntityType type) {
+		super(type);
 		this.setUpAgent(kSessionName, 0);
 	}
 	
@@ -44,8 +43,8 @@ public abstract class DroolsAgent extends Agent {
 	 * @param kSessionName
 	 * @param maxRulesFired
 	 */
-	public DroolsAgent(String kSessionName, int maxRulesFired) {
-		super(Entity.EntityType.DROOLS);
+	public DroolsAgent(String kSessionName, int maxRulesFired, EntityType type) {
+		super(type);
 		this.setUpAgent(kSessionName, maxRulesFired);
 	}
 	

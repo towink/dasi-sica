@@ -23,7 +23,7 @@ public class QueenDrools extends DroolsAgent{
 	protected PriorityQueue<Objective> objectives;
 	
 	public QueenDrools() {
-		super("ksession-queenDrools", 1);
+		super("ksession-queenDrools", 1, EntityType.QUEEN);
 		count = 0;
 		this.objectives = new PriorityQueue<Objective>();
 	}

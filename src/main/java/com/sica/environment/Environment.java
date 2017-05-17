@@ -78,11 +78,23 @@ public class Environment extends IntGrid2D {
 	
 	/**
 	 * Gets the knowledge at the given position
+	 * without the metadata!
 	 * @param pos
 	 * @return
 	 */
 	public Knowledge getKnowledgeAt(Int2D pos) {
 		return Knowledge.fromInt(this.get(pos.x, pos.y));
+	}
+	
+	/**
+	 * Gets the knowledge at the given position
+	 * without the metadata!
+	 * @param x
+	 * @param y
+	 * @return
+	 */
+	public Knowledge getKnowledgeAt(int x, int y) {
+		return Knowledge.fromInt(this.get(x, y));
 	}
 	
 	/**
@@ -247,5 +259,20 @@ public class Environment extends IntGrid2D {
 		return true;
 	} 
 		
+	/**
+	 * Gets the count of instances of the given knowledge in this map
+	 * @param knowledge
+	 * @return
+	 */
+	public int getCountOf(Knowledge knowledge) {
+		int counter = 0;
+		for (int i = 0; i < this.width; i++) {
+			for (int j = 0; j < this.height; j++) {
+				if (this.getKnowledgeAt(i, j) == knowledge)
+					counter++;
+			}
+		}
+		return counter;
+	}
 	
 }

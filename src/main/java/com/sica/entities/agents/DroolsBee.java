@@ -17,7 +17,7 @@ public class DroolsBee extends DroolsAgent {
 	DroolsBeeController controller;
 
 	public DroolsBee() {
-		super("ksession-DroolsBee");
+		super("ksession-DroolsBee", EntityType.DROOLS);
 	}
 
 	@Override

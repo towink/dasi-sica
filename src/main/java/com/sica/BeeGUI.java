@@ -23,7 +23,7 @@ import sim.portrayal.grid.SparseGridPortrayal2D;
 import sim.portrayal.simple.OvalPortrayal2D;
 
 public class BeeGUI extends GUIState {
-	
+
 	// size of the simulation frame
 	public static final int DISPLAY_SIZE = 600;
 
@@ -33,8 +33,9 @@ public class BeeGUI extends GUIState {
 	FastValueGridPortrayal2D environmentPortrayal = new FastValueGridPortrayal2D("environment");
 	SparseGridPortrayal2D entityPortrayal = new SparseGridPortrayal2D();
 
-	public BeeGUI() { 
-		super(new SimulationState(System.currentTimeMillis())); 
+	public BeeGUI() {
+		super(new SimulationState(System.currentTimeMillis()));
+		SimulationConfig.config().loadConfig((SimulationState)this.state);
 	}
 
 	public BeeGUI(SimState state) { 
@@ -46,9 +47,12 @@ public class BeeGUI extends GUIState {
 	 *  The properties if the return object will be visible/manipulable
 	 *  in the 'Model' tab of the console window.
 	 */
+	@Override
 	public Object getSimulationInspectedObject() { 
 		return ((SimulationState)state).getConfig();
 	}
+	
+	
 	
 	public Inspector getInspector() {
 		Inspector i = super.getInspector();

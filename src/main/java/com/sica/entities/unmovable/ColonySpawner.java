@@ -11,6 +11,7 @@ import sim.util.Int2D;
 public class ColonySpawner extends Entity {
 	private static final long serialVersionUID = -3977351065123585649L;
 	
+	SimulationState simState;
 	
 	public ColonySpawner() {
 		super(EntityType.BEE_SPAWNER);
@@ -25,7 +26,15 @@ public class ColonySpawner extends Entity {
 		EntityPlacer.deployEntities(EntityType.OBJECTIVE_DRIVEN_WORKER, simState.entities, colonyPosition, simState.schedule, SimulationConfig.config().getNumWorkers());
 		EntityPlacer.deployEntity(EntityType.QUEEN, simState.entities, colonyPosition, simState.schedule);
 		EntityPlacer.deployEntities(EntityType.DEFENDER_BEE, simState.entities, colonyPosition, simState.schedule, SimulationConfig.config().getNumWorkers());
-		
+		this.simState = simState;
 	}
+	
+	public int getWorkers() {
+		return this.simState.entities.getNumberOf(Entity.EntityType.OBJECTIVE_DRIVEN_WORKER);
+	}
+	
+	public int getDefenders() {
+		return this.simState.entities.getNumberOf(Entity.EntityType.DEFENDER_BEE);
+	}	
 
 }

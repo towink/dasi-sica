@@ -59,16 +59,16 @@ public class SimulationConfig {
 	protected int flowerThreshold = 2;
 	protected int workerMovesBeforeUpdating = 2; //number of times a worker bee moves randomly before scanning
 
-	//defender
-	protected float percentageDefender = 30f; 		
+	//percentage of the total bees that should be defending
+	protected float percentageDefender = 50f; 		
 	
 	//Queen
 	protected int time2Create = 10;
 	protected int cost2Create = 5;
 	
 	//enemies
-	protected int time4Enemies = 2;			//they are "season units"
-	protected int enemies4Season = 30;
+	protected int time4Enemies = 1;			//they are "season units"
+	protected int enemies4Season = 8;
 	
 	// --- environment parameters ---
 	

@@ -33,7 +33,7 @@ public abstract class ObjectiveDrivenAgent extends Agent {
 	 * @param simState
 	 */
 	@Override
-	public final void doStep(SimulationState simState) {
+	public final void agentDoStep(SimulationState simState) {
 		if (!objectives.isEmpty()) {
 			Objective current = objectives.peek();
 			if (!current.isFinished(this, simState)) {

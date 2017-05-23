@@ -27,7 +27,7 @@ public class DefenderBee extends Agent {
 	@Override
 	//TODO some repeated code and stuff, probably cleaner to extract it to an objective driven bee, 
 	//that way some functions can even be shared across agents
-	public void doStep(SimulationState simState) {
+	public void agentDoStep(SimulationState simState) {
 		switch(this.state) {
 		case FINDING_TRENCH: {
 			//decide which hive you are defending, if we don't have a hive just die in peace

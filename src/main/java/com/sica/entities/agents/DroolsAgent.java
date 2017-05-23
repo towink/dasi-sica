@@ -86,7 +86,7 @@ public abstract class DroolsAgent extends Agent {
 	
 
 	@Override
-	public void doStep (final SimulationState arg0) {  
+	public void agentDoStep (final SimulationState arg0) {  
 		//let the subclass do something before rules are fired
 		this.stepBeforeFiringRules(arg0);
 		//update all the knowledge base objects so that rules can fire again

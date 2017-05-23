@@ -38,6 +38,16 @@ public abstract class Agent extends Entity {
 	}
 	
 	
+	@Override
+	public void doStep(SimulationState simState) {
+		this.agentDoStep(simState);
+		//TODO check if this agent should be dead
+	}
+	
+	
+	public abstract void agentDoStep(SimulationState simState);
+	
+	
 	public boolean dead () {
 		this.seasonCount += 1;
 		if (this.seasonCount >= SimulationConfig.config().getTime2Die()) {

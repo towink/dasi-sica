@@ -23,7 +23,7 @@ public class SimpleEnemy extends Agent {
 	}
 
 	@Override
-	public void doStep(SimulationState simState) {
+	public void agentDoStep(SimulationState simState) {
 		switch (this.state) {
 		case DECIDING:
 			Int2D objective = new Int2D(

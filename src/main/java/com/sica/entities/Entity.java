@@ -22,6 +22,7 @@ public abstract class Entity implements Steppable {
 	private EntityType type = EntityType.UNKNOWN;
 	private boolean initialized = false;
 	private boolean removed = false;
+	private int timesStepped = 0;
 	//create a new uaid when instantiating a new agent
 	{
 		this.uaid = uaidGenerator;
@@ -44,6 +45,8 @@ public abstract class Entity implements Steppable {
 	public void step(SimState arg0) {
 		if (this.removed)
 			return;
+		
+		this.timesStepped++;
 		
 		if (!this.initialized) {
 			this.setUp((SimulationState) arg0);
@@ -124,5 +127,12 @@ public abstract class Entity implements Steppable {
 		return e.type == EntityType.DEFENDER_BEE 
 				|| e.type == EntityType.QUEEN
 				|| e.type == EntityType.OBJECTIVE_DRIVEN_WORKER;
+	}
+	
+	/**
+	 * @return the number of times this entity has been stepped
+	 */
+	public int getTimesStepped() {
+		return this.timesStepped;
 	}
 }

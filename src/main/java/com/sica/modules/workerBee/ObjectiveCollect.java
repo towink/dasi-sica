@@ -1,13 +1,13 @@
-package com.sica.behaviour.Objectives;
+package com.sica.modules.workerBee;
 
 
+import com.sica.behaviour.Objectives.Objective;
 import com.sica.behaviour.Tasks.TaskBroadcastKnowledgeToSameType;
 import com.sica.behaviour.Tasks.TaskGetToPosition;
 import com.sica.behaviour.Tasks.TaskGoToRandomPlaceWithKnowledge;
 import com.sica.behaviour.Tasks.TaskObserveEnvironment;
 import com.sica.behaviour.Tasks.TaskOneShot;
 import com.sica.entities.agents.Agent;
-import com.sica.entities.agents.ObjectiveDrivenWorkerBee;
 import com.sica.simulation.SimulationConfig;
 import com.sica.simulation.SimulationState;
 import com.util.knowledge.Knowledge;

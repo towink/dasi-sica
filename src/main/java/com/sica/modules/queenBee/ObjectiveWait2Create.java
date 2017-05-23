@@ -1,8 +1,8 @@
-package com.sica.behaviour.Objectives;
+package com.sica.modules.queenBee;
 
+import com.sica.behaviour.Objectives.Objective;
 import com.sica.behaviour.Tasks.Task;
 import com.sica.entities.agents.Agent;
-import com.sica.entities.agents.QueenDrools;
 import com.sica.simulation.SimulationState;
 
 public class ObjectiveWait2Create extends Objective {

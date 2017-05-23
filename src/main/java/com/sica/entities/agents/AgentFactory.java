@@ -1,8 +1,12 @@
 package com.sica.entities.agents;
 
-import com.sica.behaviour.Objectives.ObjectiveFindUnexploredTerrain;
 import com.sica.entities.Entity;
 import com.sica.entities.Entity.EntityType;
+import com.sica.modules.defenderBee.DefenderBee;
+import com.sica.modules.queenBee.QueenDrools;
+import com.sica.modules.simpleEnemy.SimpleEnemy;
+import com.sica.modules.workerBee.ObjectiveDrivenWorkerBee;
+import com.sica.modules.workerBee.ObjectiveFindUnexploredTerrain;
 
 public class AgentFactory {	
 	/**

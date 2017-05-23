@@ -1,6 +1,7 @@
-package com.sica.entities.agents;
+package com.sica.modules.simpleEnemy;
 
 import com.sica.entities.Entity;
+import com.sica.entities.agents.Agent;
 import com.sica.simulation.SimulationConfig;
 import com.sica.simulation.SimulationState;
 import com.util.data.IterableSet;

@@ -1,4 +1,4 @@
-package com.sica.entities.unmovable;
+package com.sica.modules.unmovable;
 
 import com.sica.entities.Entity;
 import com.sica.entities.EntityPlacer;

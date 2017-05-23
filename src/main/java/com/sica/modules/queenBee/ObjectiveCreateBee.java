@@ -1,8 +1,8 @@
-package com.sica.behaviour.Objectives;
+package com.sica.modules.queenBee;
 
+import com.sica.behaviour.Objectives.Objective;
 import com.sica.behaviour.Tasks.TaskOneShot;
 import com.sica.entities.agents.Agent;
-import com.sica.entities.agents.QueenDrools;
 import com.sica.simulation.SimulationState;
 
 public class ObjectiveCreateBee extends Objective {

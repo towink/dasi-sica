@@ -1,5 +1,6 @@
-package com.sica.entities.agents;
+package com.sica.modules.workerBee;
 
+import com.sica.entities.agents.ObjectiveDrivenAgent;
 import com.util.knowledge.Knowledge;
 
 /**

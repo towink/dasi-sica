@@ -3,6 +3,8 @@ package com.sica.entities.agents;
 import com.sica.entities.Entity;
 import com.sica.entities.Entity.EntityType;
 import com.sica.modules.defenderBee.DefenderBee;
+import com.sica.modules.enemy.ObjectiveDrivenEnemy;
+import com.sica.modules.enemy.ObjectiveEnemyExplore;
 import com.sica.modules.queenBee.QueenDrools;
 import com.sica.modules.simpleEnemy.SimpleEnemy;
 import com.sica.modules.workerBee.ObjectiveDrivenWorkerBee;
@@ -21,9 +23,13 @@ public class AgentFactory {
 	public static Entity getAgent(EntityType type) {
 		switch(type) {
 		case OBJECTIVE_DRIVEN_WORKER:
-			ObjectiveDrivenWorkerBee agent = new ObjectiveDrivenWorkerBee();
-			agent.addObjective(new ObjectiveFindUnexploredTerrain());
-			return agent;
+			ObjectiveDrivenWorkerBee worker = new ObjectiveDrivenWorkerBee();
+			worker.addObjective(new ObjectiveFindUnexploredTerrain());
+			return worker;
+		case OBJECTIVE_DRIVEN_ENEMY:
+			ObjectiveDrivenEnemy enemy = new ObjectiveDrivenEnemy();
+			enemy.addObjective(new ObjectiveEnemyExplore());
+			return enemy;
 		case QUEEN:
 			return new QueenDrools();
 		case SIMPLE_ENEMY:

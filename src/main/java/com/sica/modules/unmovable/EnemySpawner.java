@@ -53,7 +53,7 @@ public class EnemySpawner extends Entity {
 		if (this.seasonCont >= simState.config.getTime4Enemies()) {
 			for (int i = 0; i < simState.getConfig().getEnemies4Season(); i++) {
 				EntityPlacer.deployEntity(
-						EntityType.SIMPLE_ENEMY, 
+						EntityType.OBJECTIVE_DRIVEN_ENEMY, 
 						simState.entities, 
 						this.positions.get(simState.random.nextInt(this.positions.size())), 
 						simState.schedule);

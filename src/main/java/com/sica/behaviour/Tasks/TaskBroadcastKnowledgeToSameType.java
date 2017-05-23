@@ -1,7 +1,7 @@
 package com.sica.behaviour.Tasks;
 
 import com.sica.entities.agents.Agent;
-import com.sica.entities.agents.ObjectiveDrivenWorkerBee;
+import com.sica.modules.workerBee.ObjectiveDrivenWorkerBee;
 import com.sica.simulation.SimulationState;
 
 /**

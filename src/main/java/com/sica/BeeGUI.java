@@ -5,11 +5,11 @@ import java.util.Locale;
 
 import javax.swing.JFrame;
 
-import com.sica.entities.agents.DefenderBee;
-import com.sica.entities.agents.ObjectiveDrivenWorkerBee;
-import com.sica.entities.agents.QueenDrools;
-import com.sica.entities.agents.SimpleEnemy;
 import com.sica.environment.EnvironmentColorMap;
+import com.sica.modules.defenderBee.DefenderBee;
+import com.sica.modules.queenBee.QueenDrools;
+import com.sica.modules.simpleEnemy.SimpleEnemy;
+import com.sica.modules.workerBee.ObjectiveDrivenWorkerBee;
 import com.sica.simulation.SimulationConfig;
 import com.sica.simulation.SimulationState;
 

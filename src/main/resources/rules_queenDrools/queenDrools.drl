@@ -1,10 +1,10 @@
 package com.sica.agents
 
 import com.sica.entities.agents.DroolsBee;
-import com.sica.entities.agents.QueenDrools;
+import com.sica.modules.queenBee.QueenDrools;
 import com.sica.simulation.SimulationState;
-import com.sica.behaviour.Objectives.ObjectiveCreateBee;
-import com.sica.behaviour.Objectives.ObjectiveWait2Create;
+import com.sica.modules.queenBee.ObjectiveCreateBee;
+import com.sica.modules.queenBee.ObjectiveWait2Create;
 import sim.util.Int2D;
 
 rule "Create bees"

@@ -1,6 +1,7 @@
-package com.sica.behaviour.Tasks;
+package com.sica.behaviour.common;
 
 
+import com.sica.behaviour.Task;
 import com.sica.entities.agents.Agent;
 import com.sica.simulation.SimulationConfig;
 import com.sica.simulation.SimulationState;

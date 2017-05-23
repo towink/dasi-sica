@@ -1,12 +1,12 @@
 package com.sica.simulation;
 
 import com.sica.entities.EntityStorage;
+import com.sica.entities.unmovable.ColonySpawner;
+import com.sica.entities.unmovable.EnemySpawner;
+import com.sica.entities.unmovable.EnvironmentSpawner;
+import com.sica.entities.unmovable.Season;
+import com.sica.entities.unmovable.Season.SeasonTypes;
 import com.sica.environment.Environment;
-import com.sica.modules.unmovable.ColonySpawner;
-import com.sica.modules.unmovable.EnemySpawner;
-import com.sica.modules.unmovable.EnvironmentSpawner;
-import com.sica.modules.unmovable.Season;
-import com.sica.modules.unmovable.Season.SeasonTypes;
 
 import sim.engine.SimState;
 import sim.util.Int2D;

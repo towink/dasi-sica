@@ -1,6 +1,6 @@
 package com.sica.modules.queenBee;
 
-import com.sica.behaviour.Tasks.TaskOneShot;
+import com.sica.behaviour.TaskOneShot;
 import com.sica.entities.agents.Agent;
 import com.sica.simulation.SimulationState;
 

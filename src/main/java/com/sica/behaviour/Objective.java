@@ -1,8 +1,8 @@
-package com.sica.behaviour.Objectives;
+package com.sica.behaviour;
 
 import java.util.Deque;
 import java.util.LinkedList;
-import com.sica.behaviour.Tasks.Task;
+
 import com.sica.entities.agents.Agent;
 import com.sica.simulation.SimulationState;
 

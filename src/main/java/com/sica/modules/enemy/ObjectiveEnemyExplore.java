@@ -1,11 +1,10 @@
 package com.sica.modules.enemy;
 
-import com.sica.behaviour.Objectives.Objective;
-import com.sica.behaviour.Tasks.Task;
-import com.sica.behaviour.Tasks.TaskMoveTowardsPosition;
-import com.sica.behaviour.Tasks.TaskObserveEnvironment;
-import com.sica.behaviour.Tasks.TaskOneShot;
-import com.sica.behaviour.Tasks.TaskSleep;
+import com.sica.behaviour.Objective;
+import com.sica.behaviour.TaskOneShot;
+import com.sica.behaviour.common.TaskMoveTowardsPosition;
+import com.sica.behaviour.common.TaskObserveEnvironment;
+import com.sica.behaviour.common.TaskSleep;
 import com.sica.entities.Entity;
 import com.sica.entities.agents.Agent;
 import com.sica.entities.agents.ObjectiveDrivenAgent;

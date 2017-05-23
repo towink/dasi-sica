@@ -1,4 +1,4 @@
-package com.sica.modules.unmovable;
+package com.sica.entities.unmovable;
 
 import com.sica.entities.Entity;
 import com.sica.entities.agents.Agent;

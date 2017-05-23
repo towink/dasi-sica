@@ -3,7 +3,7 @@ package com.sica.modules.queenBee;
 
 import java.util.PriorityQueue;
 
-import com.sica.behaviour.Objectives.Objective;
+import com.sica.behaviour.Objective;
 import com.sica.entities.EntityPlacer;
 import com.sica.entities.agents.DroolsAgent;
 import com.sica.simulation.SimulationConfig;

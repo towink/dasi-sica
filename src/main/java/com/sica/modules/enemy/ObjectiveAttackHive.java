@@ -1,8 +1,8 @@
 package com.sica.modules.enemy;
 
-import com.sica.behaviour.Objectives.Objective;
-import com.sica.behaviour.Tasks.TaskGetToPosition;
-import com.sica.behaviour.Tasks.TaskOneShot;
+import com.sica.behaviour.Objective;
+import com.sica.behaviour.TaskOneShot;
+import com.sica.behaviour.common.TaskGetToPosition;
 import com.sica.entities.agents.Agent;
 import com.sica.simulation.SimulationState;
 import com.util.data.IterableSet;

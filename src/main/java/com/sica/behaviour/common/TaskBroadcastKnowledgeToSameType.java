@@ -1,5 +1,6 @@
-package com.sica.behaviour.Tasks;
+package com.sica.behaviour.common;
 
+import com.sica.behaviour.TaskOneShot;
 import com.sica.entities.agents.Agent;
 import com.sica.modules.workerBee.ObjectiveDrivenWorkerBee;
 import com.sica.simulation.SimulationState;

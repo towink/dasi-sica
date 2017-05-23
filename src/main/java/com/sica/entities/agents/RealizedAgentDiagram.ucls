@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <class-diagram version="1.2.0" icons="true" always-add-relationships="false" generalizations="true" realizations="true" 
   associations="true" dependencies="false" nesting-relationships="true" router="FAN">  
-  <class id="1" language="java" name="com.sica.entities.agents.Agent" project="DroolsXMason" 
-    file="/DroolsXMason/src/main/java/com/sica/entities/agents/Agent.java" binary="false" corner="BOTTOM_RIGHT">    
+  <class id="1" language="java" name="com.sica.entities.agents.Agent" project="DASIBees" 
+    file="/DASIBees/src/main/java/com/sica/entities/agents/Agent.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="460" y="438"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
@@ -10,8 +10,8 @@
       <operations public="false" package="false" protected="false" private="false" static="true"/>    
     </display>  
   </class>  
-  <class id="2" language="java" name="com.sica.entities.Entity" project="DroolsXMason" 
-    file="/DroolsXMason/src/main/java/com/sica/entities/Entity.java" binary="false" corner="BOTTOM_RIGHT">    
+  <class id="2" language="java" name="com.sica.entities.Entity" project="DASIBees" 
+    file="/DASIBees/src/main/java/com/sica/entities/Entity.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="455" y="326"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
@@ -19,8 +19,8 @@
       <operations public="false" package="false" protected="false" private="false" static="true"/>    
     </display>  
   </class>  
-  <class id="3" language="java" name="com.sica.entities.agents.DroolsAgent" project="DroolsXMason" 
-    file="/DroolsXMason/src/main/java/com/sica/entities/agents/DroolsAgent.java" binary="false" corner="BOTTOM_RIGHT">    
+  <class id="3" language="java" name="com.sica.entities.agents.DroolsAgent" project="DASIBees" 
+    file="/DASIBees/src/main/java/com/sica/entities/agents/DroolsAgent.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="660" y="321"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
@@ -28,8 +28,8 @@
       <operations public="false" package="false" protected="false" private="false" static="true"/>    
     </display>  
   </class>  
-  <class id="4" language="java" name="com.sica.entities.agents.ObjectiveDrivenAgent" project="DroolsXMason" 
-    file="/DroolsXMason/src/main/java/com/sica/entities/agents/ObjectiveDrivenAgent.java" binary="false" 
+  <class id="4" language="java" name="com.sica.entities.agents.ObjectiveDrivenAgent" project="DASIBees" 
+    file="/DASIBees/src/main/java/com/sica/entities/agents/ObjectiveDrivenAgent.java" binary="false" 
     corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="658" y="437"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
@@ -38,8 +38,8 @@
       <operations public="false" package="false" protected="false" private="false" static="true"/>    
     </display>  
   </class>  
-  <class id="5" language="java" name="com.sica.entities.unmovable.ColonySpawner" project="DroolsXMason" 
-    file="/DroolsXMason/src/main/java/com/sica/entities/unmovable/ColonySpawner.java" binary="false" 
+  <class id="5" language="java" name="com.sica.entities.unmovable.ColonySpawner" project="DASIBees" 
+    file="/DASIBees/src/main/java/com/sica/entities/unmovable/ColonySpawner.java" binary="false" 
     corner="BOTTOM_RIGHT">    
     <position height="117" width="164" x="193" y="90"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
@@ -48,8 +48,8 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="6" language="java" name="com.sica.entities.unmovable.EnemySpawner" project="DroolsXMason" 
-    file="/DroolsXMason/src/main/java/com/sica/entities/unmovable/EnemySpawner.java" binary="false" 
+  <class id="6" language="java" name="com.sica.entities.unmovable.EnemySpawner" project="DASIBees" 
+    file="/DASIBees/src/main/java/com/sica/entities/unmovable/EnemySpawner.java" binary="false" 
     corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="463" y="148"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
@@ -58,8 +58,8 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="7" language="java" name="com.sica.entities.unmovable.EnvironmentSpawner" project="DroolsXMason" 
-    file="/DroolsXMason/src/main/java/com/sica/entities/unmovable/EnvironmentSpawner.java" binary="false" 
+  <class id="7" language="java" name="com.sica.entities.unmovable.EnvironmentSpawner" project="DASIBees" 
+    file="/DASIBees/src/main/java/com/sica/entities/unmovable/EnvironmentSpawner.java" binary="false" 
     corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="645" y="146"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
@@ -68,8 +68,8 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="8" language="java" name="com.sica.entities.agents.DefenderBee" project="DroolsXMason" 
-    file="/DroolsXMason/src/main/java/com/sica/entities/agents/DefenderBee.java" binary="false" corner="BOTTOM_RIGHT">    
+  <class id="8" language="java" name="com.sica.entities.agents.DefenderBee" project="DASIBees" 
+    file="/DASIBees/src/main/java/com/sica/entities/agents/DefenderBee.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="337" y="625"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
@@ -77,8 +77,8 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="9" language="java" name="com.sica.entities.agents.SimpleEnemy" project="DroolsXMason" 
-    file="/DroolsXMason/src/main/java/com/sica/entities/agents/SimpleEnemy.java" binary="false" corner="BOTTOM_RIGHT">    
+  <class id="9" language="java" name="com.sica.entities.agents.SimpleEnemy" project="DASIBees" 
+    file="/DASIBees/src/main/java/com/sica/entities/agents/SimpleEnemy.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="580" y="628"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
@@ -86,8 +86,8 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="10" language="java" name="com.sica.entities.agents.QueenDrools" project="DroolsXMason" 
-    file="/DroolsXMason/src/main/java/com/sica/entities/agents/QueenDrools.java" binary="false" corner="BOTTOM_RIGHT">    
+  <class id="10" language="java" name="com.sica.entities.agents.QueenDrools" project="DASIBees" 
+    file="/DASIBees/src/main/java/com/sica/entities/agents/QueenDrools.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="946" y="253"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
@@ -95,8 +95,8 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="11" language="java" name="com.sica.entities.agents.ObjectiveDrivenWorkerBee" project="DroolsXMason" 
-    file="/DroolsXMason/src/main/java/com/sica/entities/agents/ObjectiveDrivenWorkerBee.java" binary="false" 
+  <class id="11" language="java" name="com.sica.entities.agents.ObjectiveDrivenWorkerBee" project="DASIBees" 
+    file="/DASIBees/src/main/java/com/sica/entities/agents/ObjectiveDrivenWorkerBee.java" binary="false" 
     corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="942" y="537"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 

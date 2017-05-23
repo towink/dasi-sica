@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <class-diagram version="1.2.0" icons="true" always-add-relationships="false" generalizations="true" realizations="true" 
   associations="true" dependencies="false" nesting-relationships="true" router="FAN">  
-  <class id="1" language="java" name="com.sica.entities.agents.ObjectiveDrivenAgent" project="DroolsXMason" 
-    file="/DroolsXMason/src/main/java/com/sica/entities/agents/ObjectiveDrivenAgent.java" binary="false" 
+  <class id="1" language="java" name="com.sica.entities.agents.ObjectiveDrivenAgent" project="DASIBees" 
+    file="/DASIBees/src/main/java/com/sica/entities/agents/ObjectiveDrivenAgent.java" binary="false" 
     corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="361" y="370"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
@@ -11,8 +11,8 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="2" language="java" name="com.sica.behaviour.Objectives.Objective" project="DroolsXMason" 
-    file="/DroolsXMason/src/main/java/com/sica/behaviour/Objectives/Objective.java" binary="false" corner="BOTTOM_RIGHT">    
+  <class id="2" language="java" name="com.sica.behaviour.Objectives.Objective" project="DASIBees" 
+    file="/DASIBees/src/main/java/com/sica/behaviour/Objectives/Objective.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="225" width="342" x="195" y="10"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
@@ -20,8 +20,8 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="3" language="java" name="com.sica.behaviour.Tasks.Task" project="DroolsXMason" 
-    file="/DroolsXMason/src/main/java/com/sica/behaviour/Tasks/Task.java" binary="false" corner="BOTTOM_RIGHT">    
+  <class id="3" language="java" name="com.sica.behaviour.Tasks.Task" project="DASIBees" 
+    file="/DASIBees/src/main/java/com/sica/behaviour/Tasks/Task.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="780" y="123"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
@@ -29,7 +29,7 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <interface id="4" language="java" name="java.lang.Comparable" project="DroolsXMason" 
+  <interface id="4" language="java" name="java.lang.Comparable" project="DASIBees" 
     file="C:/Program Files/Java/jre1.8.0_121/lib/rt.jar" binary="true" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="72" y="122"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
@@ -38,8 +38,8 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </interface>  
-  <class id="5" language="java" name="com.sica.entities.agents.Agent" project="DroolsXMason" 
-    file="/DroolsXMason/src/main/java/com/sica/entities/agents/Agent.java" binary="false" corner="BOTTOM_RIGHT">    
+  <class id="5" language="java" name="com.sica.entities.agents.Agent" project="DASIBees" 
+    file="/DASIBees/src/main/java/com/sica/entities/agents/Agent.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="105" y="370"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      

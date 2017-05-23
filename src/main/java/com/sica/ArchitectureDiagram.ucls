@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <class-diagram version="1.2.0" icons="true" always-add-relationships="false" generalizations="true" realizations="true" 
   associations="true" dependencies="false" nesting-relationships="true" router="FAN">  
-  <class id="1" language="java" name="com.sica.environment.Environment" project="DroolsXMason" 
-    file="/DroolsXMason/src/main/java/com/sica/environment/Environment.java" binary="false" corner="BOTTOM_RIGHT">    
+  <class id="1" language="java" name="com.sica.environment.Environment" project="DASIBees" 
+    file="/DASIBees/src/main/java/com/sica/environment/Environment.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="228" y="181"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
@@ -10,8 +10,8 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="2" language="java" name="com.sica.entities.EntityStorage" project="DroolsXMason" 
-    file="/DroolsXMason/src/main/java/com/sica/entities/EntityStorage.java" binary="false" corner="BOTTOM_RIGHT">    
+  <class id="2" language="java" name="com.sica.entities.EntityStorage" project="DASIBees" 
+    file="/DASIBees/src/main/java/com/sica/entities/EntityStorage.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="595" y="44"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
@@ -19,8 +19,8 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="3" language="java" name="com.sica.simulation.SimulationState" project="DroolsXMason" 
-    file="/DroolsXMason/src/main/java/com/sica/simulation/SimulationState.java" binary="false" corner="BOTTOM_RIGHT">    
+  <class id="3" language="java" name="com.sica.simulation.SimulationState" project="DASIBees" 
+    file="/DASIBees/src/main/java/com/sica/simulation/SimulationState.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="669" y="296"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
@@ -28,8 +28,8 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="4" language="java" name="com.sica.entities.agents.Agent" project="DroolsXMason" 
-    file="/DroolsXMason/src/main/java/com/sica/entities/agents/Agent.java" binary="false" corner="BOTTOM_RIGHT">    
+  <class id="4" language="java" name="com.sica.entities.agents.Agent" project="DASIBees" 
+    file="/DASIBees/src/main/java/com/sica/entities/agents/Agent.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="383" y="523"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
@@ -37,8 +37,8 @@
       <operations public="false" package="false" protected="false" private="false" static="true"/>    
     </display>  
   </class>  
-  <class id="5" language="java" name="com.sica.entities.Entity" project="DroolsXMason" 
-    file="/DroolsXMason/src/main/java/com/sica/entities/Entity.java" binary="false" corner="BOTTOM_RIGHT">    
+  <class id="5" language="java" name="com.sica.entities.Entity" project="DASIBees" 
+    file="/DASIBees/src/main/java/com/sica/entities/Entity.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="660" y="524"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
@@ -46,7 +46,7 @@
       <operations public="false" package="false" protected="false" private="false" static="true"/>    
     </display>  
   </class>  
-  <interface id="6" language="java" name="sim.engine.Steppable" project="DroolsXMason" 
+  <interface id="6" language="java" name="sim.engine.Steppable" project="DASIBees" 
     file="C:/Programas/Libraries/MASON/mason.19.jar" binary="true" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="902" y="524"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
@@ -55,7 +55,7 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </interface>  
-  <class id="7" language="java" name="sim.engine.SimState" project="DroolsXMason" 
+  <class id="7" language="java" name="sim.engine.SimState" project="DASIBees" 
     file="C:/Programas/Libraries/MASON/mason.19.jar" binary="true" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="900" y="174"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
@@ -64,7 +64,7 @@
       <operations public="false" package="false" protected="false" private="false" static="true"/>    
     </display>  
   </class>  
-  <class id="8" language="java" name="sim.engine.Schedule" project="DroolsXMason" 
+  <class id="8" language="java" name="sim.engine.Schedule" project="DASIBees" 
     file="C:/Programas/Libraries/MASON/mason.19.jar" binary="true" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="898" y="3"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
@@ -73,7 +73,7 @@
       <operations public="false" package="false" protected="false" private="false" static="true"/>    
     </display>  
   </class>  
-  <class id="9" language="java" name="sim.display.GUIState" project="DroolsXMason" 
+  <class id="9" language="java" name="sim.display.GUIState" project="DASIBees" 
     file="C:/Programas/Libraries/MASON/mason.19.jar" binary="true" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="901" y="353"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
@@ -82,7 +82,7 @@
       <operations public="false" package="false" protected="false" private="false" static="true"/>    
     </display>  
   </class>  
-  <class id="10" language="java" name="sim.field.grid.SparseGrid2D" project="DroolsXMason" 
+  <class id="10" language="java" name="sim.field.grid.SparseGrid2D" project="DASIBees" 
     file="C:/Programas/Libraries/MASON/mason.19.jar" binary="true" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="592" y="-81"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
@@ -91,7 +91,7 @@
       <operations public="false" package="false" protected="false" private="false" static="true"/>    
     </display>  
   </class>  
-  <class id="11" language="java" name="sim.field.grid.IntGrid2D" project="DroolsXMason" 
+  <class id="11" language="java" name="sim.field.grid.IntGrid2D" project="DASIBees" 
     file="C:/Programas/Libraries/MASON/mason.19.jar" binary="true" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="230" y="-80"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 

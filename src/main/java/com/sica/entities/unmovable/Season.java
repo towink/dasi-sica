@@ -97,5 +97,12 @@ public class Season extends Entity {
 		
 		return value;
 	}
+	
+	/**
+	 * @return the current season
+	 */
+	public SeasonTypes getSeason() {
+		return this.season;
+	}
 
 }

@@ -14,7 +14,7 @@ public abstract class Entity implements Steppable {
 	// when you add a new entitytype, be sure to add it to isEnemy if it is a new type of enemy!
 	public static enum EntityType {UNKNOWN, 
 		DROOLS, //legacy bees, remove in the future
-		OBJECTIVE_DRIVEN_WORKER, QUEEN, BEE_SPAWNER, ENVIRONMENT_SPAWNER, SIMPLE_ENEMY, ENEMY_SPAWNER, DEFENDER_BEE, SEASON, OBJECTIVE_DRIVEN_ENEMY}; 
+		OBJECTIVE_DRIVEN_WORKER, QUEEN, BEE_SPAWNER, ENVIRONMENT_SPAWNER, SIMPLE_ENEMY, ENEMY_SPAWNER, DEFENDER_BEE, SEASON, OBJECTIVE_DRIVEN_ENEMY, OBJECTIVE_DRIVEN_DEFENDER}; 
 	
 
 	private static int uaidGenerator = 0;	//static variable to count the number of agents created
@@ -116,7 +116,7 @@ public abstract class Entity implements Steppable {
 	 * @return true if this entity is an enemy of any type
 	 */
 	public static boolean isEnemy(Entity e) {
-		return e.type == EntityType.SIMPLE_ENEMY; //|| e.type == EntityType.NEW_ENEMY_TYPE ...
+		return e.type == EntityType.OBJECTIVE_DRIVEN_ENEMY;//e.type == EntityType.SIMPLE_ENEMY; //|| e.type == EntityType.NEW_ENEMY_TYPE ...
 	}
 	
 	/**
@@ -124,9 +124,10 @@ public abstract class Entity implements Steppable {
 	 * @return true if the given entity is a bee (of any type)
 	 */
 	public static boolean isBee(Entity e) {
-		return e.type == EntityType.DEFENDER_BEE 
+		return e.type == EntityType.OBJECTIVE_DRIVEN_DEFENDER 
 				|| e.type == EntityType.QUEEN
 				|| e.type == EntityType.OBJECTIVE_DRIVEN_WORKER;
+				// || e.type == EntityType.DEFENDER_BEE 
 	}
 	
 	/**

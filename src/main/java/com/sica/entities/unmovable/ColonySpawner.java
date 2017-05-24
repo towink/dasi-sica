@@ -25,7 +25,7 @@ public class ColonySpawner extends Entity {
 		//generate the starting bees
 		EntityPlacer.deployEntities(EntityType.OBJECTIVE_DRIVEN_WORKER, simState.entities, colonyPosition, simState.schedule, SimulationConfig.config().getNumWorkers());
 		EntityPlacer.deployEntity(EntityType.QUEEN, simState.entities, colonyPosition, simState.schedule);
-		EntityPlacer.deployEntities(EntityType.DEFENDER_BEE, simState.entities, colonyPosition, simState.schedule, SimulationConfig.config().getNumWorkers());
+		EntityPlacer.deployEntities(EntityType.OBJECTIVE_DRIVEN_DEFENDER, simState.entities, colonyPosition, simState.schedule, SimulationConfig.config().getNumWorkers());
 		this.simState = simState;
 	}
 	

@@ -331,7 +331,7 @@ public class SimulationConfig {
 	 * @return the number of defenders in this propertywatcher's simulationstate
 	 */
 	public int getDefenders() {
-		return this.state.entities.getNumberOf(EntityType.DEFENDER_BEE);
+		return this.state.entities.getNumberOf(EntityType.OBJECTIVE_DRIVEN_DEFENDER);
 	}
 	
 	/**
@@ -352,7 +352,7 @@ public class SimulationConfig {
 	 * @return the number of enemies in this propertywatcher's simulationstate
 	 */
 	public int getEnemies() {
-		return this.state.entities.getNumberOf(EntityType.SIMPLE_ENEMY);
+		return this.state.entities.getNumberOf(EntityType.OBJECTIVE_DRIVEN_ENEMY);
 	}
 	
 	/**

@@ -12,7 +12,10 @@ rule "Create bees"
 		state : SimulationState()
 		queen : QueenDrools(location : getLocation(), state.getConfig().getTime2Create() <= getCount() && getAvailableFood() >= state.getConfig().getCost2Create());
 	then
-		queen.addObjective(new ObjectiveCreateBee());
+		//queen.addObjective(new ObjectiveCreateBee());
+		state.environment.setMetadataAt(queen.getLocation(), queen.getAvailableFood() - state.getConfig().getCost2Create());
+		queen.resetCount();
+		queen.createBee(state);
 end
 
 rule "Increase count to generate bees"
@@ -21,6 +24,7 @@ rule "Increase count to generate bees"
 		$state : SimulationState()
 		queen : QueenDrools($state.getConfig().getTime2Create() > getCount() && !waiting)
 	then
-		queen.waiting = true;
-		queen.addObjective(new ObjectiveWait2Create ());
+		//queen.waiting = true;
+		//queen.addObjective(new ObjectiveWait2Create ());
+		queen.increaseCount();
 end

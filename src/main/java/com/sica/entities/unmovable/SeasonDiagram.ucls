@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <class-diagram version="1.2.0" icons="true" always-add-relationships="false" generalizations="true" realizations="true" 
   associations="true" dependencies="false" nesting-relationships="true" router="FAN">  
-  <class id="1" language="java" name="com.sica.entities.unmovable.ColonySpawner" project="sica" 
-    file="/sica/src/main/java/com/sica/entities/unmovable/ColonySpawner.java" binary="false" corner="BOTTOM_RIGHT">    
+  <class id="1" language="java" name="com.sica.entities.unmovable.ColonySpawner" project="DASIBees" 
+    file="/DASIBees/src/main/java/com/sica/entities/unmovable/ColonySpawner.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="59" y="131"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
@@ -10,8 +10,8 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <enumeration id="2" language="java" name="com.sica.entities.unmovable.Season.SeasonTypes" project="sica" 
-    file="/sica/src/main/java/com/sica/entities/unmovable/Season.java" binary="false" corner="BOTTOM_RIGHT">    
+  <enumeration id="2" language="java" name="com.sica.entities.unmovable.Season.SeasonTypes" project="DASIBees" 
+    file="/DASIBees/src/main/java/com/sica/entities/unmovable/Season.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="738" y="423"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
@@ -19,8 +19,8 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </enumeration>  
-  <class id="3" language="java" name="com.sica.entities.unmovable.Season" project="sica" 
-    file="/sica/src/main/java/com/sica/entities/unmovable/Season.java" binary="false" corner="BOTTOM_RIGHT">    
+  <class id="3" language="java" name="com.sica.entities.unmovable.Season" project="DASIBees" 
+    file="/DASIBees/src/main/java/com/sica/entities/unmovable/Season.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="722" y="155"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
@@ -28,8 +28,8 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="4" language="java" name="com.sica.simulation.SimulationState" project="sica" 
-    file="/sica/src/main/java/com/sica/simulation/SimulationState.java" binary="false" corner="BOTTOM_RIGHT">    
+  <class id="4" language="java" name="com.sica.simulation.SimulationState" project="DASIBees" 
+    file="/DASIBees/src/main/java/com/sica/simulation/SimulationState.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="69" y="403"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
@@ -37,8 +37,8 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="5" language="java" name="com.sica.environment.Environment" project="sica" 
-    file="/sica/src/main/java/com/sica/environment/Environment.java" binary="false" corner="BOTTOM_RIGHT">    
+  <class id="5" language="java" name="com.sica.environment.Environment" project="DASIBees" 
+    file="/DASIBees/src/main/java/com/sica/environment/Environment.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="383" y="377"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      

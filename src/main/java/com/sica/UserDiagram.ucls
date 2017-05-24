@@ -1,16 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <class-diagram version="1.2.0" icons="true" always-add-relationships="false" generalizations="true" realizations="true" 
   associations="true" dependencies="false" nesting-relationships="true" router="FAN">  
-  <class id="1" language="java" name="com.sica.BeeGUI" project="sica" file="/sica/src/main/java/com/sica/BeeGUI.java" 
-    binary="false" corner="BOTTOM_RIGHT">    
-    <position height="353" width="292" x="32" y="-55"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
-      sort-features="false" accessors="true" visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
-    </display>  
-  </class>  
-  <class id="2" language="java" name="sim.display.Display2D" project="sica" 
+  <class id="1" language="java" name="sim.display.Display2D" project="DASIBees" 
     file="/Users/jimcubillos/Documents/UCM/DASI/mason.19.jar" binary="true" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="564" y="162"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
@@ -19,7 +10,7 @@
       <operations public="false" package="false" protected="false" private="false" static="true"/>    
     </display>  
   </class>  
-  <class id="3" language="java" name="sim.portrayal.grid.FastValueGridPortrayal2D" project="sica" 
+  <class id="2" language="java" name="sim.portrayal.grid.FastValueGridPortrayal2D" project="DASIBees" 
     file="/Users/jimcubillos/Documents/UCM/DASI/mason.19.jar" binary="true" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="-113" y="201"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
@@ -28,7 +19,7 @@
       <operations public="false" package="false" protected="false" private="false" static="true"/>    
     </display>  
   </class>  
-  <class id="4" language="java" name="sim.portrayal.grid.SparseGridPortrayal2D" project="sica" 
+  <class id="3" language="java" name="sim.portrayal.grid.SparseGridPortrayal2D" project="DASIBees" 
     file="/Users/jimcubillos/Documents/UCM/DASI/mason.19.jar" binary="true" corner="BOTTOM_RIGHT">    
     <position height="803" width="357" x="5" y="-27"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
@@ -37,7 +28,7 @@
       <operations public="false" package="false" protected="false" private="false" static="true"/>    
     </display>  
   </class>  
-  <class id="5" language="java" name="sim.display.GUIState" project="sica" 
+  <class id="4" language="java" name="sim.display.GUIState" project="DASIBees" 
     file="/Users/jimcubillos/Documents/UCM/DASI/mason.19.jar" binary="true" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="563" y="-7"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
@@ -46,7 +37,7 @@
       <operations public="false" package="false" protected="false" private="false" static="true"/>    
     </display>  
   </class>  
-  <class id="6" language="java" name="javax.swing.JFrame" project="sica" 
+  <class id="5" language="java" name="javax.swing.JFrame" project="DASIBees" 
     file="/Library/Java/JavaVirtualMachines/jdk1.8.0_45.jdk/Contents/Home/jre/lib/rt.jar" binary="true" 
     corner="BOTTOM_RIGHT">    
     <position height="55" width="157" x="408" y="350"/>    
@@ -56,60 +47,76 @@
       <operations public="false" package="false" protected="false" private="false" static="true"/>    
     </display>  
   </class>  
+  <class id="6" language="java" name="com.sica.BeeGUI" project="DASIBees" 
+    file="/DASIBees/src/main/java/com/sica/BeeGUI.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="281" width="235" x="122" y="-5"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
   <association id="7">    
-    <end type="SOURCE" refId="1" navigable="false">      
-      <attribute id="8" name="display"/>      
+    <end type="SOURCE" refId="6" navigable="false">      
+      <attribute id="8" name="entityPortrayal"/>      
       <multiplicity id="9" minimum="0" maximum="1"/>    
-    </end>    
-    <end type="TARGET" refId="2" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="10">    
-    <end type="SOURCE" refId="1" navigable="false">      
-      <attribute id="11" name="environmentPortrayal"/>      
-      <multiplicity id="12" minimum="0" maximum="1"/>    
     </end>    
     <end type="TARGET" refId="3" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
+  <association id="10">    
+    <end type="SOURCE" refId="6" navigable="false">      
+      <attribute id="11" name="environmentPortrayal"/>      
+      <multiplicity id="12" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="2" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
   <association id="13">    
     <end type="SOURCE" refId="1" navigable="false">      
-      <attribute id="14" name="entityPortrayal"/>      
-      <multiplicity id="15" minimum="0" maximum="1"/>    
+      <attribute id="14" name="simulation">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="15" minimum="0" maximum="1">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
     </end>    
     <end type="TARGET" refId="4" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <generalization id="16">    
-    <end type="SOURCE" refId="1"/>    
-    <end type="TARGET" refId="5"/>  
-  </generalization>  
-  <association id="17">    
-    <bendpoint x="333" y="368"/>    
-    <end type="SOURCE" refId="1" navigable="false">      
-      <attribute id="18" name="frame"/>      
-      <multiplicity id="19" minimum="0" maximum="1"/>    
+  <association id="16">    
+    <end type="SOURCE" refId="6" navigable="false">      
+      <attribute id="17" name="display"/>      
+      <multiplicity id="18" minimum="0" maximum="1"/>    
     </end>    
-    <end type="TARGET" refId="6" navigable="true"/>    
+    <end type="TARGET" refId="1" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <association id="20">    
-    <bendpoint x="564" y="286"/>    
-    <end type="SOURCE" refId="2" navigable="false">      
-      <attribute id="21" name="skipFrame"/>      
-      <multiplicity id="22" minimum="0" maximum="1"/>    
-    </end>    
-    <end type="TARGET" refId="6" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="23">    
-    <end type="SOURCE" refId="2" navigable="false">      
-      <attribute id="24" name="simulation"/>      
-      <multiplicity id="25" minimum="0" maximum="1"/>    
+  <association id="19">    
+    <end type="SOURCE" refId="6" navigable="false">      
+      <attribute id="20" name="frame"/>      
+      <multiplicity id="21" minimum="0" maximum="1"/>    
     </end>    
     <end type="TARGET" refId="5" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
+  <association id="22">    
+    <bendpoint x="564" y="286"/>    
+    <end type="SOURCE" refId="1" navigable="false">      
+      <attribute id="23" name="skipFrame">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="24" minimum="0" maximum="1">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="5" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="25">    
+    <end type="SOURCE" refId="6"/>    
+    <end type="TARGET" refId="4"/>  
+  </generalization>  
   <classifier-display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
     sort-features="false" accessors="true" visibility="true">    
     <attributes public="true" package="true" protected="true" private="true" static="true"/>    

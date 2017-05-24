@@ -10,6 +10,7 @@ import com.util.knowledge.Knowledge;
 import sim.util.Bag;
 import sim.util.Int2D;
 
+@Deprecated
 public class SimpleEnemy extends Agent {
 
 	private static final long serialVersionUID = -8361812131256894788L;

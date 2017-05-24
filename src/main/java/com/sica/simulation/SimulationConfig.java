@@ -75,8 +75,8 @@ public class SimulationConfig {
 	protected int cost2Create = 5;
 	
 	//enemies
-	protected int time4Enemies = 1;			//they are "season units"
-	protected int enemies4Season = 8;
+	/*protected int time4Enemies = 1;			//they are "season units"
+	protected int enemies4Season = 8;*/
 	
 	// --- environment parameters ---
 	
@@ -290,7 +290,7 @@ public class SimulationConfig {
 		return new sim.util.Interval(0.001, 99.999);
 	}
 	
-	public int getTime4Enemies () {
+	/*public int getTime4Enemies () {
 		return this.time4Enemies;
 	}
 	
@@ -308,7 +308,7 @@ public class SimulationConfig {
 	
 	public int getEnemies4Season () {
 		return this.enemies4Season;
-	}
+	}*/
 	
 	public void setWorkerMovesBeforeUpdating(int workerMovesBeforeUpdating) {
 		this.workerMovesBeforeUpdating = workerMovesBeforeUpdating;

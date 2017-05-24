@@ -1,8 +1,10 @@
 package com.sica.simulation;
 
 import com.sica.entities.EntityStorage;
+import com.sica.entities.Entity.EntityType;
 import com.sica.entities.unmovable.ColonySpawner;
 import com.sica.entities.unmovable.EnemySpawner;
+import com.sica.entities.unmovable.ListEnemySpawner;
 import com.sica.entities.unmovable.EnvironmentSpawner;
 import com.sica.entities.unmovable.Season;
 import com.sica.entities.unmovable.Season.SeasonTypes;
@@ -41,12 +43,19 @@ public class SimulationState extends SimState {
 		// let the bees out!
 		entities.addScheduledOnceEntityAt(new ColonySpawner(), new Int2D (SimulationConfig.GRID_WIDTH/2, SimulationConfig.GRID_HEIGHT/2), schedule);
 		// add also some enemies
-		EnemySpawner.createSpawner(new Int2D(0, 0));
-		EnemySpawner.getSpawner().putPosition(new Int2D (0, 0));
-		EnemySpawner.getSpawner().putPosition(new Int2D (0, SimulationConfig.GRID_HEIGHT - 1));
-		EnemySpawner.getSpawner().putPosition(new Int2D (SimulationConfig.GRID_WIDTH - 1, SimulationConfig.GRID_HEIGHT - 1));
-		EnemySpawner.getSpawner().putPosition(new Int2D (SimulationConfig.GRID_WIDTH - 1, 0));
-		entities.addScheduledRepeatingEntityAt(EnemySpawner.getSpawner(), EnemySpawner.getSpawner().getPosition(), schedule);
+		EnemySpawner spawn1 = new EnemySpawner(new Int2D (0,0), EntityType.OBJECTIVE_DRIVEN_ENEMY, 4, 4);
+		EnemySpawner spawn2 = new EnemySpawner(new Int2D (0, SimulationConfig.GRID_HEIGHT - 1), EntityType.OBJECTIVE_DRIVEN_ENEMY, 2, 2);
+		EnemySpawner spawn3 = new EnemySpawner(new Int2D (SimulationConfig.GRID_WIDTH - 1, SimulationConfig.GRID_HEIGHT - 1), EntityType.OBJECTIVE_DRIVEN_ENEMY, 1, 1);
+		EnemySpawner spawn4 = new EnemySpawner(new Int2D (SimulationConfig.GRID_WIDTH - 1, 0), EntityType.OBJECTIVE_DRIVEN_ENEMY, 4, 2);
+		
+		ListEnemySpawner.getListSpawner().putSpawner(spawn1);
+		ListEnemySpawner.getListSpawner().putSpawner(spawn2);
+		ListEnemySpawner.getListSpawner().putSpawner(spawn3);
+		ListEnemySpawner.getListSpawner().putSpawner(spawn4);
+		
+		for (EnemySpawner spawner : ListEnemySpawner.getListSpawner().getSpawners()) {
+			entities.addScheduledRepeatingEntityAt(spawner, spawner.getPosition(), schedule);
+		}
 		
 		// add the seasonController
 		entities.addScheduledRepeatingEntityAt(new Season(SeasonTypes.SPRING), new Int2D(), schedule);

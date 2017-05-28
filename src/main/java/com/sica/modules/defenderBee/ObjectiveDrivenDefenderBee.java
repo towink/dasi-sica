@@ -11,7 +11,7 @@ public class ObjectiveDrivenDefenderBee extends ObjectiveDrivenAgent {
 	private boolean recivedAlarm;
 
 	public ObjectiveDrivenDefenderBee() {
-		super(EntityType.OBJECTIVE_DRIVEN_DEFENDER);
+		super(EntityType.DEFENDER_BEE);
 	}
 	
 	@Override

@@ -20,7 +20,7 @@ public class SimpleEnemy extends Agent {
 	private int delay;
 
 	public SimpleEnemy() {
-		super(EntityType.SIMPLE_ENEMY);
+		super(EntityType.ENEMY);
 		this.state = State.DECIDING;
 	}
 

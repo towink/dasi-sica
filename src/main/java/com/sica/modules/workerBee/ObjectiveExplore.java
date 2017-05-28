@@ -71,7 +71,7 @@ public class ObjectiveExplore extends Objective {
 		@Override
 		public void endTask(Agent a, Objective obj, SimulationState simState) {
 			Int2D pos = simState.entities.getObjectLocation(a);
-			Bag enemyBag = simState.entities.getRadialEntities(simState, pos, EntityType.SIMPLE_ENEMY);
+			Bag enemyBag = simState.entities.getRadialEntities(simState, pos, EntityType.ENEMY);
 			if (enemyBag.isEmpty()) //if there are no enemies, keep goin'
 				addTaskLast(new TaskObserveFlowersObstacles());
 			else {	//go back home if dangers are nearby and repeat

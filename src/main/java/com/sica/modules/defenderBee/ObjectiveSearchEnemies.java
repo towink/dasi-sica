@@ -73,7 +73,7 @@ public class ObjectiveSearchEnemies extends Objective {
 		public void interactWithOneShot(Agent a, SimulationState simState) {
 			ObjectiveDrivenDefenderBee defender = (ObjectiveDrivenDefenderBee) a;
 			if(defender.isRecivedAlarm()){
-				System.out.printf("Recibi alarma\n");
+				//System.out.printf("Recibi alarma\n");
 				enemyPos =  defender.getAlarm();
 				a.computePath(simState, enemyPos);
 				foundEnemy = true;

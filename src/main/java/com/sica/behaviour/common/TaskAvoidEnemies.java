@@ -17,7 +17,7 @@ public class TaskAvoidEnemies extends TaskOneShot{
 	@Override
 	public void interactWithOneShot(Agent a, SimulationState simState) {
 		Int2D pos = simState.entities.getObjectLocation(a);
-		Bag enemies = simState.entities.getRadialEntities(simState, pos, EntityType.SIMPLE_ENEMY);
+		Bag enemies = simState.entities.getRadialEntities(simState, pos, EntityType.ENEMY);
 		
 		if (enemies.isEmpty())
 			return;

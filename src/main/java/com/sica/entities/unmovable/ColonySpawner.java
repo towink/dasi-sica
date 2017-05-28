@@ -23,14 +23,14 @@ public class ColonySpawner extends Entity {
 		//set the hive block in the center
 		simState.environment.set(colonyPosition, Knowledge.HIVE);
 		//generate the starting bees
-		EntityPlacer.deployEntities(EntityType.OBJECTIVE_DRIVEN_WORKER, simState.entities, colonyPosition, simState.schedule, SimulationConfig.config().getNumWorkers());
-		EntityPlacer.deployEntity(EntityType.QUEEN, simState.entities, colonyPosition, simState.schedule);
-		EntityPlacer.deployEntities(EntityType.OBJECTIVE_DRIVEN_DEFENDER, simState.entities, colonyPosition, simState.schedule, SimulationConfig.config().getNumWorkers());
+		EntityPlacer.deployEntities(EntityType.WORKER_BEE, simState.entities, colonyPosition, simState.schedule, SimulationConfig.config().getNumWorkers());
+		EntityPlacer.deployEntity(EntityType.QUEEN_BEE, simState.entities, colonyPosition, simState.schedule);
+		EntityPlacer.deployEntities(EntityType.DEFENDER_BEE, simState.entities, colonyPosition, simState.schedule, SimulationConfig.config().getNumWorkers());
 		this.simState = simState;
 	}
 	
 	public int getWorkers() {
-		return this.simState.entities.getNumberOf(Entity.EntityType.OBJECTIVE_DRIVEN_WORKER);
+		return this.simState.entities.getNumberOf(Entity.EntityType.WORKER_BEE);
 	}
 	
 	public int getDefenders() {

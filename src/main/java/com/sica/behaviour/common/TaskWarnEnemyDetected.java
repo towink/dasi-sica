@@ -21,7 +21,7 @@ public class TaskWarnEnemyDetected extends TaskOneShot {
 	public void interactWithOneShot(Agent a, SimulationState simState) {
 		Int2D pos = simState.entities.getObjectLocation(a);
 		//Bag defendersBag = simState.entities.getRadialEntities(simState, pos, EntityType.DEFENDER_BEE);
-		Bag defendersBag = simState.entities.getRadialEntities(simState, pos, EntityType.OBJECTIVE_DRIVEN_DEFENDER);
+		Bag defendersBag = simState.entities.getRadialEntities(simState, pos, EntityType.DEFENDER_BEE);
 		if (!defendersBag.isEmpty()) {
 			for (Object o: defendersBag) {
 				((Agent) o).receiveBitOfKnowledge(this.where, Knowledge.ENEMY);

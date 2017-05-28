@@ -52,10 +52,7 @@ public class EnemySpawner extends Entity{
 	private boolean availableEnemy(EntityType enemy) {
 		boolean result;
 		switch (enemy) {
-		case SIMPLE_ENEMY:
-			result = true;
-			break;
-		case OBJECTIVE_DRIVEN_ENEMY:
+		case ENEMY:
 			result = true;
 			break;
 		default:

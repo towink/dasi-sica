@@ -68,7 +68,7 @@ public class SimulationConfig {
 	protected int workerMovesBeforeUpdating = 5; //number of times a worker bee moves randomly before scanning
 
 	//percentage of the total bees that should be defending
-	protected float percentageDefender = 50f; 		
+	protected float percentageDefender = 30f; 		
 	
 	//Queen
 	protected int time2Create = 10;
@@ -324,21 +324,21 @@ public class SimulationConfig {
 	 * @return the number of workers in this propertywatcher's simulationstate
 	 */
 	public int getWorkers() {
-		return this.state.entities.getNumberOf(EntityType.OBJECTIVE_DRIVEN_WORKER);
+		return this.state.entities.getNumberOf(EntityType.WORKER_BEE);
 	}
 	
 	/**
 	 * @return the number of defenders in this propertywatcher's simulationstate
 	 */
 	public int getDefenders() {
-		return this.state.entities.getNumberOf(EntityType.OBJECTIVE_DRIVEN_DEFENDER);
+		return this.state.entities.getNumberOf(EntityType.DEFENDER_BEE);
 	}
 	
 	/**
 	 * @return the number of queens in this propertywatcher's simulationstate
 	 */
 	public int getQueens() {
-		return this.state.entities.getNumberOf(EntityType.QUEEN);
+		return this.state.entities.getNumberOf(EntityType.QUEEN_BEE);
 	}
 	
 	/**
@@ -352,7 +352,7 @@ public class SimulationConfig {
 	 * @return the number of enemies in this propertywatcher's simulationstate
 	 */
 	public int getEnemies() {
-		return this.state.entities.getNumberOf(EntityType.OBJECTIVE_DRIVEN_ENEMY);
+		return this.state.entities.getNumberOf(EntityType.ENEMY);
 	}
 	
 	/**

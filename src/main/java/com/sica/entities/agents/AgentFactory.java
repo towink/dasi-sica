@@ -24,24 +24,24 @@ public class AgentFactory {
 	 */
 	public static Entity getAgent(EntityType type) {
 		switch(type) {
-		case OBJECTIVE_DRIVEN_WORKER:
+		case WORKER_BEE:
 			ObjectiveDrivenWorkerBee worker = new ObjectiveDrivenWorkerBee();
 			worker.addObjective(new ObjectiveFindUnexploredTerrain());
 			return worker;
-		case OBJECTIVE_DRIVEN_ENEMY:
+		case ENEMY:
 			ObjectiveDrivenEnemy enemy = new ObjectiveDrivenEnemy();
 			enemy.addObjective(new ObjectiveEnemyExplore());
 			return enemy;
-		case OBJECTIVE_DRIVEN_DEFENDER:
+		case DEFENDER_BEE:
 			ObjectiveDrivenDefenderBee defender = new ObjectiveDrivenDefenderBee();
 			defender.addObjective(new ObjectiveExploreTrench());
 			return defender;
-		case QUEEN:
+		case QUEEN_BEE:
 			return new QueenDrools();
-		case SIMPLE_ENEMY:
+		/*case ENEMY:
 			return new SimpleEnemy();
 		case DEFENDER_BEE:
-			return new DefenderBee();
+			return new DefenderBee();*/
 		default:
 			throw new IllegalStateException("Cannot create the type of agent: " + type);
 		

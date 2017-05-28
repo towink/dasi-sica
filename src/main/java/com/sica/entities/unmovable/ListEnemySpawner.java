@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import sim.util.Int2D;
 
 public class ListEnemySpawner{
-	private static final long serialVersionUID = -3430485150816800473L;
 	private static ListEnemySpawner instance;
 	
 	private ArrayList <EnemySpawner> spawners;

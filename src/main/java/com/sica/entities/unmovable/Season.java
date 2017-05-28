@@ -70,7 +70,7 @@ public class Season extends Entity {
 	
 	private boolean isBee (EntityType type) {
 		return type == EntityType.DEFENDER_BEE ||
-				type == EntityType.OBJECTIVE_DRIVEN_WORKER;
+				type == EntityType.WORKER_BEE;
 	}
 	
 	/**

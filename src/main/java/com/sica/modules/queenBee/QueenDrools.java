@@ -24,7 +24,7 @@ public class QueenDrools extends DroolsAgent{
 	protected PriorityQueue<Objective> objectives;
 	
 	public QueenDrools() {
-		super("ksession-queenDrools", 1, EntityType.QUEEN);
+		super("ksession-queenDrools", 1, EntityType.QUEEN_BEE);
 		count = 0;
 		this.objectives = new PriorityQueue<Objective>();
 	}
@@ -57,15 +57,15 @@ public class QueenDrools extends DroolsAgent{
 	}
 	
 	public void createBee(SimulationState state) {
-		float workers = ((float) state.entities.getNumberOf(EntityType.OBJECTIVE_DRIVEN_WORKER));
-		float defenders = ((float) state.entities.getNumberOf(EntityType.OBJECTIVE_DRIVEN_DEFENDER));
+		float workers = ((float) state.entities.getNumberOf(EntityType.WORKER_BEE));
+		float defenders = ((float) state.entities.getNumberOf(EntityType.DEFENDER_BEE));
 		float total = workers + defenders;
 
 		if (100.0 * defenders / total > state.config.getPercentageDefender()) {
-			EntityPlacer.deployEntity(EntityType.OBJECTIVE_DRIVEN_WORKER, state.entities, state.entities.getObjectLocation(this), state.schedule);
+			EntityPlacer.deployEntity(EntityType.WORKER_BEE, state.entities, state.entities.getObjectLocation(this), state.schedule);
 		}
 		else {
-			EntityPlacer.deployEntity(EntityType.OBJECTIVE_DRIVEN_DEFENDER, state.entities, state.entities.getObjectLocation(this), state.schedule);
+			EntityPlacer.deployEntity(EntityType.DEFENDER_BEE, state.entities, state.entities.getObjectLocation(this), state.schedule);
 
 		}
 	}

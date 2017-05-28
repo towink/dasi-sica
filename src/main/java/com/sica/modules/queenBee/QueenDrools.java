@@ -31,7 +31,7 @@ public class QueenDrools extends DroolsAgent{
 	
 	@Override
 	public void stepBeforeFiringRules(SimulationState arg0) {
-		this.heal(1);//avoid damage from stepping
+		this.heal(3);//avoid damage from stepping
 		
 		this.addObjectToKnowledgeBase(arg0);
 		this.location = arg0.entities.getObjectLocation(this);

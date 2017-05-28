@@ -5,6 +5,7 @@ import com.sica.behaviour.TaskOneShot;
 import com.sica.behaviour.common.TaskBroadcastKnowledgeToSameType;
 import com.sica.behaviour.common.TaskGetToPosition;
 import com.sica.behaviour.common.TaskMoveRandomly;
+import com.sica.behaviour.common.TaskMoveTowardsPosition;
 import com.sica.behaviour.common.TaskObserveEnvironment;
 import com.sica.behaviour.common.TaskWarnEnemyDetected;
 import com.sica.entities.Entity.EntityType;
@@ -50,23 +51,23 @@ public class ObjectiveExplore extends Objective {
 		public void endTask(Agent a, Objective obj, SimulationState simState) {
 			obj.addTaskFirst(new TaskObserveEnvironment(Knowledge.FLOWER));
 			obj.addTaskFirst(new TaskObserveEnvironment(Knowledge.OBSTACLE));
-			if(a.getKnowledgeMap().pollNewKnowledge()) {
+			/*if(a.getKnowledgeMap().pollNewKnowledge()) {
 				obj.addTaskLast(new TaskBroadcastKnowledgeToSameType());
-			}
+			}*/
 			addTaskLast(new TaskMoveThenObserve(objective));
 		}
 	}
 	
-	private class TaskMoveThenObserve extends TaskMoveRandomly {
+	private class TaskMoveThenObserve extends TaskMoveTowardsPosition {
 
-		public TaskMoveThenObserve(Int2D n) {
+		/*public TaskMoveThenObserve(Int2D n) {
 			super(SimulationConfig.config().getWorkerMovesBeforeUpdating());
-		}
+		}*/
 		
 		//make this class inherit from TaskMoveTowardsPosition and uncomment this for quicker detecting food sources
-		/*public TaskMoveThenObserve(Int2D destination) {
+		public TaskMoveThenObserve(Int2D destination) {
 			super(destination, SimulationConfig.config().getWorkerMovesBeforeUpdating());
-		}*/
+		}
 
 		@Override
 		public void endTask(Agent a, Objective obj, SimulationState simState) {

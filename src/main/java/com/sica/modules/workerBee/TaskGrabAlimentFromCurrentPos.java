@@ -25,10 +25,11 @@ public class TaskGrabAlimentFromCurrentPos extends TaskOneShot {
 		ObjectiveDrivenWorkerBee bee = (ObjectiveDrivenWorkerBee) a;
 		obj.addTaskLast(new TaskObserveEnvironmentObstacleFlower());
 		// only go back to hive if we really grabbed aliment
+		//obj.addTaskLast(new TaskBroadcastKnowledgeToSameType());
 		if(bee.getCarriesAliment()) {
 			obj.addTaskLast(new TaskGetToPosition(a.getHome()));
 			obj.addTaskLast(new TaskLeaveAlimentInHive());
-			obj.addTaskLast(new TaskBroadcastKnowledgeToSameType());
+			//obj.addTaskLast(new TaskBroadcastKnowledgeToSameType());
 		}
 		obj.addTaskLast(new TaskDecideWhereToGo());
 	}

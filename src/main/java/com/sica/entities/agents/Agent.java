@@ -28,7 +28,6 @@ public abstract class Agent extends Entity {
 	public Agent (EntityType type) {
 		super(type);
 		this.knowledge = new HashMapKnowledgeMap();
-		this.life = SimulationConfig.config().getTime2Die() * SimulationConfig.config().getTime4Season() * 2;
 		//this.knowledge = new ArrayKnowledgeMap(SimulationConfig.GRID_WIDTH, SimulationConfig.GRID_HEIGHT);
 	}
 	
@@ -36,6 +35,8 @@ public abstract class Agent extends Entity {
 	public void setUp(SimulationState simState) {
 		this.observeEnvironment(simState, Knowledge.HIVE);
 		this.home = simState.entities.getObjectLocation(this);
+		this.life = SimulationConfig.config().getTime2Die() * SimulationConfig.config().getTime4Season() * 2;
+		this.life *= simState.random.nextGaussian() * 0.33f + 1; //adjusted to be random
 	}
 	
 	
@@ -55,8 +56,7 @@ public abstract class Agent extends Entity {
 	 * @param simState
 	 */
 	private void checkForDeath(SimulationState simState) {
-		//TODO: die this way if we are not enemies
-		if (this.life < this.getTimesStepped() && this.getType() == EntityType.ENEMY) 
+		if (this.life < this.getTimesStepped()) 
 			this.die(simState);
 	}
 	

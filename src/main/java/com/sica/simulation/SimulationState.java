@@ -43,10 +43,10 @@ public class SimulationState extends SimState {
 		// let the bees out!
 		entities.addScheduledOnceEntityAt(new ColonySpawner(), new Int2D (SimulationConfig.GRID_WIDTH/2, SimulationConfig.GRID_HEIGHT/2), schedule);
 		// add also some enemies
-		EnemySpawner spawn1 = new EnemySpawner(new Int2D (0,0), EntityType.ENEMY, 4, 40);
-		EnemySpawner spawn2 = new EnemySpawner(new Int2D (0, SimulationConfig.GRID_HEIGHT - 1), EntityType.ENEMY, 2, 20);
-		EnemySpawner spawn3 = new EnemySpawner(new Int2D (SimulationConfig.GRID_WIDTH - 1, SimulationConfig.GRID_HEIGHT - 1), EntityType.ENEMY, 1, 10);
-		EnemySpawner spawn4 = new EnemySpawner(new Int2D (SimulationConfig.GRID_WIDTH - 1, 0), EntityType.ENEMY, 4, 20);
+		EnemySpawner spawn1 = new EnemySpawner(new Int2D (0,0), EntityType.ENEMY, 4, 10);
+		EnemySpawner spawn2 = new EnemySpawner(new Int2D (0, SimulationConfig.GRID_HEIGHT - 1), EntityType.ENEMY, 2, 5);
+		EnemySpawner spawn3 = new EnemySpawner(new Int2D (SimulationConfig.GRID_WIDTH - 1, SimulationConfig.GRID_HEIGHT - 1), EntityType.ENEMY, 1, 3);
+		EnemySpawner spawn4 = new EnemySpawner(new Int2D (SimulationConfig.GRID_WIDTH - 1, 0), EntityType.ENEMY, 4, 5);
 		
 		ListEnemySpawner.getListSpawner().putSpawner(spawn1);
 		ListEnemySpawner.getListSpawner().putSpawner(spawn2);

@@ -120,6 +120,9 @@ public class DefenderBee extends Agent {
 				if (Entity.isEnemy(entity)) {
 					entity.die(simState);
 					killed = true;
+					if (simState.random.nextFloat() < SimulationConfig.config().getDefenderAttackDeathChance())
+						this.die(simState);
+					break;
 				}
 			}
 			//back to work after a fun battle

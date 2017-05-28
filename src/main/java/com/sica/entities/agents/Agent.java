@@ -21,13 +21,14 @@ public abstract class Agent extends Entity {
 	protected List<Int2D> actualPath;			//actual path that the agent is using to get somewhere
 	protected KnowledgeMapInterface knowledge;	//knowledge that this agent has about the environment
 	protected Int2D home; 						//automatically set to where this agent spawned
-	protected int seasonCount;
+	
+	private int life = 4000;
 	
 	
 	public Agent (EntityType type) {
 		super(type);
 		this.knowledge = new HashMapKnowledgeMap();
-		this.seasonCount = 0;
+		this.life = SimulationConfig.config().getTime2Die() * SimulationConfig.config().getTime4Season() * 2;
 		//this.knowledge = new ArrayKnowledgeMap(SimulationConfig.GRID_WIDTH, SimulationConfig.GRID_HEIGHT);
 	}
 	
@@ -41,20 +42,45 @@ public abstract class Agent extends Entity {
 	@Override
 	public void doStep(SimulationState simState) {
 		this.agentDoStep(simState);
-		//TODO check if this agent should be dead
+		//unless it heals, it will eventually die
+		this.damage(1);
+		this.checkForDeath(simState);
 	}
-	
 	
 	public abstract void agentDoStep(SimulationState simState);
 	
+	/**
+	 * Check if this agent's life is less than its time alive.
+	 * If so, die
+	 * @param simState
+	 */
+	private void checkForDeath(SimulationState simState) {
+		//TODO: die this way if we are not enemies
+		if (this.life < this.getTimesStepped() && this.getType() == EntityType.ENEMY) 
+			this.die(simState);
+	}
 	
-	public boolean dead () {
-		this.seasonCount += 1;
-		if (this.seasonCount >= SimulationConfig.config().getTime2Die()) {
-			return true;
-		}
-		
-		return false;
+	/**
+	 * Heal this agent 
+	 * @param boost the life quantity to be added
+	 */
+	public void heal(int boost) {
+		this.life += boost;
+	}
+
+	/**
+	 * Damage this agent
+	 * @param damage amount to be damaged for
+	 */
+	public void damage(int damage) {
+		this.life -= damage;
+	}
+	
+	/**
+	 * @return true if this agent is supposed to be dead
+	 */
+	public boolean isDead() {
+		return this.getTimesStepped() > this.life;
 	}
 
 	//////BEHAVIOR FUNCTIONS

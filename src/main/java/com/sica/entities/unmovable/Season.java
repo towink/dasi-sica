@@ -1,12 +1,9 @@
 package com.sica.entities.unmovable;
 
 import com.sica.entities.Entity;
-import com.sica.entities.agents.Agent;
 import com.sica.environment.EnvironmentModeller;
 import com.sica.simulation.SimulationState;
 import com.util.knowledge.Knowledge;
-
-import sim.util.Bag;
 
 public class Season extends Entity {
 
@@ -49,16 +46,17 @@ public class Season extends Entity {
 		ListEnemySpawner.getListSpawner().increaseSeasonCount();
 		simState.environment.removeAll(Knowledge.FLOWER);
 		
-		Bag agents = simState.getEntities().getAllObjects();
+		//already checked by the agent's internal methods
+		/*Bag agents = simState.getEntities().getAllObjects();
 		for (Object o : agents) {
 			Entity entity = (Entity) o;
-			if (isBee(entity.getType())) {
+			if (Entity.isBee(entity)) {
 				Agent agent = (Agent) entity;
-				if (agent.dead()) {
+				if (agent.isDead()) {
 					agent.die(simState);
 				}
 			}
-		}
+		}*/
 		
 		EnvironmentModeller.randomlyGenerateFlowers(simState.environment, 
 													getNumFlowers(simState), 
@@ -68,10 +66,6 @@ public class Season extends Entity {
 		
 	}
 	
-	private boolean isBee (EntityType type) {
-		return type == EntityType.DEFENDER_BEE ||
-				type == EntityType.WORKER_BEE;
-	}
 	
 	/**
 	 * Return number of flowers in the actual season

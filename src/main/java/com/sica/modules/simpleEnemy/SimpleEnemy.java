@@ -52,7 +52,10 @@ public class SimpleEnemy extends Agent {
 				Entity bee = (Entity) o;
 				if (Entity.isBee(bee)) {
 					bee.die(simState);
-					this.die(simState);
+					if (simState.random.nextFloat() < SimulationConfig.config().getEnemyAttackDeathChance())
+						this.heal(SimulationConfig.config().getEnemyHealthBoost());
+					else
+						this.die(simState);
 					return;
 				}
 			}

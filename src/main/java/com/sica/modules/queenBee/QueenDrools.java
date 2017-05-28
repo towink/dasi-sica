@@ -31,6 +31,8 @@ public class QueenDrools extends DroolsAgent{
 	
 	@Override
 	public void stepBeforeFiringRules(SimulationState arg0) {
+		this.heal(1);//avoid damage from stepping
+		
 		this.addObjectToKnowledgeBase(arg0);
 		this.location = arg0.entities.getObjectLocation(this);
 		if (arg0.environment.hasTypeAt(location, Knowledge.HIVE))
@@ -95,5 +97,6 @@ public class QueenDrools extends DroolsAgent{
 	public Int2D getLocation() {
 		return this.location;
 	}
+	
 
 }

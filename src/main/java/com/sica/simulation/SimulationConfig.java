@@ -74,12 +74,17 @@ public class SimulationConfig {
 	protected int time2Create = 10;
 	protected int cost2Create = 5;
 	
+	//attacks
+	protected float defenderAttackDeathChance = 0.3f; //when they attack they have this chance of dying
+	protected float enemyAttackDeathChance = 0.2f; //when they attack they have this chance of dying
+	protected int enemyHealthBoost = 2000;
+	
 	//enemies
 	/*protected int time4Enemies = 1;			//they are "season units"
 	protected int enemies4Season = 8;*/
 	
 	// --- environment parameters ---
-	
+
 	// obstacles
 	protected int numFlowers = 20;
 	protected int minAlimentFlower = 5;
@@ -87,7 +92,7 @@ public class SimulationConfig {
 	
 	// obstacles
 	protected float percentageObstacle = 0.1f;
-	protected int numberOfWalls = 20;
+	protected int numberOfWalls = 10;
 	protected int wallLength = 20;
 	public static final int WALL_OBSTACLES = 0;
 	public static final int RANDOM_OBSTACLES = 1;
@@ -318,6 +323,38 @@ public class SimulationConfig {
 		return this.workerMovesBeforeUpdating;
 	}
 	
+	public float getDefenderAttackDeathChance() {
+		return this.defenderAttackDeathChance;
+	}
+	
+	public void setDefenderAttackDeathChance(float chance) {
+		this.defenderAttackDeathChance = chance;
+	}
+	
+	public Object domDefenderAttackDeathChance(){
+		return new sim.util.Interval(0.0, 1.0);
+	}
+	
+	public float getEnemyAttackDeathChance() {
+		return enemyAttackDeathChance;
+	}
+	
+	public void setEnemyAttackDeathChance(float enemyAttackDeathChance) {
+		this.enemyAttackDeathChance = enemyAttackDeathChance;
+	}
+	
+	public Object domEnemyAttackDeathChance(){
+		return new sim.util.Interval(0.0, 1.0);
+	}
+	
+	public int getEnemyHealthBoost() {
+		return enemyHealthBoost;
+	}
+	
+	public void setEnemyHealthBoost(int enemyHealthBoost) {
+		this.enemyHealthBoost = enemyHealthBoost;
+	}
+	
 	
 	//////ALL VARIABLES WITH ONLY GETTERS BELOW
 	/**
@@ -361,7 +398,6 @@ public class SimulationConfig {
 	public int getFlowers() {
 		return this.state.environment.getCountOf(Knowledge.FLOWER);
 	}
-	
 	
 	
 	

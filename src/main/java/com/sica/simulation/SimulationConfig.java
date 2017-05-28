@@ -78,6 +78,7 @@ public class SimulationConfig {
 	protected float defenderAttackDeathChance = 0.3f; //when they attack they have this chance of dying
 	protected float enemyAttackDeathChance = 0.2f; //when they attack they have this chance of dying
 	protected int enemyHealthBoost = 2000;
+	protected float enemySpawningBoost = 1.0f;
 	
 	//enemies
 	/*protected int time4Enemies = 1;			//they are "season units"
@@ -354,6 +355,19 @@ public class SimulationConfig {
 	public void setEnemyHealthBoost(int enemyHealthBoost) {
 		this.enemyHealthBoost = enemyHealthBoost;
 	}
+	
+	public float getEnemySpawningBoost() {
+		return enemySpawningBoost;
+	}
+	
+	public void setEnemySpawningBoost(float enemySpawningBoost) {
+		this.enemySpawningBoost = enemySpawningBoost;
+	}
+	
+	public Object domEnemySpawningBoost(){
+		return new sim.util.Interval(0.0, 10.0);
+	}
+	
 	
 	
 	//////ALL VARIABLES WITH ONLY GETTERS BELOW

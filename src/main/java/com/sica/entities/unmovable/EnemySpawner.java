@@ -80,7 +80,9 @@ public class EnemySpawner extends Entity{
 	@Override
 	public void doStep(SimulationState simState) {
 		if ((this.seasonCont >= this.time4Enemy) && (this.enemy != null) && (this.position != null)) {
-			for (int i = 0; i < this.nEnemies; i++) {
+			int limit = (int) ((float) this.nEnemies * SimulationConfig.config().getEnemySpawningBoost()); 
+			
+			for (int i = 0; i < limit; i++) {
 				EntityPlacer.deployEntity(
 						this.enemy, 
 						simState.entities, 

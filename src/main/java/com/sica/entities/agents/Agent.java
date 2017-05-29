@@ -230,6 +230,37 @@ public abstract class Agent extends Entity {
 	public void sendKnowledgeTo (Agent receptor) {
 	        receptor.receiveKnowledgeFrom(this);
 	}
+	
+	/**
+	 * Broadcast the given knowledge to the given entity type
+	 * @param simState
+	 * @param type
+	 * @param pos
+	 * @param knowledge
+	 */
+	public void broadcastKnowledgeToType(SimulationState simState, EntityType type, Int2D pos, Knowledge knowledge) {
+		Bag beeBag = this.getNeighboringEntities(simState);
+		
+		for (Object a: beeBag) {
+			Entity ag = (Entity) a;
+			if (ag.getType() != type || ag.getUAID() == this.getUAID()) {
+				continue;
+			}
+			this.sendKnowledgeTo((Agent) a, pos, knowledge); 
+		}
+	}
+	
+	/**
+	 * Sends the given knowledge to the receptor agent
+	 * @param receptor
+	 * @param pos
+	 * @param knowledge
+	 */
+	private void sendKnowledgeTo(Agent receptor, Int2D pos, Knowledge knowledge) {
+		receptor.receiveBitOfKnowledge(pos, knowledge);
+	}
+
+
 
 	/**
 	 * This function could basically be copied into sendKnowledgeTo
@@ -251,6 +282,33 @@ public abstract class Agent extends Entity {
 	public void receiveBitOfKnowledge(Int2D where, Knowledge knowledge) { 
 		this.knowledge.updateKnowledge(where, knowledge);
 	}
+	
+	/**
+	 * Tells other agents to forget stuff
+	 * @param simState
+	 * @param type
+	 * @param pos
+	 */
+	public void broadcastForgetKnowledgeToType(SimulationState simState, EntityType type, Int2D pos) {
+		Bag beeBag = this.getNeighboringEntities(simState);
+		
+		for (Object a: beeBag) {
+			Entity en = (Entity) a;
+			if (en.getType() != type || en.getUAID() == this.getUAID()) {
+				continue;
+			}
+			Agent ag = (Agent) en;
+			ag.forgetKnowledgeAt(pos);
+		}
+	}
+
+	/**
+	 * forgets its knowledge at the given pos
+	 * @param pos
+	 */
+	private void forgetKnowledgeAt(Int2D pos) {
+		this.getKnowledgeMap().removeKnowledge(pos);
+	}
 	/////////////////////////////////
 	
 	
@@ -271,6 +329,9 @@ public abstract class Agent extends Entity {
 	public KnowledgeMapInterface getKnowledgeMap() {
 		return knowledge;
 	}
+
+
+
 
 
 }

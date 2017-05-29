@@ -63,14 +63,18 @@ public class EnvironmentModeller {
 			Int2D pos = new Int2D(
 					random.nextInt(SimulationConfig.GRID_WIDTH),
 					random.nextInt(SimulationConfig.GRID_HEIGHT));
-			// do not place flowers into hive ...
+			// place flowers only in empty spots (could be over entities, but it doesn't matter)
+			if (env.hasTypeAt(pos, Knowledge.EMPTY)) {
+				generateFlower(env, pos, aliment);
+			}
+			/*
 			if((env.inHive(pos, new Int2D (env.getWidth()/2, env.getHeight()/2))) && 
 				(env.hasTypeAt(pos, Knowledge.EMPTY))) {
 				i--;
 			}
 			else {
 				generateFlower(env, pos, aliment);
-			}
+			}*/
 		}
 	}
 

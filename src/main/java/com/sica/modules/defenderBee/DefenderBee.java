@@ -15,7 +15,7 @@ public class DefenderBee extends Agent {
 	
 
 	private enum State {FINDING_TRENCH, MOVING_TO_TRENCH, GUARDING_COLONY, MOVING_TO_ENEMY, ATTACK, REEVALUATE_LIFE, RECEIVED_ALARM}
-	private State state;
+	private State state, prevState;
 	private Int2D alarm;
 
 
@@ -148,8 +148,14 @@ public class DefenderBee extends Agent {
 			break;
 		}
 		case RECEIVED_ALARM: {
-			this.computePath(simState, this.alarm);
-			this.state = State.MOVING_TO_ENEMY;
+			int defCount = simState.entities.getNumberOf(getType());
+			float prob = 3.0f / (float) defCount; //three bees should go after them
+			if (simState.random.nextFloat() < prob) {
+				this.computePath(simState, this.alarm);
+				this.state = State.MOVING_TO_ENEMY;
+			} else {
+				this.state = this.prevState;
+			}
 			break;
 		}
 		}
@@ -157,8 +163,9 @@ public class DefenderBee extends Agent {
 	
 	@Override
 	public void receiveBitOfKnowledge(Int2D where, Knowledge knowledge) {
-		if (knowledge == Knowledge.ENEMY && this.state == State.GUARDING_COLONY) {
+		if (knowledge == Knowledge.ENEMY && this.state != State.MOVING_TO_ENEMY && this.state != State.ATTACK) {
 			this.alarm = where;
+			this.prevState = this.state;
 			this.state = State.RECEIVED_ALARM;
 		}
 	}

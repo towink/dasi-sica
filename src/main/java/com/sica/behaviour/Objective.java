@@ -121,4 +121,13 @@ public abstract class Objective implements Comparable<Objective> {
 		return Integer.compare(this.getPriority(), other.getPriority());
 	}
 	
+	
+	/**
+	 * Getter just out of curiosity
+	 * @return
+	 */
+	public int getTaskListLength() {
+		return this.taskQueue.size();
+	}
+	
 }

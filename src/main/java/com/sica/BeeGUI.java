@@ -89,8 +89,8 @@ public class BeeGUI extends GUIState {
 		entityPortrayal.setPortrayalForClass(ObjectiveDrivenDefenderBee.class, new OvalPortrayal2D(new Color(128, 178, 255), true));
 		entityPortrayal.setPortrayalForClass(DefenderBee.class, new OvalPortrayal2D(new Color(128, 178, 255), true));
 		
-		entityPortrayal.setPortrayalForClass(SimpleEnemy.class, new OvalPortrayal2D(Color.GREEN, true));
-		entityPortrayal.setPortrayalForClass(ObjectiveDrivenEnemy.class, new OvalPortrayal2D(Color.GREEN, true));
+		entityPortrayal.setPortrayalForClass(SimpleEnemy.class, new OvalPortrayal2D(new Color(128, 255, 90), true));
+		entityPortrayal.setPortrayalForClass(ObjectiveDrivenEnemy.class, new OvalPortrayal2D(new Color(128, 255, 90), true));
 		
 		entityPortrayal.setPortrayalForRemainder(new OvalPortrayal2D(Color.ORANGE, true));
 		
@@ -102,7 +102,7 @@ public class BeeGUI extends GUIState {
 	@Override
 	public void start()
 	{
-		super.start(); 
+		super.start();
 		setUpPortrayals();
 	}
 

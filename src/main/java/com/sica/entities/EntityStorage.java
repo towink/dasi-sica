@@ -16,6 +16,8 @@ public class EntityStorage extends SparseGrid2D {
 	private static final long serialVersionUID = 8716191153250328728L;
 	
 	private EnumMap<EntityType, Integer> agentQuantity;
+	
+	private int order = 0;
 
 	public EntityStorage(int width, int height) {
 		super(width, height);
@@ -31,10 +33,11 @@ public class EntityStorage extends SparseGrid2D {
 	public void addScheduledOnceEntityAt(Entity entity, Int2D location, Schedule schedule) {
 		this.setObjectLocation(entity, location);
 		if (schedule.getTime() > 0.0)
-			schedule.scheduleOnce(schedule.getTime(), 0, entity);
+			schedule.scheduleOnce(schedule.getTime(), order, entity);
 		else
-			schedule.scheduleOnce(Schedule.EPOCH, 0, entity);
+			schedule.scheduleOnce(Schedule.EPOCH, order, entity);
 		this.agentQuantity.put(entity.getType(), 1 + this.agentQuantity.getOrDefault(entity.getType(), 0));
+		order++;
 	}
 	
 	/**
@@ -47,10 +50,11 @@ public class EntityStorage extends SparseGrid2D {
 	public void addScheduledRepeatingEntityAt(Entity entity, Int2D location, Schedule schedule) {
 		this.setObjectLocation(entity, location);
 		if (schedule.getTime() > 0.0)
-			schedule.scheduleRepeating(schedule.getTime(), 0, entity);
+			schedule.scheduleRepeating(schedule.getTime(), order, entity);
 		else
-			schedule.scheduleRepeating(Schedule.EPOCH, 0, entity);
+			schedule.scheduleRepeating(Schedule.EPOCH, order, entity);
 		this.agentQuantity.put(entity.getType(), 1 + this.agentQuantity.getOrDefault(entity.getType(), 0));
+		order++;
 	}
 	
 	

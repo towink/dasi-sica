@@ -20,6 +20,7 @@ import sim.util.Int2D;
 public class ObjectiveExplore extends Objective {
 
 	private Int2D objective;
+	private boolean warning = false;
 	
 	public ObjectiveExplore(Int2D where) {
 		this.addTaskLast(new TaskMoveThenObserve(where));
@@ -31,7 +32,7 @@ public class ObjectiveExplore extends Objective {
 		ObjectiveDrivenWorkerBee bee = (ObjectiveDrivenWorkerBee) a;
 		return bee.thinksKnowsFlowers(SimulationConfig.config().getFlowerThresholdWorker()) 
 				|| !a.canMoveTo(objective, simState, SimulationConfig.ENV_MODE) 
-				|| simState.entities.getObjectLocation(a).equals(objective);
+				|| simState.entities.getObjectLocation(a).equals(objective) && !warning;
 	}
 	
 	@Override
@@ -73,9 +74,12 @@ public class ObjectiveExplore extends Objective {
 		public void endTask(Agent a, Objective obj, SimulationState simState) {
 			Int2D pos = simState.entities.getObjectLocation(a);
 			Bag enemyBag = simState.entities.getRadialEntities(simState, pos, EntityType.ENEMY);
-			if (enemyBag.isEmpty()) //if there are no enemies, keep goin'
+			if (enemyBag.isEmpty()) {//if there are no enemies, keep goin'
+				warning = false;
 				addTaskLast(new TaskObserveFlowersObstacles());
-			else {	//go back home if dangers are nearby and repeat
+			} else {	//go back home if dangers are nearby and repeat
+				//System.out.println("Enemy detected at: " + pos + obj.getTaskListLength());
+				warning = true;
 				addTaskLast(new TaskGetToPosition(a.getHome()));
 				addTaskLast(new TaskWarnEnemyDetected(pos));
 				addTaskLast(new TaskMoveThenObserve(objective));

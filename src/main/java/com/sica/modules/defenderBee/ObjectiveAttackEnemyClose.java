@@ -11,11 +11,19 @@ import com.sica.simulation.SimulationState;
 import sim.util.Bag;
 import sim.util.Int2D;
 
-public class ObjectiveAttackEnemy extends Objective {
+public class ObjectiveAttackEnemyClose extends Objective {
+	
+	@Override
+	public int getPriority() {
+		return 5;
+	}
+
 	private boolean isFinished = false;
 	private Int2D enemyPos;
 	
-	public ObjectiveAttackEnemy(Int2D where) {
+	
+	
+	public ObjectiveAttackEnemyClose(Int2D where) {
 		this.enemyPos = where;
 		addTaskLast(new TaskGetToPosition(enemyPos));
 		addTaskLast(new TaskAttack());		

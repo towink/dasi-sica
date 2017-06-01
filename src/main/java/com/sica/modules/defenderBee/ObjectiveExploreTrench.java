@@ -2,16 +2,20 @@ package com.sica.modules.defenderBee;
 
 import com.sica.behaviour.Objective;
 import com.sica.behaviour.TaskOneShot;
-import com.sica.behaviour.common.TaskMoveTowardsPosition;
+import com.sica.behaviour.common.TaskGetToPosition;
 import com.sica.entities.agents.Agent;
 import com.sica.entities.agents.ObjectiveDrivenAgent;
-import com.sica.simulation.SimulationConfig;
 import com.sica.simulation.SimulationState;
 import com.util.knowledge.Knowledge;
 import com.util.movement.PositioningFunctions;
 import sim.util.Int2D;
 
 public class ObjectiveExploreTrench extends Objective {
+	@Override
+	public int getPriority() {
+		return 10;
+	}
+
 	private Int2D objective;
 	private boolean isFinished = false;
 
@@ -53,24 +57,26 @@ public class ObjectiveExploreTrench extends Objective {
 			else{
 				objective = PositioningFunctions.findValidPosition(hive, 5, a.getKnowledgeMap(), simState.random);
 				a.computePath(simState, objective);
-				obj.addTaskLast(new TaskMove2Trench(objective, 1));
+				obj.addTaskLast(new TaskMove2Trench(objective));
 				//obj.addTaskLast(new TaskGetToPosition(objective)); This task doesn't work in this case 
 			}
 		}
 	}
 
-	private class TaskMove2Trench extends TaskMoveTowardsPosition {
-		public TaskMove2Trench(Int2D destination, int maxSteps) {
-			super(destination, maxSteps);
+	private class TaskMove2Trench extends TaskGetToPosition {
+		public TaskMove2Trench(Int2D destination) {
+			super(destination);
 		}
 		@Override
 		public void endTask(Agent a, Objective obj, SimulationState simState) {
 			// if we reached the current position we finish
+			isFinished = true;
+			/*
 			if(simState.entities.getObjectLocation(a).equals(objective) 
 					|| !a.canMoveTo(objective, simState, SimulationConfig.ENV_MODE)) 
 				isFinished = true;
 			else
-				obj.addTaskLast(new TaskMove2Trench(objective, 1));	
+				obj.addTaskLast(new TaskMove2Trench(objective, 1));*/	
 	
 		}
 	}

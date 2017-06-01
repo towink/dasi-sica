@@ -16,10 +16,13 @@ public class ObjectiveDrivenDefenderBee extends ObjectiveDrivenAgent {
 	
 	@Override
 	public void receiveBitOfKnowledge(Int2D where, Knowledge knowledge) {
-		if (knowledge == Knowledge.ENEMY) {
+		//add a new objetive with maximum priority, which will be pursued before anything it has right now
+		if (knowledge == Knowledge.ENEMY)
+			this.addObjective(new ObjectiveAttackEnemyFar(where));
+		/*if (knowledge == Knowledge.ENEMY) {
 			this.alarm = where;
 			this.recivedAlarm = true;
-		}
+		}*/
 	}
 	
 	public Int2D getAlarm() {

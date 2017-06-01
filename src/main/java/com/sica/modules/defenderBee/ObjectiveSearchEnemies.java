@@ -13,6 +13,11 @@ import sim.util.Bag;
 import sim.util.Int2D;
 
 public class ObjectiveSearchEnemies extends Objective {
+	@Override
+	public int getPriority() {
+		return 10;
+	}
+
 	private boolean foundEnemy = false;
 	private boolean isFinished = false;
 	private Int2D enemyPos;
@@ -28,12 +33,11 @@ public class ObjectiveSearchEnemies extends Objective {
 
 	@Override
 	public void onFinished(Agent a, SimulationState simState) {
-
-		if(foundEnemy)
-			((ObjectiveDrivenAgent)a).addObjective(new ObjectiveAttackEnemy(enemyPos));
-		else
+		if(foundEnemy) {
+			((ObjectiveDrivenAgent)a).addObjective(new ObjectiveAttackEnemyClose(enemyPos));
+		} else {
 			((ObjectiveDrivenAgent)a).addObjective(new ObjectiveExploreTrench());
-
+		}
 	}
 	//TASKS
 
@@ -61,13 +65,14 @@ public class ObjectiveSearchEnemies extends Objective {
 		@Override
 		public void endTask(Agent a, Objective obj, SimulationState simState) {
 			//if we didn't find enemies, we'll check alarm
-			if (!foundEnemy) 
-				obj.addTaskLast(new TaskCheckAlarm());
+			/*if (!foundEnemy) 
+				obj.addTaskLast(new TaskCheckAlarm());*/
+			isFinished = true;
 				
 		}
 	}
 
-	private class TaskCheckAlarm extends TaskOneShot {
+	/*private class TaskCheckAlarm extends TaskOneShot {
 
 		@Override
 		public void interactWithOneShot(Agent a, SimulationState simState) {
@@ -81,5 +86,5 @@ public class ObjectiveSearchEnemies extends Objective {
 			isFinished = true;
 		}
 
-	}
+	}*/
 }

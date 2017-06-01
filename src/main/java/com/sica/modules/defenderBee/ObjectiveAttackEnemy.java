@@ -11,14 +11,34 @@ import com.sica.simulation.SimulationState;
 import sim.util.Bag;
 import sim.util.Int2D;
 
-public class ObjectiveAttackEnemyFar extends Objective {
+/**
+ * Objective that makes the agent go towards a position, look for an enemy, and
+ * attack if one is found
+ * 
+ * @author Daniel
+ * @author David
+ *
+ */
+public class ObjectiveAttackEnemy extends Objective {
+
+	@Override
+	public int getPriority() {
+		return this.priority;
+	}
 
 	private boolean isFinished = false;
+	private int priority;
 	
-	public ObjectiveAttackEnemyFar(Int2D where) {
+	/**
+	 * Give a priority to the objective if we want it to be executed before others
+	 * @param where
+	 * @param priority
+	 */
+	public ObjectiveAttackEnemy(Int2D where, int priority) {
 		addTaskLast(new TaskCheckIfWorthPursuing());
 		addTaskLast(new TaskGetToPosition(where));
 		addTaskLast(new TaskAttack());
+		this.priority = priority;
 	}
 	
 	@Override
@@ -26,7 +46,14 @@ public class ObjectiveAttackEnemyFar extends Objective {
 		return isFinished;
 	}
 	
-	
+	/**
+	 * Check if this objective is worth pursuing. Look around you, and see how many 
+	 * other bees surround you. If there are a lot, just hope that someone else will to the job for you,
+	 * or take initiative and go kill the enemies
+	 * 
+	 * @author Daniel
+	 *
+	 */
 	private class TaskCheckIfWorthPursuing extends TaskOneShot {
 
 		@Override
@@ -47,6 +74,12 @@ public class ObjectiveAttackEnemyFar extends Objective {
 		
 	}
 	
+	/**
+	 * Go and try attacking the enemies. This agent can die in the process
+	 * 
+	 * @author David
+	 *
+	 */
 	private class TaskAttack extends TaskOneShot {
 
 		private boolean killed = false;
@@ -69,11 +102,8 @@ public class ObjectiveAttackEnemyFar extends Objective {
 		
 		@Override
 		public void endTask(Agent a, Objective obj, SimulationState simState) {
-			//back to work after a fun battle
-			//if we always go to FINDING_TRENCH, the bees are less prone
-			//to wander away being blood thirsty
-			if (!killed) {
-				obj.addTaskLast(new TaskScan4Enemies()); //scan 4 enemies
+			if (!killed) {	//keep looking just in case
+				obj.addTaskLast(new TaskScan4Enemies());
 			} else {
 				obj.addTaskFirst(new TaskFinishObjective(a.getHome()));
 			}
@@ -82,6 +112,13 @@ public class ObjectiveAttackEnemyFar extends Objective {
 	}
 	
 	
+	/**
+	 * Check around to see if there are still enemies around you
+	 * 
+	 * @author David
+	 * @author Daniel
+	 *
+	 */
 	private class TaskScan4Enemies extends TaskOneShot {
 
 		private Int2D enemyPos;
@@ -116,6 +153,14 @@ public class ObjectiveAttackEnemyFar extends Objective {
 		}
 	}
 	
+	
+	/**
+	 * Go to a position then mark the objective as finished so that objectives with less priority can keep 
+	 * executing
+	 * 
+	 * @author Daniel
+	 *
+	 */
 	private class TaskFinishObjective extends TaskGetToPosition {
 
 		@Override
@@ -126,9 +171,6 @@ public class ObjectiveAttackEnemyFar extends Objective {
 		public TaskFinishObjective(Int2D destination) {
 			super(destination);
 		}
-
-
-		
 	}
 
 }

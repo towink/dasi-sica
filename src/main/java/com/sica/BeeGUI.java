@@ -24,6 +24,7 @@ import sim.portrayal.grid.FastValueGridPortrayal2D;
 import sim.portrayal.grid.SparseGridPortrayal2D;
 import sim.portrayal.simple.OvalPortrayal2D;
 
+@SuppressWarnings("deprecation")
 public class BeeGUI extends GUIState {
 
 	// size of the simulation frame
@@ -76,22 +77,19 @@ public class BeeGUI extends GUIState {
 	public void setUpPortrayals() {
 		SimulationState simulation = (SimulationState) state;
 
-		//set up the portrayal for the static objects
+		// set up the portrayal for the static objects
 		environmentPortrayal.setField(simulation.environment);
 		environmentPortrayal.setMap(new EnvironmentColorMap());
-		//set up the portrayals for the agents
+		// set up the portrayals for the agents
 		entityPortrayal.setField(simulation.entities);
-		//entityPortrayal.setPortrayalForClass(WorkerBee.class, new OvalPortrayal2D(Color.BLUE, true));
-		//entityPortrayal.setPortrayalForClass(DroolsBee.class, new OvalPortrayal2D(Color.GREEN, true));
+		// set the colors for each agent
 		entityPortrayal.setPortrayalForClass(ObjectiveDrivenWorkerBee.class, new OvalPortrayal2D(Color.MAGENTA, true));
 		entityPortrayal.setPortrayalForClass(QueenDrools.class, new OvalPortrayal2D(Color.WHITE, true));
-		
 		entityPortrayal.setPortrayalForClass(ObjectiveDrivenDefenderBee.class, new OvalPortrayal2D(new Color(128, 178, 255), true));
 		entityPortrayal.setPortrayalForClass(DefenderBee.class, new OvalPortrayal2D(new Color(128, 178, 255), true));
-		
 		entityPortrayal.setPortrayalForClass(SimpleEnemy.class, new OvalPortrayal2D(new Color(128, 255, 90), true));
 		entityPortrayal.setPortrayalForClass(ObjectiveDrivenEnemy.class, new OvalPortrayal2D(new Color(128, 255, 90), true));
-		
+		// agents not configured will be of this color
 		entityPortrayal.setPortrayalForRemainder(new OvalPortrayal2D(Color.ORANGE, true));
 		
 		display.reset();

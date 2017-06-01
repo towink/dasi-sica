@@ -2,13 +2,11 @@ package com.sica.entities.agents;
 
 import com.sica.entities.Entity;
 import com.sica.entities.Entity.EntityType;
-import com.sica.modules.defenderBee.DefenderBee;
 import com.sica.modules.defenderBee.ObjectiveDrivenDefenderBee;
 import com.sica.modules.defenderBee.ObjectiveExploreTrench;
 import com.sica.modules.enemy.ObjectiveDrivenEnemy;
 import com.sica.modules.enemy.ObjectiveEnemyExplore;
 import com.sica.modules.queenBee.QueenDrools;
-import com.sica.modules.simpleEnemy.SimpleEnemy;
 import com.sica.modules.workerBee.ObjectiveDrivenWorkerBee;
 import com.sica.modules.workerBee.ObjectiveFindUnexploredTerrain;
 

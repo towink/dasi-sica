@@ -15,6 +15,24 @@ import sim.util.Bag;
 import sim.util.Int2D;
 import sim.util.IntBag;
 
+/**
+ * Class extending entity that adds KNOWLEDGE as well as positional information
+ * If you want to make a quick agent, just extend this class and override the agentDoStep method.
+ * Make a FSM to model the agent's behaviour and you are all set!!
+ * 
+ * If you want more functionality, try using a rule-based agent or objective-driven one
+ * 
+ * Movement functions, as well as knowledge sharing ones, are implemented here. It is not recommended
+ * that you override them and, if so, make sure to call super() since not doing it could cause
+ * unpredicted behaviour.
+ * 
+ * The agent has a limited time to live, modelled by getLife(), that can be overriden if desired.
+ * The agent's life is decreased on each step, and the agent will die when its life is below the 
+ * number of times it's been stepped.
+ * 
+ * @author Daniel
+ *
+ */
 public abstract class Agent extends Entity {
 	private static final long serialVersionUID = -3612132049378487984L;
 	
@@ -35,8 +53,18 @@ public abstract class Agent extends Entity {
 	public void setUp(SimulationState simState) {
 		this.observeEnvironment(simState, Knowledge.HIVE);
 		this.home = simState.entities.getObjectLocation(this);
-		this.life = SimulationConfig.config().getTime2Die() * SimulationConfig.config().getTime4Season() * 2;
-		this.life *= simState.random.nextGaussian() * 0.33f + 1; //adjusted to be random
+		this.life = (int) getLife(simState);
+	}
+	
+	/**
+	 * Gets this agents life. By default it is a gaussian distribution centered around the default
+	 * number of seasons an agent lives, with a standard deviation of 33% of that value
+	 * @param simState
+	 * @return
+	 */
+	public float getLife(SimulationState simState) {
+		float life = SimulationConfig.config().getTime2Die() * SimulationConfig.config().getTime4Season() * 2;
+		return life * ((float) simState.random.nextGaussian() * 0.33f + 1); //adjusted to be random
 	}
 	
 	
@@ -48,6 +76,10 @@ public abstract class Agent extends Entity {
 		this.checkForDeath(simState);
 	}
 	
+	/**
+	 * Override this function to do logic when implementing an agent
+	 * @param simState
+	 */
 	public abstract void agentDoStep(SimulationState simState);
 	
 	/**

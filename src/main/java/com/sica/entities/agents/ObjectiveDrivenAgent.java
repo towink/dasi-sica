@@ -46,7 +46,8 @@ public abstract class ObjectiveDrivenAgent extends Agent {
 				current.onFinished(this, simState);
 			}
 		}
-		// if there are no objectives do not do anything
+		// if there are no objectives do not do anything,
+		// just wait until we are assigned one
 	}
 	
 	/**

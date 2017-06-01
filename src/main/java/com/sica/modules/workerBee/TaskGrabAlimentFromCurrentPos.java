@@ -3,7 +3,6 @@ package com.sica.modules.workerBee;
 import com.sica.behaviour.Objective;
 import com.sica.behaviour.TaskOneShot;
 import com.sica.behaviour.common.TaskBroadcastForgetKnowledgeToSameType;
-import com.sica.behaviour.common.TaskBroadcastKnowledgeToSameType;
 import com.sica.behaviour.common.TaskBroadcastSpecificKnowledgeToSameType;
 import com.sica.behaviour.common.TaskGetToPosition;
 import com.sica.entities.agents.Agent;

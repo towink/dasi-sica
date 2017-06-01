@@ -2,9 +2,7 @@ package com.sica.modules.workerBee;
 
 import com.sica.behaviour.Objective;
 import com.sica.behaviour.TaskOneShot;
-import com.sica.behaviour.common.TaskBroadcastKnowledgeToSameType;
 import com.sica.behaviour.common.TaskGetToPosition;
-import com.sica.behaviour.common.TaskMoveRandomly;
 import com.sica.behaviour.common.TaskMoveTowardsPosition;
 import com.sica.behaviour.common.TaskObserveEnvironment;
 import com.sica.behaviour.common.TaskWarnEnemyDetected;
@@ -52,9 +50,6 @@ public class ObjectiveExplore extends Objective {
 		public void endTask(Agent a, Objective obj, SimulationState simState) {
 			obj.addTaskFirst(new TaskObserveEnvironment(Knowledge.FLOWER));
 			obj.addTaskFirst(new TaskObserveEnvironment(Knowledge.OBSTACLE));
-			/*if(a.getKnowledgeMap().pollNewKnowledge()) {
-				obj.addTaskLast(new TaskBroadcastKnowledgeToSameType());
-			}*/
 			addTaskLast(new TaskMoveThenObserve(objective));
 		}
 	}
@@ -78,7 +73,6 @@ public class ObjectiveExplore extends Objective {
 				warning = false;
 				addTaskLast(new TaskObserveFlowersObstacles());
 			} else {	//go back home if dangers are nearby and repeat
-				//System.out.println("Enemy detected at: " + pos + obj.getTaskListLength());
 				warning = true;
 				addTaskLast(new TaskGetToPosition(a.getHome()));
 				addTaskLast(new TaskWarnEnemyDetected(pos));

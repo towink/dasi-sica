@@ -15,6 +15,12 @@ import com.util.knowledge.Knowledge;
 import sim.util.Bag;
 import sim.util.Int2D;
 
+/**
+ * Explore the world looking for a colony
+ * 
+ * @author Tobias
+ *
+ */
 public class ObjectiveEnemyExplore extends Objective {
 
 	@Override

@@ -10,6 +10,7 @@ import com.util.movement.PositioningFunctions;
 import sim.util.Bag;
 import sim.util.Int2D;
 
+@Deprecated //use ObjectiveDrivenDefenderBee instead
 public class DefenderBee extends Agent {
 	private static final long serialVersionUID = 1746904605899616287L;
 	

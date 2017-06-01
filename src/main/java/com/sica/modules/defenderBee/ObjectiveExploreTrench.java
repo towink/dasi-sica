@@ -10,10 +10,16 @@ import com.util.knowledge.Knowledge;
 import com.util.movement.PositioningFunctions;
 import sim.util.Int2D;
 
+/**
+ * Move around the colony
+ * 
+ * @author David
+ *
+ */
 public class ObjectiveExploreTrench extends Objective {
 	@Override
 	public int getPriority() {
-		return 10;
+		return Objective.DEFAULT_PRIORITY;
 	}
 
 	private Int2D objective;
@@ -26,8 +32,6 @@ public class ObjectiveExploreTrench extends Objective {
 
 	@Override
 	public boolean isFinished(Agent a, SimulationState simState) {
-		/*return simState.entities.getObjectLocation(a).equals(objective) 
-				|| !a.canMoveTo(objective, simState, SimulationConfig.ENV_MODE);*/
 		return isFinished;
 	}
 
@@ -70,13 +74,8 @@ public class ObjectiveExploreTrench extends Objective {
 		@Override
 		public void endTask(Agent a, Objective obj, SimulationState simState) {
 			// if we reached the current position we finish
+			// if not we finish as well cause that means it is an obstacle
 			isFinished = true;
-			/*
-			if(simState.entities.getObjectLocation(a).equals(objective) 
-					|| !a.canMoveTo(objective, simState, SimulationConfig.ENV_MODE)) 
-				isFinished = true;
-			else
-				obj.addTaskLast(new TaskMove2Trench(objective, 1));*/	
 	
 		}
 	}

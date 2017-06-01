@@ -10,6 +10,13 @@ import com.util.knowledge.Knowledge;
 
 import sim.util.Int2D;
 
+
+/**
+ * Attack the hive, destroying it so that bees cannot exchange food
+ * 
+ * @author Tobias
+ *
+ */
 public class ObjectiveAttackHive extends Objective {
 	
 	public ObjectiveAttackHive() {
@@ -26,7 +33,6 @@ public class ObjectiveAttackHive extends Objective {
 	// TASKS
 
 	private class TaskPrepareToAttack extends TaskOneShot {
-
 		@Override
 		public void interactWithOneShot(Agent a, SimulationState simState) {
 			IterableSet<Int2D> hives = a.getKnowledgeMap().getKnowledgeOf(Knowledge.HIVE);
@@ -35,7 +41,6 @@ public class ObjectiveAttackHive extends Objective {
 			// they will not have the sleep delays when on this task!
 			addTaskLast(new TaskGetToPosition(hivePos));
 			addTaskLast(new TaskAttack());
-			
 		}
 	}
 	

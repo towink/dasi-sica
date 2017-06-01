@@ -12,10 +12,17 @@ import com.sica.simulation.SimulationState;
 import sim.util.Bag;
 import sim.util.Int2D;
 
+/**
+ * Look for enemies, and if any are found, add an objective to go hunt them
+ * 
+ * @author Daniel
+ * @author David
+ *
+ */
 public class ObjectiveSearchEnemies extends Objective {
 	@Override
 	public int getPriority() {
-		return 10;
+		return Objective.DEFAULT_PRIORITY;
 	}
 
 	private boolean foundEnemy = false;
@@ -34,16 +41,17 @@ public class ObjectiveSearchEnemies extends Objective {
 	@Override
 	public void onFinished(Agent a, SimulationState simState) {
 		if(foundEnemy) {
-			((ObjectiveDrivenAgent)a).addObjective(new ObjectiveAttackEnemyClose(enemyPos));
-		} else {
-			((ObjectiveDrivenAgent)a).addObjective(new ObjectiveExploreTrench());
-		}
+			//add an objetive with higher priority to pursue
+			((ObjectiveDrivenAgent)a).addObjective(new ObjectiveAttackEnemy(enemyPos, Objective.HIGH_PRIORITY));
+		} 
+		((ObjectiveDrivenAgent)a).addObjective(new ObjectiveExploreTrench());
+		
 	}
+	
+	
 	//TASKS
 
 	private class TaskScan4Enemies extends TaskOneShot {
-
-
 		@Override
 		public void interactWithOneShot(Agent a, SimulationState simState) {
 			//just scan for enemies, if none are found, reevaluate your trench
@@ -64,27 +72,7 @@ public class ObjectiveSearchEnemies extends Objective {
 		}
 		@Override
 		public void endTask(Agent a, Objective obj, SimulationState simState) {
-			//if we didn't find enemies, we'll check alarm
-			/*if (!foundEnemy) 
-				obj.addTaskLast(new TaskCheckAlarm());*/
-			isFinished = true;
-				
+			isFinished = true; //finish the objective and do something else
 		}
 	}
-
-	/*private class TaskCheckAlarm extends TaskOneShot {
-
-		@Override
-		public void interactWithOneShot(Agent a, SimulationState simState) {
-			ObjectiveDrivenDefenderBee defender = (ObjectiveDrivenDefenderBee) a;
-			if(defender.isRecivedAlarm()){
-				//System.out.printf("Recibi alarma\n");
-				enemyPos =  defender.getAlarm();
-				a.computePath(simState, enemyPos);
-				foundEnemy = true;
-			}
-			isFinished = true;
-		}
-
-	}*/
 }

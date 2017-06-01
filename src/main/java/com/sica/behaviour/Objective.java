@@ -31,6 +31,14 @@ import com.sica.simulation.SimulationState;
  */
 public abstract class Objective implements Comparable<Objective> {
 
+	//some predefined priorities if we want to use them
+	public static final int VERY_LOW_PRIORITY = 1000;
+	public static final int LOW_PRIORITY = 500;
+	public static final int DEFAULT_PRIORITY = 100;
+	public static final int HIGH_PRIORITY = 50;
+	public static final int VERY_HIGH_PRIORITY = 10;
+	
+	//queue of tasks and current task
 	protected Deque<Task> taskQueue;
 	private Task currentTask;
 	
@@ -66,7 +74,7 @@ public abstract class Objective implements Comparable<Objective> {
 	 * @return the priority of this objective
 	 */
 	public int getPriority() {
-		return 0;
+		return DEFAULT_PRIORITY;
 	}
 	
 	/**

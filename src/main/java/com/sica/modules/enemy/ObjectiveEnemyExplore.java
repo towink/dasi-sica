@@ -65,7 +65,7 @@ public class ObjectiveEnemyExplore extends Objective {
 			obj.addTaskLast(new TaskAttackBeesOnSamePosition());
 			obj.addTaskLast(new TaskObserveEnvironment(Knowledge.HIVE));
 			// enemies move slower, so they sleep a while after each step they move
-			obj.addTaskLast(new TaskSleep(5));
+			obj.addTaskLast(new TaskSleep(10 - simState.getConfig().getEnemySpeed()));
 			// if we reached the current position we decide a new one
 			if(simState.entities.getObjectLocation(a).equals(currDest) 
 					|| !a.canMoveTo(currDest, simState, SimulationConfig.ENV_MODE)) {

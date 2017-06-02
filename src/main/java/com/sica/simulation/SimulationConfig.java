@@ -83,6 +83,7 @@ public class SimulationConfig {
 	//enemies
 	/*protected int time4Enemies = 1;			//they are "season units"
 	protected int enemies4Season = 8;*/
+	protected int enemySpeed = 5;
 	
 	// --- environment parameters ---
 
@@ -315,6 +316,20 @@ public class SimulationConfig {
 	public int getEnemies4Season () {
 		return this.enemies4Season;
 	}*/
+	
+	public void setEnemySpeed(int speed) {
+		if(1 <= speed && speed <= 10) {
+			this.enemySpeed = speed;
+		}
+	}
+	
+	public int getEnemySpeed() {
+		return this.enemySpeed;
+	}
+	
+	public Object domEnemySpeed(){
+		return new sim.util.Interval(1, 10);
+	}
 	
 	public void setWorkerMovesBeforeUpdating(int workerMovesBeforeUpdating) {
 		this.workerMovesBeforeUpdating = workerMovesBeforeUpdating;

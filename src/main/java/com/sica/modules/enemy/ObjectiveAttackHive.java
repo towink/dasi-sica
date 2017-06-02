@@ -39,7 +39,7 @@ public class ObjectiveAttackHive extends Objective {
 			//go to the first known hive
 			Int2D hivePos = hives.iterator().next();
 			// they will not have the sleep delays when on this task!
-			addTaskLast(new TaskGetToPosition(hivePos));
+			addTaskLast(new TaskGetToPosition(hivePos, 5));
 			addTaskLast(new TaskAttack());
 		}
 	}

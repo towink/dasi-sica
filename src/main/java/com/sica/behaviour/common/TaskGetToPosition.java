@@ -24,16 +24,33 @@ import sim.util.Int2D;
 public class TaskGetToPosition extends Task {
 
 	private Int2D destination;
+	
+	private int sleep;
+	private int count;
+	
+	public TaskGetToPosition(Int2D destination, int sleep) {
+		this.destination = destination;
+		this.sleep = sleep;
+		this.count = 0;
+	}
 
 	public TaskGetToPosition(Int2D destination) {
-		this.destination = destination;
+		this(destination, 0);
 	}
 	
 
 	@Override
 	public void interactWith(Agent agent, SimulationState simState) {
-		if (!agent.followCurrentPath(simState))
-			agent.computePath(simState, destination);
+		if(count >= sleep) {
+			if (!agent.followCurrentPath(simState)) {
+				agent.computePath(simState, destination);
+			}
+			count = 0;
+		}
+		else {
+			count++;
+		}
+		
 		/*// a.move(Direction.values()[simState.random.nextInt(4)], simState, Grid2D.TOROIDAL);
 		
 		// the first step in a get-to-position task is to observe the environment nearby

@@ -12,7 +12,7 @@ import sim.util.Int2D;
 
 public class TaskAvoidEnemies extends TaskOneShot{
 
-	private Int2D safeSpot;
+	protected Int2D safeSpot;
 
 	@Override
 	public void interactWithOneShot(Agent a, SimulationState simState) {
@@ -26,8 +26,9 @@ public class TaskAvoidEnemies extends TaskOneShot{
 		int dx = enemyPos.x - pos.x;
 		int dy = enemyPos.y - pos.y;
 		
-		this.safeSpot = new Int2D(-dx*2 + pos.x, -dy*2 + pos.y);
-		System.out.println("Vector: " + dx + "," + dy);
+		safeSpot = new Int2D(-dx*5 + pos.x, -dy*5 + pos.y);
+		safeSpot = PositioningFunctions.findValidPosition(safeSpot, 10, enemyPos, a.getKnowledgeMap(), simState.random);
+		System.out.println("safe spot: " + safeSpot);
 	}
 	
 	@Override

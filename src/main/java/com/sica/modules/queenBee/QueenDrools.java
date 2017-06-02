@@ -4,18 +4,23 @@ package com.sica.modules.queenBee;
 import java.util.PriorityQueue;
 
 import com.sica.behaviour.Objective;
+import com.sica.entities.Entity;
 import com.sica.entities.EntityPlacer;
 import com.sica.entities.agents.DroolsAgent;
 import com.sica.simulation.SimulationConfig;
 import com.sica.simulation.SimulationState;
 import com.util.knowledge.Knowledge;
 
+import sim.util.Bag;
 import sim.util.Int2D;
 
 public class QueenDrools extends DroolsAgent{
 	
 	private static final long serialVersionUID = 7010748442357851286L;
+	
 	public boolean waiting = false;
+	
+	public boolean onObjectiveAvoidEnemies = false;
 	
 	private int count;
 	private int availableFood;
@@ -55,6 +60,7 @@ public class QueenDrools extends DroolsAgent{
 
 	@Override
 	public void setupSessionKnowledge() {
+		// maybe better as a global variable to drools
 		this.addObjectToKnowledgeBase(this);
 	}
 	
@@ -97,6 +103,19 @@ public class QueenDrools extends DroolsAgent{
 	public Int2D getLocation() {
 		return this.location;
 	}
+	
+	public boolean enemiesClose(SimulationState simState) {
+		Bag entityBag = getNeighboringEntities(simState);
+		// check if there are enemies within range
+		for (Object o: entityBag) {
+			Entity entity = (Entity) o;
+			if (Entity.isEnemy(entity)) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
 	
 
 }

@@ -5,6 +5,9 @@ import com.sica.modules.queenBee.QueenDrools;
 import com.sica.simulation.SimulationState;
 import com.sica.modules.queenBee.ObjectiveCreateBee;
 import com.sica.modules.queenBee.ObjectiveWait2Create;
+import com.sica.modules.queenBee.ObjectiveAvoidEnemies
+import com.sica.modules.queenBee.ObjectiveReturnToHive;
+import com.sica.simulation.SimulationConfig
 import sim.util.Int2D;
 
 rule "Create bees"
@@ -22,9 +25,30 @@ rule "Increase count to generate bees"
 	salience -10
 	when
 		$state : SimulationState()
-		queen : QueenDrools($state.getConfig().getTime2Create() > getCount() && !waiting)
+		queen : QueenDrools(!waiting)
 	then
 		queen.waiting = true;
-		queen.addObjective(new ObjectiveWait2Create ());
+		queen.addObjective(new ObjectiveWait2Create());
 		//queen.increaseCount();
+end
+
+rule "avoid enemies"
+	salience 10
+	when
+		$state : SimulationState()
+		$queen : QueenDrools(enemiesClose($state), !onObjectiveAvoidEnemies)
+	then
+		//System.out.println("drools avoid enemy");
+		$queen.addObjective(new ObjectiveAvoidEnemies());
+		$queen.onObjectiveAvoidEnemies = true;
+end
+
+rule "return to hive"
+	salience 5
+	when
+		$state : SimulationState()
+		$queen : QueenDrools(!enemiesClose($state), location != getHome())
+	then
+		//System.out.println("returning to hive..");
+		$queen.addObjective(new ObjectiveReturnToHive());
 end

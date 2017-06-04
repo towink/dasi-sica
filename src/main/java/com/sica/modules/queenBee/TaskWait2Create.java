@@ -14,9 +14,10 @@ public class TaskWait2Create extends Task {
 	
 	@Override
 	public boolean isFinished(Agent a, SimulationState simState) {
-		QueenDrools bee = (QueenDrools) a;
+		return false;
+		/*QueenDrools bee = (QueenDrools) a;
 		return (simState.getConfig().getTime2Create() <= bee.getCount()) && 
-				(bee.getAvailableFood() >= simState.getConfig().getCost2Create());
+				(bee.getAvailableFood() >= simState.getConfig().getCost2Create());*/
 	}
 
 }

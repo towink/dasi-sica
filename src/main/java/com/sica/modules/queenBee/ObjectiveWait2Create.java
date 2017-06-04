@@ -6,6 +6,11 @@ import com.sica.simulation.SimulationState;
 
 public class ObjectiveWait2Create extends Objective {
 
+	@Override
+	public int getPriority() {
+		return Objective.VERY_LOW_PRIORITY;
+	}
+
 	public ObjectiveWait2Create() {
 		super();
 		addTaskFirst(new TaskWait2Create());
@@ -17,7 +22,7 @@ public class ObjectiveWait2Create extends Objective {
 			return taskQueue.peek().isFinished(a, simState);
 		}
 		
-			return true;
+		return true;
 	}
 	
 	@Override

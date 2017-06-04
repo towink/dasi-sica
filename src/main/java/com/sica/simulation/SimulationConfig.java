@@ -62,7 +62,7 @@ public class SimulationConfig {
 	protected int time2Die = 4;					// they are "season units"
 	
 	// worker
-	protected int numWorkers = 0;
+	protected int numWorkers = 10;
 	protected float groupingAffinity = 0.95f;
 	protected int flowerThreshold = 2;
 	protected int workerMovesBeforeUpdating = 5; //number of times a worker bee moves randomly before scanning

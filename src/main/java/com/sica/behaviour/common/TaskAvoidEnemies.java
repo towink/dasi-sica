@@ -4,6 +4,7 @@ import com.sica.behaviour.Objective;
 import com.sica.behaviour.TaskOneShot;
 import com.sica.entities.Entity.EntityType;
 import com.sica.entities.agents.Agent;
+import com.sica.simulation.SimulationConfig;
 import com.sica.simulation.SimulationState;
 import com.util.movement.PositioningFunctions;
 
@@ -26,9 +27,12 @@ public class TaskAvoidEnemies extends TaskOneShot{
 		int dx = enemyPos.x - pos.x;
 		int dy = enemyPos.y - pos.y;
 		
-		safeSpot = new Int2D(-dx*5 + pos.x, -dy*5 + pos.y);
+		safeSpot = PositioningFunctions.fitToGrid(new Int2D(-dx*2 + pos.x, -dy*2 + pos.y), 
+				SimulationConfig.ENV_MODE, 
+				SimulationConfig.GRID_WIDTH, 
+				SimulationConfig.GRID_WIDTH);
+		
 		safeSpot = PositioningFunctions.findValidPosition(safeSpot, 10, enemyPos, a.getKnowledgeMap(), simState.random);
-		System.out.println("safe spot: " + safeSpot);
 	}
 	
 	@Override

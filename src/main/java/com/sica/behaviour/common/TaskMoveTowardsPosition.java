@@ -16,7 +16,7 @@ import sim.util.Int2D;
  */
 public class TaskMoveTowardsPosition extends TaskFiniteTimes {
 
-	private Int2D destination;
+	public final Int2D destination;
 
 	public TaskMoveTowardsPosition(Int2D destination, int maxSteps) {
 		super(maxSteps);

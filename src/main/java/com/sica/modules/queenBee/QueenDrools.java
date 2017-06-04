@@ -47,13 +47,18 @@ public class QueenDrools extends DroolsAgent{
 	}
 	
 	@Override
-	public void stepAfterFiringRules(SimulationState arg0) {
-		if (!this.objectives.isEmpty()) {
-			this.objectives.peek().step(this, arg0);
-			
-			if (this.objectives.peek().isFinished(this, arg0)) {
-				this.objectives.peek().onFinished(this, arg0);
-				this.objectives.poll();
+	public void stepAfterFiringRules(SimulationState simState) {
+		if (!objectives.isEmpty()) {
+			Objective current = objectives.peek();
+			//System.out.println("Executing: " + current.getClass());
+			if (!current.isFinished(this, simState)) {
+				// objective is not finished
+				current.step(this, simState);
+			}
+			else {
+				// objective is finished
+				objectives.poll();
+				current.onFinished(this, simState);
 			}
 		}
 	}

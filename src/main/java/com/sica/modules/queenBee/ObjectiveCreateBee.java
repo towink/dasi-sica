@@ -6,6 +6,11 @@ import com.sica.simulation.SimulationState;
 
 public class ObjectiveCreateBee extends Objective {
 
+	@Override
+	public int getPriority() {
+		return Objective.LOW_PRIORITY;
+	}
+
 	public ObjectiveCreateBee() {
 		super();
 		addTaskFirst(new TaskCreateBee());

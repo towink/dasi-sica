@@ -1,24 +1,12 @@
 package com.sica.modules.queenBee;
 
 import com.sica.behaviour.Objective;
-import com.sica.behaviour.common.TaskAvoidEnemies;
 import com.sica.behaviour.common.TaskGetToPosition;
-import com.sica.entities.Entity;
 import com.sica.entities.agents.Agent;
 import com.sica.simulation.SimulationConfig;
 import com.sica.simulation.SimulationState;
 
-import sim.util.Bag;
 import sim.util.Int2D;
-
-import com.sica.behaviour.Objective;
-import com.sica.behaviour.common.TaskAvoidEnemies;
-import com.sica.entities.Entity;
-import com.sica.entities.agents.Agent;
-import com.sica.simulation.SimulationConfig;
-import com.sica.simulation.SimulationState;
-
-import sim.util.Bag;
 
 /**
  * Objective that represents the queens intention to avoid enemies.

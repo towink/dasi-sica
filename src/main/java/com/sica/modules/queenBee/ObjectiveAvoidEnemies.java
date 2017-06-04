@@ -4,12 +4,8 @@ import com.sica.behaviour.Objective;
 import com.sica.behaviour.TaskOneShot;
 import com.sica.behaviour.common.TaskAvoidEnemies;
 import com.sica.behaviour.common.TaskGetToPosition;
-import com.sica.entities.Entity;
 import com.sica.entities.agents.Agent;
-import com.sica.simulation.SimulationConfig;
 import com.sica.simulation.SimulationState;
-
-import sim.util.Bag;
 
 /**
  * Objective that represents the queens intention to avoid enemies.
@@ -23,7 +19,7 @@ import sim.util.Bag;
 public class ObjectiveAvoidEnemies extends Objective {
 
 	public ObjectiveAvoidEnemies() {
-		addTaskFirst(new TaskAvoidEnemies());
+		addTaskFirst(new TaskQueenAvoidEnemies());
 	}
 	
 	@Override
@@ -44,7 +40,7 @@ public class ObjectiveAvoidEnemies extends Objective {
 			//if there are enemies safespot wont be null
 			if (safeSpot != null) {
 				obj.addTaskFirst(new TaskGetToPosition(safeSpot));
-				obj.addTaskFirst(new TaskQueenDecideWhatToDo());
+				obj.addTaskLast(new TaskQueenDecideWhatToDo());
 			}
 		}
 	}

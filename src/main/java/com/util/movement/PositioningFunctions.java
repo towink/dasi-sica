@@ -68,7 +68,11 @@ public class PositioningFunctions {
 		vector.normalize();
 		vector.dot(distance);
 		
-		Int2D destination = new Int2D(closeToWhere.x + (int) vector.x, closeToWhere.y + (int) vector.y);
+		Int2D destination = PositioningFunctions.fitToGrid(
+				new Int2D(closeToWhere.x + (int) vector.x, closeToWhere.y + (int) vector.y),
+				SimulationConfig.ENV_MODE,
+				SimulationConfig.GRID_WIDTH,
+				SimulationConfig.GRID_HEIGHT);
 		
 		return PositioningFunctions.findValidPosition(destination, kMap, random);
 	}

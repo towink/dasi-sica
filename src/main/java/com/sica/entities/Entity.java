@@ -76,7 +76,7 @@ public abstract class Entity implements Steppable {
 	 * by disabling its step() method
 	 */
 	public void die(SimulationState simState) {
-		System.out.println("Entity dead: " + this.getType());
+		//System.out.println("Entity dead: " + this.getType());
 		simState.entities.remove(this);
 		this.removed = true;
 	}

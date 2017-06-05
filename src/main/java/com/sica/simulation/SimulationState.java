@@ -53,6 +53,10 @@ public class SimulationState extends SimState {
 		ListEnemySpawner.getListSpawner().putSpawner(spawn3);
 		ListEnemySpawner.getListSpawner().putSpawner(spawn4);
 		
+		//uncomment for tutorial agents
+		//EnemySpawner spawn5 = new EnemySpawner(new Int2D (0,0), EntityType.ENEMY_FLOWER, 1, 3);
+		//ListEnemySpawner.getListSpawner().putSpawner(spawn5);
+		
 		for (EnemySpawner spawner : ListEnemySpawner.getListSpawner().getSpawners()) {
 			entities.addScheduledRepeatingEntityAt(spawner, spawner.getPosition(), schedule);
 		}

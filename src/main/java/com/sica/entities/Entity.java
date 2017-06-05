@@ -12,9 +12,9 @@ public abstract class Entity implements Steppable {
 	
 	// TODO clean this up
 	// when you add a new entitytype, be sure to add it to isEnemy if it is a new type of enemy!
-	public static enum EntityType {UNKNOWN, 
-		DROOLS, //legacy bees, remove in the future
-		WORKER_BEE, QUEEN_BEE, BEE_SPAWNER, ENVIRONMENT_SPAWNER, ENEMY, ENEMY_SPAWNER, DEFENDER_BEE, SEASON}; 
+	public static enum EntityType {UNKNOWN, DROOLS,
+		WORKER_BEE, QUEEN_BEE, BEE_SPAWNER, ENVIRONMENT_SPAWNER, 
+		ENEMY, ENEMY_FLOWER, ENEMY_SPAWNER, DEFENDER_BEE, SEASON}; 
 	
 
 	private static int uaidGenerator = 0;	//static variable to count the number of agents created
@@ -117,7 +117,8 @@ public abstract class Entity implements Steppable {
 	 * @return true if this entity is an enemy of any type
 	 */
 	public static boolean isEnemy(Entity e) {
-		return e.type == EntityType.ENEMY;//e.type == EntityType.SIMPLE_ENEMY; //|| e.type == EntityType.NEW_ENEMY_TYPE ...
+		return e.type == EntityType.ENEMY
+				|| e.type == EntityType.ENEMY_FLOWER;//e.type == EntityType.SIMPLE_ENEMY; //|| e.type == EntityType.NEW_ENEMY_TYPE ...
 	}
 	
 	/**

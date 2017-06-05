@@ -18,6 +18,8 @@ import com.sica.simulation.SimulationState;
  */
 public class ObjectiveAvoidEnemies extends Objective {
 
+	private boolean isFinished = false;
+	
 	public ObjectiveAvoidEnemies() {
 		addTaskFirst(new TaskQueenAvoidEnemies());
 	}
@@ -29,7 +31,7 @@ public class ObjectiveAvoidEnemies extends Objective {
 	
 	@Override
 	public boolean isFinished(Agent a, SimulationState simState) {
-		return !((QueenDrools)a).enemiesClose(simState);
+		return isFinished;
 	}
 	
 	// Tasks specific to this objective
@@ -41,6 +43,8 @@ public class ObjectiveAvoidEnemies extends Objective {
 			if (safeSpot != null) {
 				obj.addTaskFirst(new TaskGetToPosition(safeSpot));
 				obj.addTaskLast(new TaskQueenDecideWhatToDo());
+			} else { //something went wrong, try again
+				isFinished = true;
 			}
 		}
 	}
@@ -52,6 +56,8 @@ public class ObjectiveAvoidEnemies extends Objective {
 		public void endTask(Agent a, Objective obj, SimulationState simState) {
 			if(((QueenDrools)a).enemiesClose(simState)) {
 				obj.addTaskFirst(new TaskQueenAvoidEnemies());
+			} else {
+				isFinished = true;
 			}
 		}
 	}

@@ -81,7 +81,8 @@ public class EntityStorage extends SparseGrid2D {
 	}
 	
 	/**
-	 * get all entities of the given type around the given position 
+	 * get all entities of the given type around the given position,
+	 * or get all entities of all types if type == null 
 	 * @param simState
 	 * @param pos
 	 * @param type
@@ -89,6 +90,9 @@ public class EntityStorage extends SparseGrid2D {
 	 */
 	public Bag getRadialEntities(SimulationState simState, Int2D pos, EntityType type) {
 		Bag enemies = simState.entities.getRadialNeighbors(pos.getX(), pos.getY(), simState.config.getRadioView(), SimulationConfig.ENV_MODE, true);
+		if (type == null)
+			return enemies;
+		
 		Bag res = new Bag();
 		//retrieve only the interesting entities
 		for (Object o: enemies)

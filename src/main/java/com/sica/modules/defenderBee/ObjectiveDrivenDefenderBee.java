@@ -24,6 +24,6 @@ public class ObjectiveDrivenDefenderBee extends ObjectiveDrivenAgent {
 	public void receiveBitOfKnowledge(Int2D where, Knowledge knowledge) {
 		//add a new objetive with maximum priority, which will be pursued before anything it has right now
 		if (knowledge == Knowledge.ENEMY)
-			this.addObjective(new ObjectiveAttackEnemy(where, Objective.VERY_HIGH_PRIORITY));
+			this.addObjective(new ObjectiveAttackEnemy(where, Objective.VERY_HIGH_PRIORITY, false));
 	}
 }

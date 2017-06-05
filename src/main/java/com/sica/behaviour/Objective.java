@@ -87,7 +87,7 @@ public abstract class Objective implements Comparable<Objective> {
 		//if we have no current task
 		if (currentTask == null) {
 			if (taskQueue.isEmpty()) {
-				throw new IllegalStateException("This objective has no tasks and it is not finished either! Fix it!");
+				throw new IllegalStateException("This objective: " + this.getClass() + " has no tasks and it is not finished either! Fix it!");
 			} else {
 				currentTask = taskQueue.pollFirst();//get a new task
 				currentTask.startTask(a, simState);

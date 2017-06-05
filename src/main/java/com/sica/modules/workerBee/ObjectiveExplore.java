@@ -6,7 +6,7 @@ import com.sica.behaviour.common.TaskGetToPosition;
 import com.sica.behaviour.common.TaskMoveTowardsPosition;
 import com.sica.behaviour.common.TaskObserveEnvironment;
 import com.sica.behaviour.common.TaskWarnEnemyDetected;
-import com.sica.entities.Entity.EntityType;
+import com.sica.entities.Entity;
 import com.sica.entities.agents.Agent;
 import com.sica.simulation.SimulationConfig;
 import com.sica.simulation.SimulationState;
@@ -68,16 +68,19 @@ public class ObjectiveExplore extends Objective {
 		@Override
 		public void endTask(Agent a, Objective obj, SimulationState simState) {
 			Int2D pos = simState.entities.getObjectLocation(a);
-			Bag enemyBag = simState.entities.getRadialEntities(simState, pos, EntityType.ENEMY);
-			if (enemyBag.isEmpty()) {//if there are no enemies, keep goin'
-				warning = false;
-				addTaskLast(new TaskObserveFlowersObstacles());
-			} else {	//go back home if dangers are nearby and repeat
-				warning = true;
-				addTaskLast(new TaskGetToPosition(a.getHome()));
-				addTaskLast(new TaskWarnEnemyDetected(pos));
-				addTaskLast(new TaskMoveThenObserve(objective));
+			Bag enemyBag = simState.entities.getRadialEntities(simState, pos, null);
+			for (Object o: enemyBag) {
+				Entity e = (Entity) o;
+				if (Entity.isEnemy(e)) {
+					warning = true;
+					addTaskLast(new TaskGetToPosition(a.getHome()));
+					addTaskLast(new TaskWarnEnemyDetected(pos));
+					addTaskLast(new TaskMoveThenObserve(objective));
+					return;
+				}
 			}
+			warning = false;
+			addTaskLast(new TaskObserveFlowersObstacles());
 		}
 	}
 

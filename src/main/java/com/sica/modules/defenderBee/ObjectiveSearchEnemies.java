@@ -42,7 +42,7 @@ public class ObjectiveSearchEnemies extends Objective {
 	public void onFinished(Agent a, SimulationState simState) {
 		if(foundEnemy) {
 			//add an objetive with higher priority to pursue
-			((ObjectiveDrivenAgent)a).addObjective(new ObjectiveAttackEnemy(enemyPos, Objective.HIGH_PRIORITY));
+			((ObjectiveDrivenAgent)a).addObjective(new ObjectiveAttackEnemy(enemyPos, Objective.HIGH_PRIORITY, true));
 		} 
 		((ObjectiveDrivenAgent)a).addObjective(new ObjectiveExploreTrench());
 		

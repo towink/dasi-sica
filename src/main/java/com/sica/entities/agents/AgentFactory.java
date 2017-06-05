@@ -4,6 +4,8 @@ import com.sica.entities.Entity;
 import com.sica.entities.Entity.EntityType;
 import com.sica.modules.defenderBee.ObjectiveDrivenDefenderBee;
 import com.sica.modules.defenderBee.ObjectiveExploreTrench;
+import com.sica.modules.eater.EaterEnemy;
+import com.sica.modules.eater.ObjectiveSearchForFlowers;
 import com.sica.modules.enemy.ObjectiveDrivenEnemy;
 import com.sica.modules.enemy.ObjectiveEnemyExplore;
 import com.sica.modules.queenBee.QueenDrools;
@@ -31,6 +33,10 @@ public class AgentFactory {
 			enemy.addObjective(new ObjectiveEnemyExplore());
 			return enemy;
 			//return new SimpleEnemy();
+		case ENEMY_FLOWER:
+			EaterEnemy eater = new EaterEnemy();
+			eater.addObjective(new ObjectiveSearchForFlowers());
+			return eater;
 		case DEFENDER_BEE:
 			ObjectiveDrivenDefenderBee defender = new ObjectiveDrivenDefenderBee();
 			defender.addObjective(new ObjectiveExploreTrench());
@@ -44,3 +50,4 @@ public class AgentFactory {
 		}
 	}
 }
+

@@ -28,17 +28,19 @@ public class ObjectiveAttackEnemy extends Objective {
 
 	private boolean isFinished = false;
 	private int priority;
+	private boolean alwaysAttack = false;
 	
 	/**
 	 * Give a priority to the objective if we want it to be executed before others
 	 * @param where
 	 * @param priority
 	 */
-	public ObjectiveAttackEnemy(Int2D where, int priority) {
+	public ObjectiveAttackEnemy(Int2D where, int priority, boolean alwaysAttack) {
 		addTaskLast(new TaskCheckIfWorthPursuing());
 		addTaskLast(new TaskGetToPosition(where));
 		addTaskLast(new TaskAttack());
 		this.priority = priority;
+		this.alwaysAttack = alwaysAttack;
 	}
 	
 	@Override
@@ -68,7 +70,7 @@ public class ObjectiveAttackEnemy extends Objective {
 		public void interactWithOneShot(Agent a, SimulationState simState) {
 			int defCount = simState.entities.getNumberOf(a.getType());
 			float prob = 3.0f / (float) defCount; //three bees should go after them
-			if (simState.random.nextFloat() < prob)
+			if (alwaysAttack || simState.random.nextFloat() < prob)
 				worthIt = true;
 		}
 		

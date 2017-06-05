@@ -50,17 +50,13 @@ public class EnemySpawner extends Entity{
 	}
 	
 	private boolean availableEnemy(EntityType enemy) {
-		boolean result;
 		switch (enemy) {
 		case ENEMY:
-			result = true;
-			break;
+		case ENEMY_FLOWER:
+			return true;
 		default:
-			result = false;
-			break;
+			return false;
 		}
-		
-		return result;
 	}
 	
 	private boolean availablePosition (Int2D position) {
